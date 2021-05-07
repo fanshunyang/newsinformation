@@ -1,0 +1,9 @@
+{
+    "id": "zk-share-column",
+    "name": "分享栏",
+    "version": "1.0.1",
+    "description": "分享app时弹出的app栏",
+    "keywords": [
+        "组件"
+    ]
+}
