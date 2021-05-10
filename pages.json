@@ -91,9 +91,10 @@
 				"navigationBarBackgroundColor":"#FFFFFF",
 		        "enablePullDownRefresh": false,
 				"app-plus": {
+					"softinputNavBar": "none",
 					"titleNView": false,
-				
-					"bounce": "none"
+					"bounce": "none",
+					"softinputMode": "adjustResize" 
 				}
 				
 		    }
@@ -133,10 +134,15 @@
 		  "path" : "pages/my/my",
 		  "style" :                                                                                    
 		  {
-		      "navigationBarTitleText": "我的",
-		  	"navigationBarBackgroundColor":"#FFFFFF",
-		  	"navigationBarTextStyle" : "black",
-		      "enablePullDownRefresh": false
+		   "navigationBarTitleText": "",
+		   "navigationBarTextStyle" : "black",
+		   "navigationBarBackgroundColor":"#FFFFFF",
+			  "app-plus": {
+			  	"softinputNavBar": "none",
+			  	"titleNView": false,
+			  	"bounce": "none",
+			  	"softinputMode": "adjustResize" 
+			  }
 		  	
 		  }
 		}
@@ -323,6 +329,189 @@
           }
             
         }
+        ,{
+            "path" : "pages/feedback/feedback",
+          "style" :
+          {
+              "navigationBarTitleText": "",
+              "enablePullDownRefresh": false,
+          	"navigationBarTextStyle" : "black",
+			 "navigationBarBackgroundColor":"#FFFFFF",
+          	"app-plus": {
+          		"softinputNavBar": "none",
+          		"titleNView": false,
+          		"bounce": "none",
+          		"softinputMode": "adjustResize"
+          	
+          	}
+          }
+            
+        }
+        ,{
+            "path" : "pages/setting/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false,
+			    "navigationBarTextStyle" : "black",
+			    "navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/personal/personal",
+           "style" :
+           {
+               "navigationBarTitleText": "",
+               "enablePullDownRefresh": false,
+           	"navigationBarTextStyle" : "black",
+           			 "navigationBarBackgroundColor":"#FFFFFF",
+           	"app-plus": {
+           		"softinputNavBar": "none",
+           		"titleNView": false,
+           		"bounce": "none",
+           		"softinputMode": "adjustResize"
+           	
+           	}
+           }
+        }
+        ,{
+            "path" : "pages/myinvitation/myinvitation",
+             "style" :
+                      {
+                          "navigationBarTitleText": "",
+                          "enablePullDownRefresh": false,
+                      	"navigationBarTextStyle" : "black",
+                      			 "navigationBarBackgroundColor":"#FFFFFF",
+                      	"app-plus": {
+                      		"softinputNavBar": "none",
+                      		"titleNView": false,
+                      		"bounce": "none",
+                      		"softinputMode": "adjustResize"
+                      	
+                      	}
+                      }
+            
+        }
+        ,{
+            "path" : "pages/browse/browse",
+          "style" :
+                   {
+                       "navigationBarTitleText": "",
+                       "enablePullDownRefresh": false,
+                   	"navigationBarTextStyle" : "black",
+                   			 "navigationBarBackgroundColor":"#FFFFFF",
+                   	"app-plus": {
+                   		"softinputNavBar": "none",
+                   		"titleNView": false,
+                   		"bounce": "none",
+                   		"softinputMode": "adjustResize"
+                   	
+                   	}
+                   }
+                     
+        }
+        ,{
+            "path" : "pages/moredetails/moredetails",
+            "style" :                                                                                    
+          {
+              "navigationBarTitleText": "",
+              "enablePullDownRefresh": false,
+          	"navigationBarTextStyle" : "black",
+          			 "navigationBarBackgroundColor":"#FFFFFF",
+          	"app-plus": {
+          		"softinputNavBar": "none",
+          		"titleNView": false,
+          		"bounce": "none",
+          		"softinputMode": "adjustResize"
+          	
+          	}
+          }
+            
+        }
+        ,{
+            "path" : "pages/gameeasier/gameeasier",
+            "style" :                                                                                    
+            {
+             "navigationBarTitleText": "热门推荐",
+               "enablePullDownRefresh": false,
+             "navigationBarTextStyle" : "black",
+             "navigationBarBackgroundColor":"#FFFFFF"
+            }
+            
+        }
+        ,{
+            "path" : "pages/newcompany/newcompany",
+          "style" :
+          {
+           "navigationBarTitleText": "最新上市",
+             "enablePullDownRefresh": false,
+           "navigationBarTextStyle" : "black",
+           "navigationBarBackgroundColor":"#FFFFFF"
+          }
+        }
+        ,{
+            "path" : "pages/myhost/myhost",
+         "style" :
+         {
+             "navigationBarTitleText": "",
+             "enablePullDownRefresh": false,
+         	"navigationBarTextStyle" : "black",
+         			 "navigationBarBackgroundColor":"#FFFFFF",
+         	"app-plus": {
+         		"softinputNavBar": "none",
+         		"titleNView": false,
+         		"bounce": "none",
+         		"softinputMode": "adjustResize"
+         	
+         	}
+         }
+            
+        }
+        ,{
+            "path" : "pages/collect/collect",
+          "style" :
+          {
+              "navigationBarTitleText": "",
+              "enablePullDownRefresh": false,
+          	"navigationBarTextStyle" : "black",
+          			 "navigationBarBackgroundColor":"#FFFFFF",
+          	"app-plus": {
+          		"softinputNavBar": "none",
+          		"titleNView": false,
+          		"bounce": "none",
+          		"softinputMode": "adjustResize"
+          	
+          	}
+          }
+            
+        }
+        ,{
+            "path" : "pages/myconcern/myconcern",
+          "style" :
+          {
+              "navigationBarTitleText": "",
+              "enablePullDownRefresh": false,
+          	"navigationBarTextStyle" : "black",
+          	"app-plus": {
+          		"softinputNavBar": "none",
+          		"titleNView": false,
+          		"bounce": "none",
+          		"softinputMode": "adjustResize"
+          	
+          	}
+          }
+            
+        }
+        ,{
+            "path" : "pages/button/button",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	// "globalStyle": {
 	// 	"navigationBarTextStyle": "white",
@@ -332,34 +521,40 @@
 	// },
 	"tabBar" : {
 	    "color" : "#C0C4CC",
-	    "selectedColor" : "#fa436a",
+	    "selectedColor" : "#046AFF",
 	    "borderStyle" : "white",
 	    "backgroundColor" : "#ffffff",
 	    "list" : [
 	        {
 	            "pagePath" : "pages/index/index",
-	            "iconPath" : "static/tab-home.png",
-	            "selectedIconPath" : "static/tab-home-current.png",
+	            "iconPath" : "static/home.png",
+	            "selectedIconPath" : "static/home-xuan.png",
 	            "text" : "首页"
 	        },
 			{
 			    "pagePath" : "pages/game/game",
-			    "iconPath" : "static/tab-home.png",
-			    "selectedIconPath" : "static/tab-home-current.png",
+			    "iconPath" : "static/game.png",
+			    "selectedIconPath" : "static/game-xuan.png",
 			    "text" : "游戏"
 			},
 			{
-			    "pagePath" : "pages/square/square",
-			    "iconPath" : "static/tab-home.png",
-			    "selectedIconPath" : "static/tab-home-current.png",
-			    "text" : "广场"
+			    "pagePath" : "pages/invitation/invitation",
+			    "iconPath" : "static/fa.png",
+			    "selectedIconPath" : "static/fa.png"
+			    // "text" : "发布"
 			},
 			{
-			    "pagePath" : "pages/message/message",
-			    "iconPath" : "static/tab-home.png",
-			    "selectedIconPath" : "static/tab-home-current.png",
-			    "text" : "资讯"
+			    "pagePath" : "pages/square/square",
+			    "iconPath" : "static/square.png",
+			    "selectedIconPath" : "static/square-xuan.png",
+			    "text" : "广场"
 			},
+			// {
+			//     "pagePath" : "pages/message/message",
+			//     "iconPath" : "static/tab-home.png",
+			//     "selectedIconPath" : "static/tab-home-current.png",
+			//     "text" : "资讯"
+			// },
 			//  {
 			//     "pagePath" : "pages/component/component",
 			//     "iconPath" : "static/tab-home.png",
@@ -368,8 +563,8 @@
 			// },
 			{
 			    "pagePath" : "pages/my/my",
-			    "iconPath" : "static/tab-home.png",
-			    "selectedIconPath" : "static/tab-home-current.png",
+			    "iconPath" : "static/my.png",
+			    "selectedIconPath" : "static/my-xuan.png",
 			    "text" : "我的"
 			}
 	    ]

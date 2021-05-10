@@ -13,7 +13,7 @@
 		</view>
 		<view class="maidan-bottom">
 			<view class="box-firend-ul">
-				<view class="box-firend-li" @click="dynamically">
+				<view class="box-firend-li" v-for="(item,index) in plazaList" :key='index' @click="dynamically">
 				<view class="box-firend-li-header">
 					<view class="box-firend-li-item-madile">
 						<view class="box-firend-li-item-madile-img">
@@ -28,15 +28,15 @@
 					<view class="box-firend-li-item-letter">
 						<view class="box-firend-li-item-letter-left">
 							<view class="  box-firend-li-item-letter-left-praise">
-								赞
+								<image style="width: 32upx; height: 32upx;" src="../../images/zan.png" mode=""></image>
 							</view>
 							<view class="box-firend-li-item-letter-left-number">
 								5
 							</view>
 						</view>
 						<view class="box-firend-li-item-letter-right">
-							<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
-								
+							<view class="box-firend-li-item-letter-right-message ">
+								<image class="imgs" src="../../images/shouc.png" mode=""></image>
 							</view>
 							<view class="box-firend-li-item-letter-right-number">
 								11
@@ -69,116 +69,8 @@
 				
 				</view>
 				
-				<view class="box-firend-li" @click="dynamically">
-				<view class="box-firend-li-header">
-					<view class="box-firend-li-item-madile">
-						<view class="box-firend-li-item-madile-img">
-							<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
-						</view>
-						<view class="box-firend-li-item-madile-text">
-							<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-							<view class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</view>
-						</view>
-					
-					</view>
-					<view class="box-firend-li-item-letter">
-						<view class="box-firend-li-item-letter-left">
-							<view class="  box-firend-li-item-letter-left-praise">
-								赞
-							</view>
-							<view class="box-firend-li-item-letter-left-number">
-								5
-							</view>
-						</view>
-						<view class="box-firend-li-item-letter-right">
-							<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
-								
-							</view>
-							<view class="box-firend-li-item-letter-right-number">
-								11
-							</view>
-						</view>
-					
-					
-					</view>			
-				</view>
-				<view class="box-firend-li-content">
-					<view class="box-firend-li-content-title">
-						《英雄联盟》山海绘卷概念设计图公布
-					</view>
-					<view class="box-firend-li-content-text">
-					兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-					</view>
-					<view class="box-firend-li-content-img">
-						<view class="box-firend-li-content-img-ul">
-							<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-								<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
-							</view>
-						</view>
-					
-					
-					</view>
-				
-				
-				</view>
-				
-				
-				</view>
-				<view class="box-firend-li" @click="dynamically">
-				<view class="box-firend-li-header">
-					<view class="box-firend-li-item-madile">
-						<view class="box-firend-li-item-madile-img">
-							<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
-						</view>
-						<view class="box-firend-li-item-madile-text">
-							<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-							<view class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</view>
-						</view>
-					
-					</view>
-					<view class="box-firend-li-item-letter">
-						<view class="box-firend-li-item-letter-left">
-							<view class="  box-firend-li-item-letter-left-praise">
-								赞
-							</view>
-							<view class="box-firend-li-item-letter-left-number">
-								5
-							</view>
-						</view>
-						<view class="box-firend-li-item-letter-right">
-							<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
-								
-							</view>
-							<view class="box-firend-li-item-letter-right-number">
-								11
-							</view>
-						</view>
-					
-					
-					</view>			
-				</view>
-				<view class="box-firend-li-content">
-					<view class="box-firend-li-content-title">
-						《英雄联盟》山海绘卷概念设计图公布
-					</view>
-					<view class="box-firend-li-content-text">
-					兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-					</view>
-					<view class="box-firend-li-content-img">
-						<view class="box-firend-li-content-img-ul">
-							<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-								<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
-							</view>
-						</view>
-					
-					
-					</view>
-				
-				
-				</view>
-				
-				
-				</view>
+		
+			
 			<!-- 第一个列表 -->
 				
 				
@@ -187,11 +79,11 @@
 		</view>
 			
 		
-		<view class="issue el-icon-plus">
+	<!-- 	<view class="issue el-icon-plus">
 			<view class="issue-text">
 				发布
 			</view>
-		</view>
+		</view> -->
 
 	</view>
 </template> 
@@ -217,6 +109,12 @@
 				{id:1,text:'吃鸡大神'},
 				{id:2,text:'五排'},
 				{id:3,text:'pgls'},
+			],
+			//广场列表
+			plazaList:[
+				{id:1},
+				{id:2},
+				{id:3}
 			],
 			//盒有动态
 			boxfirendimg:[
@@ -291,7 +189,9 @@
 			},	
 			//跳转帖子详情页
 			dynamically () {
-				
+				uni.navigateTo({
+					url:'../../pages/details/details'
+				})
 			},
 		}
 	}
@@ -381,9 +281,11 @@
 					margin: 0 30upx;
 					display: flex;
 					flex-direction: row;
+					
 					.box-firend-li-item-madile {
 						display: flex;
 						flex-direction: row;
+						flex: 1;
 						.box-firend-li-item-madile-img {
 							.box-firend-li-item-madile-item-imgs {
 								width: 72upx;
@@ -415,13 +317,14 @@
 						}
 					}
 					.box-firend-li-item-letter {
-						margin-left: 240upx;
+						// margin-left: 240upx;
 						display: flex;
+						// align-items: center;
 						flex-direction: row;
 						.box-firend-li-item-letter-left {
 							display: flex;
 							flex-direction: row;
-							
+							margin-top: 2px;
 							.box-firend-li-item-letter-left-praise {
 								width: 26upx;
 								height: 26upx;
@@ -440,21 +343,28 @@
 						.box-firend-li-item-letter-right {
 							display: flex;
 							flex-direction: row;
+							
 							.box-firend-li-item-letter-right-message {
 								margin-left: 30upx;
 								margin-right: 20upx;
-								width: 27upx;
-								height: 24upx;
+								// width: 27upx;
+								// height: 24upx;
 								margin-top: 6upx;
+								.imgs {
+									width: 37upx;
+									height: 36upx;
+								
+								}
 							}
 							.box-firend-li-item-letter-right-number {
-								width: 28upx;
-								height: 21upx;
+								// width: 28upx;
+								// height: 21upx;
 								font-size: 26upx;
 								font-family: Microsoft YaHei;
 								font-weight: 400;
 								color: #CCCCCC;
 								line-height: 43upx;
+								margin-top: 4upx;
 							}
 						}
 					}

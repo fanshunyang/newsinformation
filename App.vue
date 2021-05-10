@@ -43,6 +43,10 @@
 		
 	}
 	
+	.uni-radio-wrapper .uni-radio-input {
+		width: 24upx;
+		height: 25upx;
+	}
 	.yticon {
 		font-family: "yticon" !important;
 		font-size: 16px;

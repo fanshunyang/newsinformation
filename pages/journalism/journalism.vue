@@ -8,7 +8,7 @@
 				
 			</view>
 			<view class="homepage-header-title">
-			绝地求生
+			{{journalisonitem.special_cat_name}}
 			</view>
 			<view class="homepage-header-right">
 				<view class="homepage-header-right-search el-icon-search" @click="search">
@@ -28,27 +28,26 @@
 		<view class="journalism-part">
 			<scroll-view scroll-y="true" style="height: 100%;" >
 			<view class="journalism-part-img" >
-				<image class="imgs" src="../../images/cjb.jpg" mode=""></image>
+				<image class="imgs" :src=" 'http://www.app.youxun.com' + journalisonitem.special_head_url" mode=""></image>
 			</view>
 			
 			<view class="main">
 				<view class="main-ul">
 				
-					<view class="main-li">
+					<view class="main-li" @tap='journalismClick(item)' v-for="(item,index) in journalismList" :key='index'>
 						<view class="main-li-left">
 							<view class="main-li-left-top">
 								<view class="main-li-left-number">
 									
 								</view>
 								<view class="main-li-left-desc">
-									笔记本电脑清灰换硅脂需要
-									什么工具
+									{{item.special_news_title}}
 								</view>
 							</view>
 							<view class="main-li-left-bottom">
 							
 								<view class="main-li-left-title">
-									20分钟前 . 绝地求生
+								{{item.special_news_add_time}}
 								</view>
 								<view class="main-li-left-leave">
 									<view class="main-li-left-leave-icon el-icon-view">
@@ -65,44 +64,10 @@
 						</view>
 						
 					  <view class="main-li-right">
-						<image class="imgs" src="../../images/cjb.jpg" mode=""></image>
+						<image class="imgs" :src="item.special_news_img" mode=""></image>
 					 </view>
 					</view>
-					<view class="main-li">
-						<view class="main-li-left">
-							<view class="main-li-left-top">
-								<view class="main-li-left-number">
-									
-								</view>
-								<view class="main-li-left-desc">
-									笔记本电脑清灰换硅脂需要
-									什么工具
-								</view>
-							</view>
-							<view class="main-li-left-bottom">
-							
-								<view class="main-li-left-title">
-									1小时前 . 绝地求生
-								</view>
-								<view class="main-li-left-leave">
-									<view class="main-li-left-leave-icon el-icon-view">
-										
-									</view>
-									<view class="main-li-left-leave-number">
-										222
-									</view>
-								
-								
-								</view>
-							</view>
-						
-						</view>
-						
-					  <view class="main-li-right">
-						<image class="imgs" src="../../images/cjb.jpg" mode=""></image>
-					 </view>
-					</view>
-				
+					
 				</view>
 			</view>
 			</scroll-view>
@@ -114,10 +79,44 @@
 	export default {
 		data() {
 			return {
-				
+				journalismList:[],
+			    journalisonitem:{}
 			}
 		},
+		onLoad(va) {
+				const item=  JSON.parse(decodeURIComponent(va.item))
+				this.journalisonitem = item
+			console.log(	this.journalisonitem)
+		},
+		mounted() {
+			this.getSpecialList()
+		},
 		methods: {
+			//新闻资讯列表
+			async getSpecialList () {
+				// tabnav
+				 let data = await this.$http.post('/api/getSpecialList',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					    special_id:this.journalisonitem.id
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 this.journalismList = DATA
+						console.log( this.journalismList)
+					
+					}
+			},
+			//资讯详情
+			journalismClick (va) {
+				const id = va.id
+				uni.navigateTo({
+					url:`../qualification/qualification?items=${encodeURIComponent (JSON.stringify(id))}`
+				})
+					// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}` 
+			},
 			//返回上一级
 			back () {
 				uni.navigateBack()

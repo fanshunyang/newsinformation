@@ -4,7 +4,7 @@
 		<view class="main">
 			<view class="main-ul">
 			
-				<view class="main-li">
+				<view class="main-li" v-for="(item,index) in informationList" @tap='information'>
 					<view class="main-li-left">
 						<view class="main-li-left-top">
 							<view class="main-li-left-number">
@@ -38,41 +38,7 @@
 					<image class="imgs" src="../../images/cjb.jpg" mode=""></image>
 				 </view>
 				</view>
-				<view class="main-li">
-					<view class="main-li-left">
-						<view class="main-li-left-top">
-							<view class="main-li-left-number">
-								
-							</view>
-							<view class="main-li-left-desc">
-								笔记本电脑清灰换硅脂需要
-								什么工具
-							</view>
-						</view>
-						<view class="main-li-left-bottom">
-						
-							<view class="main-li-left-title">
-								1小时前 . 绝地求生
-							</view>
-							<view class="main-li-left-leave">
-								<view class="main-li-left-leave-icon el-icon-chat-dot-square">
-									
-								</view>
-								<view class="main-li-left-leave-number">
-									222
-								</view>
-							
-							
-							</view>
-						</view>
-					
-					</view>
-					
-				  <view class="main-li-right">
-					<image class="imgs" src="../../images/cjb.jpg" mode=""></image>
-				 </view>
-				</view>
-			
+				
 			</view>
 		</view>
 	</view>
@@ -90,14 +56,24 @@
 		},
 		data() {
 			return {
-				
+			  informationList:[
+				  {id:1},
+				  {id:2},
+				  {id:3},
+				  {id:4}
+			  ]	
 			}
 		},
 		mounted() {
 		
 		},
 		methods: {
-		
+			//跳转新闻资讯
+			information () {
+				uni.navigateTo({
+					url:'../../pages/qualification/qualification'
+				})
+			},
 		}
 	}
 </script>

@@ -183,23 +183,23 @@
 			}, 100)
 		},
 		methods: {
-			touchstart(e) {
-				if (this.readonly || this.disabled) return
-				const {
-					clientX,
-					screenX
-				} = e.changedTouches[0]
-				// TODO 做一下兼容，只有 Nvue 下才有 screenX，其他平台式 clientX
-				this._getRateCount(clientX || screenX)
-			},
-			touchmove(e) {
-				if (this.readonly || this.disabled || !this.touchable) return
-				const {
-					clientX,
-					screenX
-				} = e.changedTouches[0]
-				this._getRateCount(clientX || screenX)
-			},
+			// touchstart(e) {
+			// 	if (this.readonly || this.disabled) return
+			// 	const {
+			// 		clientX,
+			// 		screenX
+			// 	} = e.changedTouches[0]
+			// 	// TODO 做一下兼容，只有 Nvue 下才有 screenX，其他平台式 clientX
+			// 	this._getRateCount(clientX || screenX)
+			// },
+			// touchmove(e) {
+			// 	if (this.readonly || this.disabled || !this.touchable) return
+			// 	const {
+			// 		clientX,
+			// 		screenX
+			// 	} = e.changedTouches[0]
+			// 	this._getRateCount(clientX || screenX)
+			// },
 			/**
 			 * 获取星星个数
 			 */

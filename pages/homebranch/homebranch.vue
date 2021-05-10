@@ -234,7 +234,7 @@
 					//文章评论
 				comment:[],
 				focus:false,
-				tabIndex:0,
+				tabIndex:1,
 				tabBar:[
 					{id:0,title:'游戏'},
 					{id:1,title:'广场'},
@@ -248,7 +248,12 @@
 				]
 			}
 		},
-		onLoad() {
+		onShow() {
+		
+		},
+		onLoad(va) {
+			
+			this.tabIndex = parseInt(va.item)
 				this.comment = comment
 		},
 		methods: {

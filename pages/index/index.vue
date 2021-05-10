@@ -6,14 +6,14 @@
 		* imageUrl 背景图
 		* url 跳转链接
 		*  -->
-		<!-- #ifndef MP -->
-		<!-- <mix-advert 
-			ref="mixAdvert" 
-			:timedown="8" 
-			imageUrl="/static/advert.jpg"
-			:url="advertNavUrl"
-		></mix-advert> -->
-		<!-- #endif -->
+	<!-- #ifndef MP -->
+	<!-- <mix-advert 
+		ref="mixAdvert" 
+		:timedown="8" 
+		imageUrl="/static/advert.jpg"
+		:url="advertNavUrl"
+	></mix-advert> -->
+	<!-- #endif --> 
 		
 		 <view class="status_bar">
 		          <!-- 这里是状态栏 --> 
@@ -36,7 +36,7 @@
 						
 					</view>
 			
-		
+		 
 			
 				<view class="nav-bat-right">
 				
@@ -69,40 +69,40 @@
 				@scrolltolower="loadMores"
 				>
 				<view class="swiper-item-each">
-					<view class="attention-header">
+					<view class="attention-header" v-if="userLoginId">
 							<scroll-view class="attention-header-list" scroll-x >
 								<view class="attention-header-ul">
 									
-									<view class="attention-header-li" v-for="(item,index) in attention" :key='index' @click="check(index)">
-										<image class="attention-header-li-imgs" src="../../images/fz.jpg" mode=""></image>
-										<text class="attention-header-li-txt">{{item.title}}</text>
+									<view class="attention-header-li" v-for="(item,index) in attention" :key='index' @click="check(index,item)">
+										<image class="attention-header-li-imgs" :src="item.user_head_url" mode=""></image>
+										<text class="attention-header-li-txt">{{item.user_name}}</text>
 									</view>
 								</view>
 							</scroll-view>
 					</view>
+					<view class="swiper-item-each-model" v-if="user_id===''?true:false">
+						<view class="swiper-item-each-model-text">
+							<view class="swiper-item-each-model-text-top">
+								登录打造个性化定制
+							</view>
+							<view class="swiper-item-each-model-text-bottom">
+								更加精确的内容推荐
+							</view>
+							
+							
+						</view>
+						<view class="swiper-item-each-model-login" @tap='login'>
+							登录
+						</view>
+					</view>
+					
 					<view class="attention-main">
 						<view class="attention-main-ul">
 							<view class="attention-main-li" @tap='skip(item)' v-for="(item,index) in attentionmain" :key='index'>
-								<view class="attention-main-li-left">
-									<text class="attention-main-li-left-txtone">{{item.title}}</text>
-									<text class="attention-main-li-left-txttwo">{{item.hot}}</text>
-									<view class="attention-main-li-left-position">
-										热
-									</view>
-									<view class="attention-main-li-left-positions">
-										热
-									</view>
-								</view>
-								<view class="attention-main-li-right">
-									<text class="attention-main-li-right-txtone">{{item.sell}}</text>
-									<text class="attention-main-li-right-txttwo">{{item.actily}}</text>
-									<view class="attention-main-li-right-position">
-										热
-									</view>
-									<view class="attention-main-li-right-positions">
-										活动
-									</view>
-								</view>
+							<view class="	attention-main-li-text">
+								#{{item.gambit_name}}#
+							</view>
+								<image v-if="parseInt(item.is_hot)" style="width: 24upx; height: 24upx; margin-top: 6upx; margin-left: 15upx; " src="../../images/hot.png" mode=""></image>
 								
 								
 							</view>
@@ -136,12 +136,14 @@
 										</view>
 									</view>
 									<view class="box-firend-li-item-letter-right">
-										<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
+									<!-- 	<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
 											
-										</view>
-										<view class="box-firend-li-item-letter-right-number">
-											11
-										</view>
+										</view> -->
+							
+									<image class="imgs" src="../../images/shouc.png" mode=""></image>
+											<view class="box-firend-li-item-letter-right-number">
+												331
+											</view>
 									</view>
 								
 								
@@ -181,7 +183,7 @@
 				<!-- <view class="list-item" v-for="item in list" :key="item">
 					列表项 -- {{item}}
 				</view> -->
-				<view class="issue_all">
+				<!-- <view class="issue_all">
 					<view class="issue" @click="invition">
 					<view class="el-icon-plus">
 						
@@ -191,7 +193,7 @@
 					<view class="" style="position: fixed; top: 77%; font-size: 26upx;font-family: Microsoft YaHei;font-weight: 400; right: 46upx; letter-spacing: 1px; text-align: center; color: #1482FF;">
 						发布
 					</view>
-				</view>
+				</view> -->
 			
 				
 				<mix-load-more :status="loadMoreStatus"></mix-load-more>
@@ -209,11 +211,11 @@
 				<!-- 顶部选项卡 -->
 				<scroll-view id="nav-bar" class="nav-bar" scroll-x scroll-with-animation :scroll-left="scrollLeft"  >
 					<view 
-						v-for="(item,index) in tabBars" :key="item.id"
+						v-for="(item,index) in tabnav" :key="item.id"
 						class="nav-item"
 						:class="{current: index === tabCurrentIndex}"
 						:id="'tab'+index"
-						@click="changeTab(index)"
+						@click="changeTab(  index ,item)"
 					>{{item.name}}</view>
 				
 				</scroll-view>
@@ -247,29 +249,29 @@
 										<swiper-item v-for="(item,index) in swiperitem" @tap='jumpdeatils(item)' :key='index'>
 											<view class="swiper-itemty">
 												
-												<image :src="item.path" mode="" class="imgs"></image>
+												<image :src="item.re_news_img_url" mode="" class="imgs"></image>
 											</view>
 										</swiper-item>
-										
+										 
 									</swiper>
 								</view>
 								
 								<!--最新内容盒子  -->
-								<view class="panel-content-box"  v-else>
-									<view class="panel-content-box-li" v-for="(item,index) in panelareaoverall" :key='index'  v-show="tabCurrentIndex===item.id">
+								<view class="panel-content-box"  v-if="tabCurrentIndex===1">
+									<view class="panel-content-box-li" >
 										<view class="panel-content-box-background">
 											<view class="panel-content-box-background-area" @click="homebranch">
 												<view class="panel-content-box-background-area-img">
-														<image class="area-imgs" src="../../images/sh4.jpg" mode=""></image>
+														<image class="area-imgs" :src=" 'http://www.app.youxun.com' + gametype.special_head_url" mode=""></image>
 												</view>
 												<view class="panel-content-box-background-area-item">
 													<view class="panel-content-box-background-area-item-top">
-													{{item.title}}    >
+												  {{gametype.special_cat_name}}
 													</view>
 													
 													<view class="panel-content-box-background-area-item-bottom">
-														<view class="panel-content-box-background-area-item-bottom-li" v-for="(item1,index) in item.panelarea" :key='index' >
-															{{item1.text}}
+														<view class="panel-content-box-background-area-item-bottom-li" v-for="(item,index) in panelareaoverall" :key='index'  >
+														{{item.text}}
 														</view>
 													
 													</view>
@@ -294,22 +296,26 @@
 										<view class="new-main">
 											<view class="new-item" v-if="tabCurrentIndex===0">
 											
-												<view class="new-header" v-for="(item,index) in newfourlist "  :key='index' @click="details">
+												<view class="new-header" v-for="(item,index) in newslistss "  :key='index' @click="details(item)">
 													
 													<view class="new-header-left">
 														<view class="new-header-text">
-															{{item.title}}
+															{{item.re_news_title}}
 														</view>
 														<view class="new-header-desc">
 															<view class="new-header-desc-left">
-																{{item.time}}{{item.type}}
+															
+																{{item.re_news_add_time}}.
+																<view class="new-header-desc-name">
+																	{{item.name}}
+																</view>
 															</view>
 															<view class="new-header-desc-right">
 																<view class=" el-icon-view new-header-desc-right-icon">
 																	
 																</view>
 																<view class="new-header-desc-right-look">
-																	{{item.look}}
+																{{item.re_news_show}}
 																</view>
 															</view>
 															
@@ -318,7 +324,7 @@
 													
 													</view>
 													<view class="new-header-right">
-														<image class="img-item" src="../../images/bj.jpg" mode=""></image>
+														<image class="img-item" :src="item.re_news_img_url" mode=""></image>
 													</view>
 											
 											</view>
@@ -340,19 +346,19 @@
 											</view>
 											<view class="new-recommend-title-bars">
 												<view class="new-recommend-title-bar-item" @tap='referre(item)' v-for="(item,index) in recommendation" :key='index'>
-													<image src="../../images/sm.jpg" mode="" class="img-items"></image>
+													<image :src="item.gm_img" mode="" class="img-items"></image>
 													<view class="new-recommend-title-bar-item-text">
 														<view class="new-recommend-title-bar-item-title">
-															{{item.title}}
+															{{item.gm_name}}
 														</view>
-														<view class="new-recommed-type">
+													<!-- 	<view class="new-recommed-type">
 															<view class="peson">
 															{{item.desc}}
 															</view>
 															<view class="military">
 															{{item.science}}
 															</view>
-														</view>
+														</view> -->
 													
 													</view>
 												</view>
@@ -368,13 +374,13 @@
 												<scroll-view class="floor-list" scroll-x >
 													<view class="new-special-news-ul">
 														<view class="new-special-news-li" @tap='study(item)' v-for="(item,index) in journalism" :key='index'> 
-															<image class="new-special-news-li-imgs" src="../../images/fz.jpg" mode=""></image>
+															<image class="new-special-news-li-imgs" :src=" 'http://www.app.youxun.com' + item.special_head_url" mode=""></image>
 															<view class="new-special-news-title">
-															{{item.selected}}
+															{{item.special_cat_name}}
 															</view>
-															<view class="new-special-news-matter">
+														<!-- 	<view class="new-special-news-matter">
 															{{item.news}}
-															</view>
+															</view> -->
 															 
 														</view>	
 														
@@ -385,25 +391,32 @@
 											
 											
 											<view class="new-list">
-												<view class="new-items">
+												<view class="new-items"> 
 												
-													<view class="new-headers" @click="details" v-for="(item,index) in newslists "  :key='index'>
+													<view class="new-headers" @click="details(item)" v-show="tabCurrentIndex===tabCurrentIndex"   v-for="(item,index) in newslists "  :key='index'>
 														
 														<view class="new-header-lefts">
 															<view class="new-header-texts">
-																{{item.title}}
+																{{item.re_news_title}}
 															</view>
 															<view class="new-header-descs">
 																<view class="new-header-desc-lefts">
-																	{{item.time}}{{item.type}}
+																	{{item.re_news_add_time}}.
+																	<view class="new-header-desc-name">
+																	 {{item.name}}
+																	</view>
 																</view>
+															
 																<view class="new-header-desc-rights">
 																	<view class=" el-icon-view new-header-desc-right-icon">
 																		
 																	</view>
 																	<view class="new-header-desc-right-looks">
-																		{{item.look}}
+																		{{item.re_news_show}}
 																	</view>
+																<!-- 	<view class="new-header-desc-right-number">
+																	1
+																	</view> -->
 																</view>
 																
 																
@@ -411,7 +424,7 @@
 														
 														</view>
 														<view class="new-header-rights">
-															<image class="img-items" src="../../images/bj.jpg" mode=""></image>
+															<image class="img-items" :src="item.re_news_img_url" mode=""></image>
 														</view>
 												
 												</view>
@@ -479,16 +492,16 @@
 			return {
 				// list:[],
 				loadMoreStatus:0,
+			
 				refreshing:0,
 				swiperitem:[
-					{id:1,path:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fattachments.gfan.com%2Fforum%2F201801%2F19%2F143729sxvs4klys69z9fsl.jpg&refer=http%3A%2F%2Fattachments.gfan.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616751577&t=cd3fcd06bcf23f723b8dd01ea634b272'},
-					{id:2,path:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3887248222,2154595169&fm=26&gp=0.jpg'}
+					
 				],
 				tabCurrentIndex: 0, //当前选项卡索引
 				//全局轮播下标
-			    tabCurrentIndexs:1,
+			    tabCurrentIndexs:0,
 				scrollLeft: 0, //顶部选项卡左滑距离
-				enableScroll: true,
+				enableScroll: true, 
 				//新闻详情前4个
 				newfourlist:[
 					{id:1,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
@@ -498,49 +511,37 @@
 				],
 				//每个tab中的索引切换全局不同的最新内容中的盒子
 				panelareaoverall:[
-				{id:1,title:'使命召唤：赛博朋克战区',panelarea:[
+				
 					{id:1,text:'游戏'},
 					{id:2,text:'广场'},
 					{id:3,text:'资讯'},
 					{id:4,text:'攻略'},
-				]},
-			
-				
 			
 				],
+				//游戏专题
+				gametype:{},
 				
 				//今日推荐
 				recommendation:[
-					{id:1,title:'死神',desc:'第一人称射击',science:'军事'},
-					{id:2,title:'死神',desc:'第一人称射击',science:'军事'},
-					{id:3,title:'死神',desc:'第一人称射击',science:'军事'}
+					
 				],
 				//新闻专题
 				journalism:[
-					{id:1,selected:'英雄联盟',news:'10篇新闻'},
-					{id:2,selected:'绝地求生',news:'10篇新闻'},
-					{id:3,selected:'王者荣耀',news:'10篇新闻'}, 
-					{id:4,selected:'穿越火线',news:'10篇新闻'}
+				
 				],
 				
 				//新闻列表
 				newslists:[
-					{id:1,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:2,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:3,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:4,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
+				
 			
 					
 				],
 				newslistss:[
-					{id:1,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:2,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:3,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:4,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
+				
 				],
 				
 				tabBars: [],
-
+				tabnav:[],
 				statustext:[{ id:1, desc:'关注'}, {id:2, desc:'推荐'}],
 				detail : {
 					title:'新闻专题',
@@ -564,16 +565,22 @@
 					{id:4,title:'hunderd快讯'},		
 					{id:5,title:'hunderd快讯'}
 				],
+			
 				//热销品牌
 				attentionmain :[
-					{id:1,title:'#《戴森球计划》火爆#',hot:'#玩家热议《鬼谷八荒》#',sell:'#稽毒犬#',actily:'#黑盒动漫鉴赏家#'}
+					
 				],
 				//盒有动态
 				boxfirendimg:[
 					{id:1,img:''},
 					{id:2,img:''},
 					{id:3,img:''}
-				]
+				],
+				newslistsDetail:{},
+				re_id:1,
+				// re_news_show:'',
+				access_token:'',
+				user_id:''
 			}
 		},
 		computed: {
@@ -585,17 +592,32 @@
 					time: '2019-04-26 21:21'
 				}
 				return `/pages/details/details?data=${JSON.stringify(data)}`;
-			} 
+			},
+			userLoginId () {
+				const user_id = uni.getStorageSync('user_id')
+				return user_id
+			}
 		},
 		async onLoad() {
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			this.loadTabbars();
-			this.request()
+				
 				// this.loadData('add');
 		},
-		onReady(){
 		
+		mounted() {
+		this.getCatNews() 
+	
+		
+		this.getRecommendGame()
+		this.getSpecialCat()
+		this.getBannerNews()
+		this.getEspecialCat()
+		
+		this.gambit()
+		},
+		onReady(){
 			/**
 			 * 启动页广告 使用文档（滑稽）
 			 * 1. 引入组件并注册 
@@ -616,7 +638,30 @@
 			// // #ifndef MP
 			// this.$refs.mixAdvert.initAdvert();
 			// // #endif
-		},
+			},
+			// watch: {
+			// tabCurrentIndex () {
+			// 	this.changeTab()
+			// }
+			// },
+			onShow() {
+				this.getRecommendNews()
+				this.getRecommendNewsunshift()
+				this.userList()
+			// 	const value = uni.getStorageSync('show');
+			
+			// 	this.re_news_show = value
+			// 		console.log(this.re_news_show)
+					
+					const access_token = uni.getStorageSync('access_token')
+					const user_id = uni.getStorageSync('user_id')
+				
+					if (access_token && user_id) {
+					this.access_token = access_token
+					this.user_id = user_id
+					
+					} 
+			},
 		methods: {
 			//跳转话题
 			skip () {
@@ -624,32 +669,187 @@
 					url:'../themet/themet'
 				})
 			},
-			invition () {
-				uni.navigateTo({
-					url:'../invitation/invitation'  
-				})
+			//关注登录
+			login () {
+				if (!this.user_id) {
+					uni.navigateTo({
+						url:'../login/login'
+					})
+				}
 			},
+			// invition () {
+			// 	uni.navigateTo({
+			// 		url:'../invitation/invitation'  
+			// 	})
+			// },
+			
 			//搜索
 			search () {
 				uni.navigateTo({
 					url:'../search/search'  
 				})
 			},
-			async request () {
-				 let data = await this.$http.post('/api/getRecommendNews',{
+			//关注用户列表
+			async userList () {
+				  const user_id = uni.getStorageSync('user_id')
+				  
+				 const data = await this.$http.post('/api/userList',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
-						re_c_id:'1',
+						user_id:user_id
 						// search_value:'腾讯'
 					
 				 });
-				    console.log(data);
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+					    console.log(this.attention = DATA);
+					}
 			},
+			//话题讨论
+			async gambit () {
+				  const user_id = uni.getStorageSync('user_id')
+				 const data = await this.$http.post('/api/gambit',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						user_id:user_id
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+					    console.log(this.attentionmain = DATA);
+					}
+			},
+			//分类导航
+			async getCatNews () {
+				// tabnav
+				 let data = await this.$http.post('/api/getCatNews',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						state:'1',
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+						this.tabnav = DATA
+						this.tabnav.unshift({name:'全部'})
+					}
+			},
+		
+		
+		//轮播图
+		async getBannerNews () {
+			// tabnav
+			 let data = await this.$http.post('/api/getBannerNews',{
+				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+				
+			 });
+			    // console.log(data);
+				const {DATA} = data
+				if (data.CODE==='200') {
+					 
+					this.swiperitem = DATA
+				
+				}
+		},
+		//推荐新闻资讯前四个
+		async getRecommendNewsunshift () {
+	     let data = await this.$http.post('/api/getRecommendNews',{
+	          token:'d6a2fa16e60777e390256ec85cc2f42e',
+	          re_c_id:1,
+									
+	      });
+	   // console.log(data);
+		  const {DATA} = data
+		   if (data.CODE==='200') {
+						
+			this.newslistss = DATA
+		    this.newslistss.splice(0,4)
+						
+			}
+		},
+		//推荐新闻资讯
+		async getRecommendNews () {
+		
+			 let data = await this.$http.post('/api/getRecommendNews',{
+				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					re_c_id:this.tabCurrentIndex,
+					// search_value:'腾讯' 
+				
+			 });
+			    // console.log(data);
+				const {DATA} = data
+				if (data.CODE==='200') {
+					
+					this.newslists = DATA
+					console.log(this.newslists) 
+
+				}
+		},
+		
+		//今日推荐
+		async getRecommendGame () {
+			// tabnav
+			 let data = await this.$http.post('/api/getRecommendGame',{
+				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+				
+			 });
+			    // console.log(data);
+				const {DATA} = data
+				if (data.CODE==='200') {
+					
+					this.recommendation = DATA
+					console.log(this.recommendation) 
+					
+				
+				}
+		},
+		//新闻专题
+		async getSpecialCat () {
+			// tabnav
+			 let data = await this.$http.post('/api/getSpecialCat',{
+				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+				
+			 });
+			    // console.log(data);
+				const {DATA} = data
+				if (data.CODE==='200') {
+					
+					this.journalism = DATA
+					console.log(this.journalism) 
+					
+				
+				}
+		},
+		//游戏专题
+		async getEspecialCat () {
+			// tabnav
+			 let data = await this.$http.post('/api/getEspecialCat',{
+				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+				
+			 });
+			    // console.log(data);
+				const {DATA} = data
+				if (data.CODE==='200') {
+					
+					this.gametype = DATA
+					console.log(this.gametype) 
+					
+				
+				}
+		},
 		
 			/**
 			 * 数据处理方法在vue和nvue中通用，可以直接用mixin混合
 			 * 这里直接写的
 			 * mixin使用方法看index.nuve
-			 */ 
+			 */
 			//获取分类
 			loadTabbars(){
 				let tabList = json.tabList;
@@ -667,8 +867,8 @@
 			//新闻列表
 			loadNewsList(type){
 				let tabItem = this.tabBars[this.tabCurrentIndex];
-						console.log(	tabItem)
-						
+				
+			
 				//type add 加载更多 refresh下拉刷新
 				if(type === 'add'){
 					if(tabItem.loadMoreStatus === 2){
@@ -716,37 +916,42 @@
 					id: item.id,
 					title: item.title,
 					author: item.author,
-					time: item.time 
+					time: item.time
 				}
 				let url = item.videoSrc ? 'videoDetails' : 'details'; 
-
+				
 				uni.navigateTo({
 					url: `/pages/details/${url}?data=${JSON.stringify(data)}`
 				})
 			},
 			//轮播跳转
-			jumpdeatils () {
+			jumpdeatils (va) {
+				const id = va.id
+					// url:`../qualification/qualification?item=${id}`
 				uni.navigateTo({
-					url:'../qualification/qualification'
+					url:`../qualification/qualification?item=${id}`
 				})
 			},
 			//今日推荐
-			referre () {
+			referre (va) {
+				const id = va.gm_id
 				uni.navigateTo({
-					url:'../commercials/commercials' 
+					url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}` 
 				})
 			},
 			//更多
 			further () {
-				
 				uni.reLaunch({
 					url:'../game/game'
 				})
 			},
 			//新闻专题
-			study () {
+			study (va) {
+				const value = va
+				
+				 	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}` 
 				uni.navigateTo({
-					url:'../journalism/journalism'
+					url:`../journalism/journalism?item=${encodeURIComponent (JSON.stringify(value))}`
 				})
 			},
 			//下拉刷新
@@ -814,13 +1019,13 @@
 			//设置scroll-view是否允许滚动，在小程序里下拉刷新时避免列表可以滑动
 			setEnableScroll(enable){
 				if(this.enableScroll !== enable){
-					this.enableScroll = enable;
+					this.enableScroll = enable; 
 				}
 			},							
 
 			//tab切换
-			async changeTab(e){
-			
+			async changeTab(e,item){
+		
 				if(scrollTimer){
 					//多次切换只执行最后一次
 					clearTimeout(scrollTimer);
@@ -849,9 +1054,9 @@
 				if(typeof e === 'number'){
 					//点击切换时先切换再滚动tabbar，避免同时切换视觉错位
 					this.tabCurrentIndex = index; 
-				
+				    this.getRecommendNews()
 				}
-				
+			
 				//延迟300ms,等待swiper动画结束再修改tabbar
 				scrollTimer = setTimeout(()=>{
 					if (width - nowWidth/2 > windowWidth / 2) {
@@ -862,10 +1067,11 @@
 					}
 					if(typeof e === 'object'){
 						this.tabCurrentIndex = index; 
+						this.getRecommendNews()
 					}
-					this.tabCurrentIndex = index; 
+					// this.tabCurrentIndex = index; 
 					
-					
+					// console.log(this.tabCurrentIndex)
 				
 					//第一次切换tab，动画结束后需要加载数据
 					let tabItem = this.tabBars[this.tabCurrentIndex];
@@ -901,6 +1107,7 @@
 				for (let i = 0; i <= index; i++) {
 					let result = await this.getElSize('tab' + i);
 					width += result.width;
+			
 					if(i === index){
 						nowWidth = result.width;
 					}
@@ -908,7 +1115,7 @@
 				if(typeof e === 'number'){
 					//点击切换时先切换再滚动tabbar，避免同时切换视觉错位
 					this.tabCurrentIndexs = index; 
-				
+					console.log(this.tabCurrentIndexs)
 				}
 				
 				//延迟300ms,等待swiper动画结束再修改tabbar
@@ -955,27 +1162,35 @@
 			// 	})
 			// },
 			//查看别人个人中心
-			check () {
+			check (va,item) {
+				// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))} ${id}` 
+				const id = item.user_id
+				console.log(id)
 				uni.navigateTo({
-					url:'../homepage/homepage'
+					url:`../homepage/homepage?id=${id}`
 				})
 			},
 			//跳转详情
-			details () {
+			details (va) {
+			
+			let id = va.id
+		 
+				console.log(va)
 				uni.navigateTo({
-					url:'../qualification/qualification'
+					url:`../qualification/qualification?item=${id}`
 				})
 			},
 			//关注 盒有动态跳转详情
 			dynamically () {
 				uni.navigateTo({
 					url:'../details/details'
+					// url:'../button/button'
 				})
 			},
 			//跳转首页分支
 			homebranch () {
 				uni.navigateTo({
-					url:'../homebranch/homebranch'
+					url:`../homebranch/homebranch?item=${0}`
 				})
 			},
 		}
@@ -1096,6 +1311,41 @@
 		
 			.swiper-item-each {
 					/* height: 1260upx; */
+					.swiper-item-each-model {
+						margin:  0 auto;
+						.swiper-item-each-model-text {
+							.swiper-item-each-model-text-top {
+								/* height: 26px; */
+								font-size: 26upx;
+								font-family: Microsoft YaHei;
+								font-weight: bold;
+								color: #404040;
+								line-height: 43upx;
+								letter-spacing: 1px;
+							}
+							.swiper-item-each-model-text-bottom {
+								font-size: 22upx;
+								font-family: Microsoft YaHei;
+								font-weight: 400;
+								color: #999999;
+								line-height: 43upx;
+								letter-spacing: 1px;
+								margin-top: 5px;
+							}
+						}
+						.swiper-item-each-model-login {
+							width: 180upx;
+							height: 60upx;
+							color: #ffff;
+							text-align: center;
+							background-color: black;
+							letter-spacing: 1px;
+							margin-top: 5px;
+							margin-left: 10px;
+							line-height: 60upx;
+							margin-bottom: 5px;
+						}
+					}
 				.attention-header {
 					margin-top: 28upx;
 					height: 168upx;
@@ -1104,13 +1354,18 @@
 						  display: none; 
 						}
 						.attention-header-ul {
+							width: 100%;
 							display: flex;
 							flex-direction: row;
+							justify-content: space-between;
+							/* padding-left: 30upx;
+							padding-right: 30upx; */
 							.attention-header-li {
-									width: 95px;
+									/* width: 90px; */
 								margin-right: 33upx;
 								&:nth-child(1) {
-										margin-right: 0upx;
+									/* width: 95px; */
+										margin-right: 33upx;
 								}
 								&:first-child .attention-header-li-txt {
 								
@@ -1121,8 +1376,8 @@
 									width: 80upx;
 									height: 80upx;
 									border-radius: 50%;
-									margin-left: 37upx;
-								
+									/* margin-left: 37upx; */
+								    margin:  0 auto;
 								}
 								.attention-header-li-txt {
 									width: 95px;
@@ -1134,7 +1389,7 @@
 									line-height: 34upx;
 									margin-left: 12upx;
 									margin-top: 16upx;
-										
+									text-align: center;	
 								}
 							}
 						}
@@ -1145,7 +1400,12 @@
 						
 					background-color: #f1f1f1;
 					.attention-main-ul {
-					height: 154upx;
+						display: flex;
+						flex-direction: row;
+							
+						flex-wrap: wrap;
+			            height: 154upx;
+						
 						background-color: #fff;
 						margin-top: 10upx;
 						margin-bottom: 10upx;
@@ -1155,95 +1415,15 @@
 							display: flex;
 							flex-direction: row;
 							position: relative;
-							margin-left: 30upx;
-							margin-right: 30upx;
+							margin-left: 12upx;
+							margin-right: 12upx;
 					    	letter-spacing: 1px;
-							.attention-main-li-left {
-							
-								/* width: 269upx; */
-								/* height: 24upx; */
-								font-size: 24upx;
-								font-family: Microsoft YaHei;
-								font-weight: 400;
-								color: #333333;
-							
-								.attention-main-li-left-txtone {
-									margin-bottom: 32upx;
-								}
-								.attention-main-li-left-txttwo {
-									
-								}
-								.attention-main-li-left-position {
-									position: absolute;
-									top: 0;
-									left: 143px;
-									border: 1px solid #EA5044;
-									width: 35upx;
-									/* height: 24upx; */
-									font-size: 18upx;
-									background-color: #EA5044;
-									color: #fff;
-									text-align: center;
-									border-radius: 4upx;
-									
-								}
-								.attention-main-li-left-positions {
-									position: absolute;
-									top: 65upx;
-									left: 160px;
-									border: 1px solid #EA5044;
-									width: 35upx;
-									/* height: 24upx; */
-									font-size: 18upx;
-									background-color: #EA5044;
-									color: #fff;
-									text-align: center;
-									border-radius: 4upx;
-								}
-							}
-							.attention-main-li-right {
-							/* 	width: 117px;
-								height: 24px; */
+							.attention-main-li-text {
 								font-size: 24upx;
 								font-family: Microsoft YaHei;
 								font-weight: 400;
 								color: #333333;
 								line-height: 34upx;
-								margin-left: 110upx;
-								.attention-main-li-right-position {
-									position: absolute;
-									top: 0;
-									right: 60px;
-									border: 1px solid #EA5044;
-									width: 35upx;
-									/* height: 24upx; */
-									font-size: 18upx;
-									background-color: #EA5044;
-									color: #fff;
-								    text-align: center;
-									border-radius: 4upx;
-								}
-								.attention-main-li-right-positions {
-									position: absolute;
-									top: 30px;
-									right: 0px;
-									border: 1px solid #EA5044;
-									width: 62upx;
-									/* height: 24upx; */
-									font-size: 18upx;
-									background-color: #EA5044;
-									color: #fff;
-									padding-left: 2upx;
-									text-align: center;
-									background-color:  #EA4BFD;
-									border-radius: 4upx;
-								}
-								.attention-main-li-right-txtone {
-									margin-bottom: 31upx;
-								}
-								.attention-main-li-right-txttwo {
-									
-								}
 							}
 						}
 					}
@@ -1315,9 +1495,11 @@
 								margin: 0 30upx;
 								display: flex;
 								flex-direction: row;
+								align-items: center;
 								.box-firend-li-item-madile {
 									display: flex;
 									flex-direction: row;
+									flex: 1;
 									.box-firend-li-item-madile-img {
 										.box-firend-li-item-madile-item-imgs {
 											width: 72upx;
@@ -1349,28 +1531,30 @@
 									}
 								}
 								.box-firend-li-item-letter {
-									margin-left: 240upx;
+									/* margin-left: 240upx; */
 									display: flex;
 									flex-direction: row;
 									.box-firend-li-item-letter-left {
 										display: flex;
 										flex-direction: row;
-										
+										flex: 1;
+										margin-right: 20upx;
+										align-items: center;
 										.box-firend-li-item-letter-left-praise {
-											width: 26upx;
-											height: 26upx;
+										/* 	width: 26upx;
+											height: 26upx; */
 											margin-right: 10upx;
-											margin-top: 4px;
+											/* margin-top: 4px; */
 											.imgs {
 										
-												width: 26upx;
-												height: 26upx;
+												width: 32upx;
+												height: 32upx;
 										
 											}
 										}
 										.box-firend-li-item-letter-left-number {
-											width: 13upx;
-											height: 21upx;
+										/* 	width: 13upx;
+											height: 21upx; */
 											font-size: 26upx;
 											font-family: Microsoft YaHei;
 											font-weight: 400;
@@ -1381,6 +1565,11 @@
 									.box-firend-li-item-letter-right {
 										display: flex;
 										flex-direction: row;
+									
+										.imgs {
+											width: 37upx;
+											height: 36upx;
+										}
 										.box-firend-li-item-letter-right-message {
 											margin-left: 30upx;
 											margin-right: 10upx;
@@ -1389,13 +1578,14 @@
 											margin-top: 6upx;
 										}
 										.box-firend-li-item-letter-right-number {
-											width: 28upx;
-											height: 21upx;
+										/* 	width: 28upx;
+											height: 21upx; */
 											font-size: 26upx;
 											font-family: Microsoft YaHei;
 											font-weight: 400;
 											color: #CCCCCC;
 											line-height: 43upx;
+											margin-left: 12upx;
 										}
 									}
 								}
@@ -1553,15 +1743,19 @@
 														font-size: 26upx;
 														font-family: Microsoft YaHei;
 														margin-top: 10upx;
-														height: 67upx;
+														/* height: 67upx; */
 														line-height: 40upx;
+														margin-bottom: 10upx;
 													}
 													.new-header-descs {
 														display: flex;
 														flex-direction: row;
 														.new-header-desc-lefts {
-															width: 263upx;
-															height: 24upx;
+														/* 	width: 263upx;
+															height: 24upx; */
+															display: flex;
+																flex-direction: row;
+															flex: 1;
 															font-size: 24upx;
 															font-family: Microsoft YaHei;
 															font-weight: 400;
@@ -1569,12 +1763,24 @@
 															line-height: 41upx;
 															margin-top: 30upx;
 															letter-spacing: 2upx;
-															margin-right:81upx;
+															/* margin-right:81upx; */
+															.new-header-desc-name {
+																font-size: 24upx;
+																font-family: Microsoft YaHei;
+																font-weight: 400;
+																color: #999999;
+																line-height: 41upx;
+																/* margin-top: 30upx; */
+																letter-spacing: 2upx;
+																/* margin-right:151upx; */
+															}
 														}
+														
 														.new-header-desc-rights {
 															display: flex;
 															flex-direction: row;
 															margin-top: 32upx;
+														
 															.new-header-desc-right-icon {
 																margin-right: 12upx;
 															}
@@ -1594,7 +1800,7 @@
 													height: 140upx;
 													.img-items {
 														width: 242upx;
-														height: 140upx;
+														height: 242upx;
 														border-radius: 8upx;
 													}
 												}
@@ -1631,8 +1837,8 @@
 									height: 172upx;
 								}
 								.new-special-news-title {
-									width: 173upx;
-									height: 26upx;
+									/* width: 173upx;
+									height: 26upx; */
 									font-size: 26upx;
 									font-family: Microsoft YaHei;
 									font-weight: bold;
@@ -1640,6 +1846,7 @@
 									line-height: 34upx;
 									margin-top: 20upx;
 									letter-spacing: 1px;
+									text-align: center;
 								}
 								.new-special-news-matter {
 									/* width: 83upx; */
@@ -1687,8 +1894,10 @@
 								display: flex;
 								flex-direction: row;
 								.new-header-desc-left {
-									width: 263upx;
-									height: 24upx;
+									display: flex;
+									flex-direction: row;
+								/* 	width: 263upx;
+									height: 24upx; */
 									font-size: 24upx;
 									font-family: Microsoft YaHei;
 									font-weight: 400;
@@ -1696,7 +1905,11 @@
 									line-height: 41upx;
 									margin-top: 30upx;
 									letter-spacing: 2upx;
-									margin-right:81upx;
+									flex: 1;
+									/* margin-right:81upx; */
+									.new-header-desc-name {
+										
+									}
 								}
 								.new-header-desc-right {
 									display: flex;
@@ -1730,7 +1943,7 @@
 		      }
 			  
 			 .new-recommend {
-				height: 480upx;
+				height: 400upx;
 				 padding: 0 30upx;
 				 .new-recommend-title-bars {
 					 	 display: flex;
@@ -1740,13 +1953,13 @@
 							margin-right: 42upx;
 							.img-items {
 					 		width: 202upx;
-					 	     height: 260upx;
+					 	     height: 202upx;
 							 border-radius: 16upx;
 					 	}
 					 	.new-recommend-title-bar-item-text {
 					 	.new-recommend-title-bar-item-title {
-					 		width: 57upx;
-					 		height: 26upx;
+					 		/* width: 57upx;
+					 		height: 26upx; */
 					 		font-size: 26upx;
 					 		font-family: Microsoft YaHei;
 					 		font-weight: bold;
@@ -1755,6 +1968,7 @@
 					 		letter-spacing: 1px;
 					 		margin-top: 20upx;
 					 		margin-bottom: 18upx;
+							text-align: center;
 					 		}
 					 		.new-recommed-type {
 					 		display: flex;

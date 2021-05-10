@@ -17,12 +17,13 @@
 		
 		  	<view class="t-f"><text>———请选择您当前需要登录的平台———</text></view>
 		  	<view class="t-e cl">
+				
 				<view class="t-g" @click="phoneNumbers"><image src="@/static/sj.jpg"></image></view>
 		  		<view class="t-g"><image src="@/static/wx.png"></image></view>
 		  		<view class="t-g"><image src="@/static/qq.png"></image></view>
 		  	</view>
 		  </view>
-	<!-- <button type="default" @click="fn">一键登录</button> -->
+	<button type="default" @click="phoneNumberall">手机号登录</button>
 	 
 	</view>
 </template>
@@ -31,11 +32,12 @@
 	export default {
 		data() {
 			return {
+				phone_number:'16413665448',
 				title:'欢迎回来',
 				phoneNumber:'',
 				openid:'',
-				access_token:''
-				
+				access_token:'',
+				token:1
 			}
 		},
 		onLoad() {
@@ -43,17 +45,45 @@
 		},
 		methods: {
 			close () {
+				  
+				 // value = 0
+				 // console.log(value)
+				 // uni.getStorage({
+				 // 	key:'too',
+						
+					// success: (res)=>{
+					// 	console.log(res)
+					// } 
+				 // })
 				uni.reLaunch({
 					url:'../index/index'
 				})
 			},
+				//手机号登录
+		    async phoneNumberall () {
+			     const data = await this.$http.post('/api/userLogin',{
+					token:'d6a2fa16e60777e390256ec85cc2f42e',
+					phone_number:this.phone_number,
+				 });
+					const {DATA} = data
+					if (data.CODE==='200') {
+					const {access_token,user_id} = DATA.user_info		 
+					uni.setStorageSync('access_token', access_token);
+					uni.setStorageSync('user_id', user_id);
+				    
+					uni.reLaunch({
+						url:'../index/index' 
+					})
+				 }  
+				
+			},
 			phoneNumbers () {
 			
-			
-			let _this = this
+		
+			// let _this = this
 			 uni.preLogin({
 			provider: 'univerify',
-			success(res) { //预登录成功
+			success:(res)=> { //预登录成功
 				 						// 显示一键登录选项
 			console.log(res);
 				 						
@@ -106,33 +136,35 @@
 			  ]
 			  }
 			},
-			success(res) { // 登录成功
+			success:(res)=> { // 登录成功
 										
-			_this.openid = res.authResult.openid;
-			_this.access_token = res.authResult.access_token;
+			this.openid = res.authResult.openid;
+			this.access_token = res.authResult.access_token;
 			console.log(res.authResult); // {openid:'deviceIDlength+deviceID+gyuid',access_token:'接口返回的 token'}
-			console.log(_this.openid);
-			console.log("access_token",_this.access_token);
+			console.log(this.openid);
+			console.log("access_token",this.access_token);
 			// 客户端(调用云函数)  调用云函数来实现整个业务逻辑
 			// 在得到access_token后，通过callfunction调用云函数
 			uniCloud.callFunction({
 			  name: 'login', // 你的云函数名称
 			  data: {
-			  access_token: _this.access_token, // 客户端一键登录接口返回的access_token
-			  openid: _this.openid // 客户端一键登录接口返回的openid
+			  access_token: this.access_token, // 客户端一键登录接口返回的access_token
+			  openid: this.openid // 客户端一键登录接口返回的openid
 			  }
 			   }).then(res => {
 													
 				console.log("获取成功");
 				console.log(res);
+					// console.log(this)
 				 // 获取用户的手机号
 			    if (res.result.code===0) {
-				_this.phoneNumber=res.result.data.phoneNumber;
-				console.log(_this.phoneNumber);
+				this.phoneNumber=res.result.data.phoneNumber;
+			 
 			
+				   uni.setStorageSync('too', this.phoneNumber);
 				uni.closeAuthView()
 				uni.switchTab({
-					url:'../index/index'
+					url:'../index/index' 
 				})
 			
 				}						

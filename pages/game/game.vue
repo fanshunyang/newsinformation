@@ -16,27 +16,30 @@
 					class="nav-item"
 					:class="{current: index === tabCurrentIndex}"
 					:id="'tab'+index"
-					@click="changeTab(index)"
+					@click="changeTab(index,item)"
 				>{{item.name}}</view>
 			
 			</scroll-view>
 		</view>
-	<swiper style="height: 520px;"  :current="tabCurrentIndex" @change="changeitem">
+	<swiper class="altogether"   :current="tabCurrentIndex" @change="changeitem">
 		<swiper-item style="height: 100%; padding-left: 30upx; padding-right: 30upx;"	v-for="(item,index) in tabBars" :key="item.id">
 		<scroll-view scroll-y="true"  style="height: 100%;">
 			<view class="game_swipers">
 				<view class="gane_letter" >
 							<view class="ul">
-								<view class="li" v-for="(item,index) in recommended" :key='index'>
-									<image class="imgs" src="../../images/nz.jpg" mode=""></image>
-									<view class="li_text">
-										逆战
+								<view class="li" @tap='gameReferral(item)' v-for="(item,index) in recommended" :key='index'>
+									<image :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
+									<view class="li-item" >
+										<view class="li_text">
+											{{item.gm_name}}
+										</view>
+										<view class="li_grade_mark">
+											{{item.gm_star}}
+										</view>
 									</view>
 									<view class="li_grade">
-										<uni-rate v-model="item.txt" @change="onChange( $event, item)" :is-fill="false"  :touchable="false" :size="15.5" ></uni-rate>   
-										<view class="li_grade_mark">
-											 {{item.mark}}
-										</view>
+										<uni-rate v-model="item.gm_star" @change="onChange( $event, item)" :is-fill="false" :max="9" :touchable="false" :size="11" ></uni-rate>   
+									
 									</view>
 									
 									
@@ -46,14 +49,14 @@
 							</view>
 				        </view>
 						<view class="game_advertising">
-						<carousel :img-list="imgList" url-key="url" @selected="selectedBanner"></carousel>
+						<carousel :img-list="imgList" url-key="img" @selected="selectedBanner"></carousel>
 						</view>
 					<view class="game_recommended" >
 						<view class="game_recommended-title-all">
 							<view class="game_recommended-title-left">
 								热门推荐
 							</view>
-							<view class="game_recommended-title-right">
+							<view class="game_recommended-title-right" @tap='gameMore'>
 								更多 >
 							</view>
 							
@@ -61,33 +64,16 @@
 						</view>
 						
 						<view class="ul">
-							<view class="li">
-								<image class="imgs" src="../../images/cy.jpg" mode=""></image>
+							<view class="li" @tap='game_recommend(item)' v-for="(item,index) in game_recommendlist">
+								<image  :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
 								<view class="li-text-top">
-									逆战
+									{{item.gm_name}}
 								</view>
-								<view class="li-text-bottom">
-									科幻/热血
-								</view>
+								<!-- <view class="li-text-bottom">
+									{{item.desc}}
+								</view> -->
 							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/cy.jpg" mode=""></image>
-								<view class="li-text-top">
-									逆战
-								</view>
-								<view class="li-text-bottom">
-									科幻/热血
-								</view>
-							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/cy.jpg" mode=""></image>
-								<view class="li-text-top">
-									逆战
-								</view>
-								<view class="li-text-bottom">
-									科幻/热血
-								</view>
-							</view>
+							
 						</view>
 					</view>
 					<view class="news_appear">
@@ -95,7 +81,7 @@
 							<view class="news_appear_tilte_left">
 								最新上市
 							</view>
-							<view class="news_appear_tilte_right">
+							<view class="news_appear_tilte_right"  @tap='gamecompany'>
 								更多 >
 							</view>
 							
@@ -103,60 +89,17 @@
 						</view>
 						
 						<view class="ul">
-							<view class="li">
-								<image class="imgs" src="../../images/js.jpg" mode=""></image>
+							<view class="li" @tap='gameAppear(item)' v-for="(item,index) in appearlist" :key='index'>
+								<image  :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
 								<view class="li-text-top_fl">
-									英雄联盟
+									{{item.gm_name}}
 								</view>
 								<view class="li-text-bottom_rp">
-									科幻/角色
+								<!-- {{item.gm_cat_str}} -->
+								
 								</view>
 							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/js.jpg" mode=""></image>
-								<view class="li-text-top_fl">
-									英雄联盟
-								</view>
-								<view class="li-text-bottom_rp">
-									科幻/角色
-								</view>
-							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/js.jpg" mode=""></image>
-								<view class="li-text-top_fl">
-									英雄联盟
-								</view>
-								<view class="li-text-bottom_rp">
-									科幻/角色
-								</view>
-							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/js.jpg" mode=""></image>
-								<view class="li-text-top_fl">
-									英雄联盟
-								</view>
-								<view class="li-text-bottom_rp">
-									科幻/角色
-								</view>
-							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/js.jpg" mode=""></image>
-								<view class="li-text-top_fl">
-									英雄联盟
-								</view>
-								<view class="li-text-bottom_rp">
-									科幻/角色
-								</view>
-							</view>
-							<view class="li">
-								<image class="imgs" src="../../images/js.jpg" mode=""></image>
-								<view class="li-text-top_fl">
-									英雄联盟
-								</view>
-								<view class="li-text-bottom_rp">
-									科幻/角色
-								</view>
-							</view>
+							
 						</view>
 					</view>
 					<view class="seek_game">
@@ -165,27 +108,27 @@
 						</view>
 						<view class="game_classify">
 							<view class="ul">
-								<view class="li" :class="{'fily':index===currIndex}" @click="gameclassify(index)" v-for="(item,index) in  game_classify" :key='index'>
+								<view class="li" :class="{'fily':index===currIndex}" @click="gameclassify(item)" v-for="(item,index) in  game_classify" :key='index'>
 									{{item.text}}
 								</view>
 							</view>
 						</view>
 						 <swiper style="height: 520px;" :current="currIndex" @change="chagnetabls">
-						 	<swiper-item style="height: 100%;"  v-for="(item,index) in  game_classify" :key='index'>
+						 	<swiper-item style="height: 100%;"   v-for="(item,index) in  game_classify" :key='index'>
 						 		<scroll-view scroll-y="true" style="height: 100%;">
 						 		<view class="game_swiper-item">
 						 			<view class="ul">
-						 				<view class="li">
-						 				<image class="imgs" src="../../images/js2.jpg" mode=""></image>
+						 				<view class="li" @tap='makeGame(item)' v-for="(item,index) in makegame" :key='index'>
+						 				<image  :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
 						 				<view class="li_center">
 						 					<view class="li_center_introductory">
-						 						英雄联盟
+						 					{{item.gm_name}}
 						 					</view>
 						 					<view class="li_center_star">
-						 							<uni-rate  :touchable="false" :size="15.5" ></uni-rate>   
+						 							<uni-rate   v-model="item.gm_star" :is-fill="false" :max="9"  :touchable="false" :size="10.5" ></uni-rate>   
 						 					</view>
 						 					<view class="li_center_sort">
-						 					科幻/角色/热血
+						 				{{item.gm_cat_str}}
 						 					</view>
 						 					<view class="li_center_all">
 						 						<view class="arroind">
@@ -195,7 +138,7 @@
 						 							
 						 						</view>
 						 						<view class="listend">
-						 							2020-12-10 上市
+						 							{{item.gm_update_time}} 上市
 						 						</view>
 						 					</view>
 						 				</view>
@@ -209,142 +152,8 @@
 						 				</view>
 						 				
 						 				</view>
-						 				<view class="li">
-						 				<image class="imgs" src="../../images/js2.jpg" mode=""></image>
-						 				<view class="li_center">
-						 					<view class="li_center_introductory">
-						 						英雄联盟
-						 					</view>
-						 					<view class="li_center_star">
-						 							<uni-rate  :touchable="false" :size="15.5" ></uni-rate>   
-						 					</view>
-						 					<view class="li_center_sort">
-						 					科幻/角色/热血
-						 					</view>
-						 					<view class="li_center_all">
-						 						<view class="arroind">
-						 							
-						 						</view>
-						 						<view class="ios">
-						 							
-						 						</view>
-						 						<view class="listend">
-						 							2020-12-10 上市
-						 						</view>
-						 					</view>
-						 				</view>
-						 				<view class="li_right">
-						 					<view class="li_right-icon el-icon-download">
-						 						
-						 					</view>
-						 					<view class="li_right_text">
-						 						下载
-						 					</view>
-						 				</view>
 						 				
-						 				</view>
-						 				<view class="li">
-						 				<image class="imgs" src="../../images/js2.jpg" mode=""></image>
-						 				<view class="li_center">
-						 					<view class="li_center_introductory">
-						 						英雄联盟
-						 					</view>
-						 					<view class="li_center_star">
-						 							<uni-rate  :touchable="false" :size="15.5" ></uni-rate>   
-						 					</view>
-						 					<view class="li_center_sort">
-						 					科幻/角色/热血
-						 					</view>
-						 					<view class="li_center_all">
-						 						<view class="arroind">
-						 							
-						 						</view>
-						 						<view class="ios">
-						 							
-						 						</view>
-						 						<view class="listend">
-						 							2020-12-10 上市
-						 						</view>
-						 					</view>
-						 				</view>
-						 				<view class="li_right">
-						 					<view class="li_right-icon el-icon-download">
-						 						
-						 					</view>
-						 					<view class="li_right_text">
-						 						下载
-						 					</view>
-						 				</view>
 						 				
-						 				</view>
-						 				<view class="li">
-						 				<image class="imgs" src="../../images/js2.jpg" mode=""></image>
-						 				<view class="li_center">
-						 					<view class="li_center_introductory">
-						 						英雄联盟
-						 					</view>
-						 					<view class="li_center_star">
-						 							<uni-rate  :touchable="false" :size="15.5" ></uni-rate>   
-						 					</view>
-						 					<view class="li_center_sort">
-						 					科幻/角色/热血
-						 					</view>
-						 					<view class="li_center_all">
-						 						<view class="arroind">
-						 							
-						 						</view>
-						 						<view class="ios">
-						 							
-						 						</view>
-						 						<view class="listend">
-						 							2020-12-10 上市
-						 						</view>
-						 					</view>
-						 				</view>
-						 				<view class="li_right">
-						 					<view class="li_right-icon el-icon-download">
-						 						
-						 					</view>
-						 					<view class="li_right_text">
-						 						下载
-						 					</view>
-						 				</view>
-						 				
-						 				</view>
-						 				<view class="li">
-						 				<image class="imgs" src="../../images/js2.jpg" mode=""></image>
-						 				<view class="li_center">
-						 					<view class="li_center_introductory">
-						 						英雄联盟
-						 					</view>
-						 					<view class="li_center_star">
-						 							<uni-rate  :touchable="false" :size="15.5" ></uni-rate>   
-						 					</view>
-						 					<view class="li_center_sort">
-						 					科幻/角色/热血
-						 					</view>
-						 					<view class="li_center_all">
-						 						<view class="arroind">
-						 							
-						 						</view>
-						 						<view class="ios">
-						 							
-						 						</view>
-						 						<view class="listend">
-						 							2020-12-10 上市
-						 						</view>
-						 					</view>
-						 				</view>
-						 				<view class="li_right">
-						 					<view class="li_right-icon el-icon-download">
-						 						
-						 					</view>
-						 					<view class="li_right_text">
-						 						下载
-						 					</view>
-						 				</view>
-						 				
-						 				</view>
 						 			</view>
 						 			
 						 			
@@ -378,65 +187,264 @@
 				
 				currIndex:0,
 				tabCurrentIndex:0,
-				tabBars:[{id:1,name:'推荐'},{id:2,name:'休闲'},{id:3,name:'益智'}],
+				tabBars:[],
 				//推荐前九个
 				recommended:[
-					{id:1,txt:'3.5',mark:'3.5'},
-					{id:2,txt:'4.4',mark:'4.4'},
-				    {id:3,txt:'1.5',mark:'1.5'},
-					{id:4,txt:'5',mark:'5'},
-					{id:5,txt:'2',mark:'2'},
-					{id:6},
-				    {id:7},
-					{id:8},
-				    {id:9},
+				
 				],
 				game_classify:[
-					{id:1,text:'近期热度'},
-					{id:2,text:'评分最高'},
-					{id:3,text:'最新上市'},
-					{id:4,text:'即将上市'}
+					{id:0,text:'近期热度'},
+					{id:1,text:'评分最高'},
+					{id:2,text:'最新上市'},
+					{id:3,text:'即将上市'}
+				],
+				game_recommendlist:[
+					
+				],
+				appearlist:[
+					
+				],
+				makegame:[
+					
 				],
 				imgList:[
-					{
-					  url: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
-					  id: 1
-					  },{
-					  url: 'https://img9.51tietu.net/pic/2019-091200/euzekmi5m23euzekmi5m23.jpg',
-					  id: 2
-					  },{
-					  url: 'https://img9.51tietu.net/pic/2019-091200/143tt0ta4sr143tt0ta4sr.jpg',
-					  id: 3
-					   },{
-					    url: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
-					     id: 4
-					 },
-				]
+					
+				],
+				star:'',
+				classfily:1
 			}
 		},
+		onLoad() {
+			
+		},
+		onShow() {
+			 //    const value = uni.getStorageSync('star');
+				// this.star = value
+		},
+		mounted() {
+			this.getAllGameCat()
+			this.getAllGame()
+			this.getAdBanner()
+			this.getRecommendGame()
+			this.getNewGames()
+			this.getSearchGame()
+		},
 		methods: {
-		  changeTab (va) {
+			//分类导航
+			async getAllGameCat () {
+				// tabnav
+				 let data = await this.$http.post('/api/getAllGameCat',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+						this.tabBars = DATA
+						// this.tabBars.unshift('推荐')
+					}
+			},
+			//分类筛选
+			async getAllGame () {
+				// tabnav
+				 let data = await this.$http.post('/api/getAllGame',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					    gm_c_id:this.classfily
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+					
+					   this.recommended = DATA
+					   	console.log(   this.recommended)
+					}
+			},
+			//广告位
+			async getAdBanner () {
+				// tabnav
+				 let data = await this.$http.post('/api/getAdBanner',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+					
+					   this.imgList = DATA
+					   	console.log(     this.imgList)
+					}
+			},
+			//热门推荐
+			async getRecommendGame () {
+				// tabnav
+				 let data = await this.$http.post('/api/getRecommendGame',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+					
+					   this.game_recommendlist = DATA
+					   	console.log(      this.game_recommendlist)
+					}
+			},
+			//最新上市
+			async getNewGames () {
+				// tabnav
+				 let data = await this.$http.post('/api/getNewGames',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+					
+					   this.appearlist = DATA
+					   	console.log(    this.appearlist)
+					}
+			},
+			
+			//找游戏
+			async getSearchGame () {
+				// tabnav
+				 let data = await this.$http.post('/api/getSearchGame',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					    gm_type_id:this.currIndex
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						 
+					this.makegame = DATA
+					
+					   	console.log(   this.makegame)
+					}
+			},
+			
+			
+		async  changeTab (va,item) {
+		this.classfily = item.id
 			this.tabCurrentIndex = va
+		
+		
+		
+		this.getAllGame()
+		
 		  },
 		  changeitem (va) {
+			this.classfily =  va.detail.current
+			if (this.classfily===0) {
+				this.classfily = 1
+				this.getAllGame()
+			} else if (this.classfily===1) {
+				this.classfily = 2
+				this.getAllGame()
+			}else if (this.classfily===2) {
+				this.classfily = 3
+				this.getAllGame()
+			} else if (this.classfily===3) {
+				this.classfily = 4
+				this.getAllGame()
+			}else if (this.classfily===4) {
+				this.classfily = 5
+				this.getAllGame()
+			}else if (this.classfily===5) {
+				this.classfily = 6
+				this.getAllGame()
+			}else if (this.classfily===6) {
+				this.classfily = 7
+				this.getAllGame()
+			}
 			 this.tabCurrentIndex = va.detail.current
+			 // if ( this.tabCurrentIndex===0) {
+			 //   this.tabCurrentIndex=1
+			 //   this.classfily =  this.tabCurrentIndex
+			
+			 // }
+			 // this.getAllGame()
 		  },
+		
+		
 			//评分
 		  onChange (va,item) {
 			  
 			 console.log(va) 
 			 
 		  },
+		  gameMore () {
+			  uni.navigateTo({
+			  	url:'../gameeasier/gameeasier'
+			  })
+		  },
 		  //广告位轮播
 		  selectedBanner (item,index) {
 			  console.log(item)
 		  },
+		    //找游戏
 		  gameclassify (va) {
-			  this.currIndex = va
+			  this.currIndex = va.id
+			  this.getSearchGame()
 		  },
+		  //找游戏切换
 		  chagnetabls (va) {
 			   this.currIndex = va.detail.current
+			  this.getSearchGame()
 		  },
+		  //游戏介绍
+		  gameReferral (va) {
+			  const id =  va.gm_id
+			  	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}` 
+			  uni.navigateTo({
+			  	url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  })
+		  },
+		  //热门推荐
+		  game_recommend (item) {
+			  const id =  item.gm_id
+			   	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  uni.navigateTo({
+			  	url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  })
+		  },
+		  //最新上市
+		  gameAppear (va) {
+			 const id =  va.gm_id
+			     	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  uni.navigateTo({
+			  	url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  })
+		  },
+		  //找游戏
+		  makeGame (va) {
+			  const id =  va.gm_id
+			  	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  uni.navigateTo({
+			  	url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+			  })
+		  },
+		  gamecompany () {
+			  uni.navigateTo({
+			  	url:'../newcompany/newcompany'
+			  })
+		  }
 		}
 	}
 </script>
@@ -461,15 +469,19 @@ page, .game{
 			.nav-bar{
 				position: relative;
 				z-index: 10;
-				height: 90upx;
+				// height: 90upx;
 				margin-bottom: 32upx;
 				white-space: nowrap;
 				// box-shadow: 0 2upx 8upx rgba(0,0,0,.06);
 				background-color: #fff;
+				
 				.nav-item{
+					padding-left: 30upx;
+					// padding-right: 30upx;
 					display: inline-block;
-					width: 150upx;
+					// width: 150upx;
 					height: 90upx;
+					margin-right: 40upx;
 					text-align: center;
 					line-height: 90upx;
 					font-size: 30upx;
@@ -489,8 +501,10 @@ page, .game{
 				} 
 				.current{  
 					color: #007aff;
+					
 					&:after{
 						width: 50%;
+						margin-left: 10upx;
 					}
 				} 
 				.currents {
@@ -500,263 +514,298 @@ page, .game{
 			} 
 			
 		}
-		.gane_letter {
-			// margin-bottom: 30upx;
-			.ul {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-				.li {
-					display: flex;
-					flex-direction: column;
-					margin-bottom: 42upx;
-					.imgs {
-						width: 202upx;
-						height: 260upx;
-						border-radius: 8px;
-						margin-bottom: 24upx;
-					}
-					.li_text {
-						font-size: 26upx;
-						font-family: Microsoft YaHei;
-						font-weight: bold;
-						color: #333333;
-						letter-spacing: 1px;
-						// line-height: 34upx;
-						margin-bottom: 20upx;
-					}
-					.li_grade {
-						
+		/*  #ifdef  APP-PLUS ||  #ifdef H5 */
+		.altogether {
+			height: 1250upx;
+			.game_swipers {
+				.gane_letter {
+					// margin-bottom: 30upx;
+					.ul {
 						display: flex;
-						.li_grade_mark {
-							margin-left: 12upx;
-							font-size: 24upx;
-							font-family: Microsoft YaHei;
-							font-weight: bold;
-							color: #666666;
+						flex-wrap: wrap;
+						justify-content: space-between;
+						.li {
+							display: flex;
+							flex-direction: column;
+							margin-bottom: 42upx;
+							// margin-right: 1upx;
+							.imgs {
+								width: 202upx;
+								height: 202upx;
+								border-radius: 8px;
+								margin-bottom: 24upx;
+							}
+							.li-item {
+								display: flex;
+								.li_text {
+									width: 167upx;
+									font-size: 26upx;
+									font-family: Microsoft YaHei;
+									font-weight: bold;
+									color: #333333;
+									letter-spacing: 1px;
+									// line-height: 34upx;
+									margin-bottom: 20upx;
+								    white-space:nowrap;
+								    overflow:hidden;
+								    text-overflow:ellipsis;
+								}
+								.li_grade_mark {
+									margin-left: 12upx;
+									font-size: 24upx;
+									font-family: Microsoft YaHei;
+									font-weight: bold;
+									color: #666666;
+								}
+							}
+							
+							.li_grade {
+								
+								// display: flex;
+								// width: 80px;
+								
+							}
 						}
 					}
+				}	
+				.game_advertising {
+				
 				}
-			}
-		}	
-		.game_advertising {
-		
-		}
-		.game_recommended {
-			
-			margin-top: 67upx;
-			margin-bottom: 64upx;
-			.game_recommended-title-all {
-		
-				margin-bottom: 32upx;
-				display: flex;
-				.game_recommended-title-left {
-					flex: 1;
-					font-size: 32upx;
-					font-family: Microsoft YaHei;
-					font-weight: bold;
-					color: #333333;
-					line-height: 34upx;
-					letter-spacing: 1px;
-				}
-				.game_recommended-title-right {
-					font-size: 22upx;
-					font-family: Microsoft YaHei;
-					font-weight: 400;
-					color: #666666;
-					line-height: 34upx;
-				}
-			}
-			.ul {
-				display: flex;
-				.li {
-					display: flex;
-					flex-direction: column;
-					margin-right: 42upx;
-					.imgs {
-						width: 202upx;
-						height: 260upx;
-						border-radius: 8px;
-					}
-					.li-text-top {
-						font-size: 26upx;
-						font-family: Microsoft YaHei;
-						font-weight: bold;
-						color: #333333;
-						line-height: 34upx;
-						margin-top: 20upx;
-						letter-spacing: 1px;
-					}
-					.li-text-bottom {
-					    margin-top: 20upx;
-						font-size: 22upx;
-						font-family: Microsoft YaHei;
-						font-weight: 400;
-						color: #999999;
-						line-height: 34upx;
-						letter-spacing: 1px;
-					}
-				}
-			}
-			
-		}
-		.news_appear {
-			.news_appear_tilte_all {
-				display: flex;
-				margin-bottom: 32upx;
-				.news_appear_tilte_left {
-					flex: 1;
-					font-size: 32upx;
-					font-family: Microsoft YaHei;
-					font-weight: bold;
-					color: #333333;
-					line-height: 34upx;
-				}
-				.news_appear_tilte_right {
-					font-size: 22upx;
-					font-family: Microsoft YaHei;
-					font-weight: 400;
-					color: #666666;
-					line-height: 34upx;
-				}
-			}
-			.ul {
-					display: flex;
-					flex-wrap: wrap;
-					justify-content: space-between;
-				.li {
-					display: flex;
-					flex-direction: column;
-					margin-bottom: 32upx;
-					.imgs {
-						margin-bottom: 20upx;
-						width: 202upx;
-						height: 260upx;
-						border-radius: 8px;  
-					}
-					.li-text-top_fl {
-						margin-bottom: 21upx;
-						font-size: 26upx;
-						font-family: Microsoft YaHei;
-						font-weight: bold;
-						color: #333333;
-						line-height: 34upx;
-						letter-spacing: 1px;
-					}
-					.li-text-bottom_rp {
-						font-size: 22upx;
-						font-family: Microsoft YaHei;
-						font-weight: 400;
-						color: #999999;
-						line-height: 34upx;
-						letter-spacing: 1px;
-					}
-				}
-			}
-		}
-		.seek_game {
-			margin-top: 64upx;
-			.seek_game_title {
-				margin-bottom: 32upx;
-				font-size: 32upx;
-				font-family: Microsoft YaHei;
-				font-weight: bold;
-				color: #333333;
-				line-height: 34upx;
-				letter-spacing: 1px;
-			}
-			.game_classify {
-				.ul {
-					display: flex;
-					justify-content: space-between;
-					.fily {
-							// border-bottom: 1px solid #046AFF;
-							color: #046AFF !important;
-					}
-					.li {
-						font-size: 28upx;
-						font-family: Microsoft YaHei;
-						font-weight: 400;
-						color:#999999;
-						line-height: 37upx;
-						// height: 38upx;
+				.game_recommended {
 					
-						margin-bottom: 55upx;
-						// margin-right: 51upx;
-					}
-				}
-			}
-		}
-		.game_swiper-item {
-			.ul {
-				.li {
-					display: flex;
-					margin-bottom: 40upx;
-					// justify-content: space-between;
-					.imgs {
-						width: 136upx;
-						height: 164upx;
-						border-radius: 4px;
-					}
-					.li_center {
-						flex: 1;
-						margin-left: 32upx;
-						.li_center_introductory {
+					margin-top: 67upx;
+					margin-bottom: 64upx;
+					.game_recommended-title-all {
+				
+						margin-bottom: 32upx;
+						display: flex;
+						.game_recommended-title-left {
+							flex: 1;
 							font-size: 32upx;
 							font-family: Microsoft YaHei;
-							font-weight: 400;
+							font-weight: bold;
 							color: #333333;
 							line-height: 34upx;
-							margin-bottom: 12upx;
 							letter-spacing: 1px;
 						}
-						.li_center_star {
-							margin-bottom: 18upx;
-						}
-						.li_center_sort {
-							font-size: 24upx;
+						.game_recommended-title-right {
+							font-size: 22upx;
 							font-family: Microsoft YaHei;
 							font-weight: 400;
-							color: #999999;
+							color: #666666;
 							line-height: 34upx;
-							margin-bottom: 5upx;
 						}
-						.li_center_all {
-							.arroind {
-								
+					}
+					.ul {
+						display: flex;
+						.li {
+							display: flex;
+							flex-direction: column;
+							margin-right: 42upx;
+							.imgs {
+								width: 202upx;
+								height:202upx;
+								border-radius: 8px;
 							}
-							.ios {
-								
+							.li-text-top {
+								font-size: 26upx;
+								font-family: Microsoft YaHei;
+								font-weight: bold;
+								color: #333333;
+								line-height: 34upx;
+								margin-top: 20upx;
+								letter-spacing: 1px;
+								text-align: center;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
 							}
-							.listend {
-								font-size: 24upx;
+							.li-text-bottom {
+							    margin-top: 20upx;
+								font-size: 22upx;
 								font-family: Microsoft YaHei;
 								font-weight: 400;
-								color: #CCCCCC;
+								color: #999999;
 								line-height: 34upx;
+								letter-spacing: 1px;
 							}
 						}
-					}	
-					.li_right {
-						  text-align: center;
-					  .li_right-icon {
-						  font-size: 40upx;
-							margin-bottom: 15upx;
-							color: #EEAD45;
-					  }
-						  
-					  .li_right_text {
-						  font-size: 26upx;
-						  font-family: Microsoft YaHei;
-						  font-weight: bold;
-						  color: #EEAD45;
-						  line-height: 34upx;
-						  letter-spacing: 1px;
-					  }
+					}
+					
+				}
+				.news_appear {
+					.news_appear_tilte_all {
+						display: flex;
+						margin-bottom: 32upx;
+						.news_appear_tilte_left {
+							flex: 1;
+							font-size: 32upx;
+							font-family: Microsoft YaHei;
+							font-weight: bold;
+							color: #333333;
+							line-height: 34upx;
+						}
+						.news_appear_tilte_right {
+							font-size: 22upx;
+							font-family: Microsoft YaHei;
+							font-weight: 400;
+							color: #666666;
+							line-height: 34upx;
+						}
+					}
+					.ul {
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: space-between;
+							// border-bottom: 10upx solid #f1f1f1;
+						.li {
+							display: flex;
+							flex-direction: column;
+							margin-bottom: 32upx;
+							.imgs {
+								margin-bottom: 20upx;
+								width: 202upx;
+								height: 202upx;
+								border-radius: 8px;  
+							}
+							.li-text-top_fl {
+								width: 180upx;
+								margin-bottom: 21upx;
+								font-size: 26upx;
+								font-family: Microsoft YaHei;
+								font-weight: bold;
+								color: #333333;
+								line-height: 34upx;
+								letter-spacing: 1px;
+								text-align: center;
+								    white-space: nowrap;
+								    overflow: hidden;
+								    text-overflow: ellipsis;
+								    // white-space: nowrap;
+								    // overflow: hidden;
+								    // text-overflow: ellipsis;
+							}
+							.li-text-bottom_rp {
+								font-size: 22upx;
+								font-family: Microsoft YaHei;
+								font-weight: 400;
+								color: #999999;
+								line-height: 34upx;
+								letter-spacing: 1px;
+							}
+						}
+					}
+				}
+				.seek_game {
+					margin-top: 64upx;
+					.seek_game_title {
+						margin-bottom: 32upx;
+						font-size: 32upx;
+						font-family: Microsoft YaHei;
+						font-weight: bold;
+						color: #333333;
+						line-height: 34upx;
+						letter-spacing: 1px;
+					}
+					.game_classify {
+						.ul {
+							display: flex;
+							justify-content: space-between;
+							.fily {
+									// border-bottom: 1px solid #046AFF;
+									color: #046AFF !important;
+							}
+							.li {
+								font-size: 28upx;
+								font-family: Microsoft YaHei;
+								font-weight: 400;
+								color:#999999;
+								line-height: 37upx;
+								// height: 38upx;
+							
+								margin-bottom: 55upx;
+								// margin-right: 51upx;
+							}
+						}
+					}
+				}
+				.game_swiper-item {
+					.ul {
+						.li {
+							display: flex;
+							align-items: center;
+							margin-bottom: 40upx;
+							// justify-content: space-between;
+							.imgs {
+								width: 136upx;
+								height: 136upx;
+								border-radius: 4px;
+							}
+							.li_center {
+								flex: 1;
+								margin-left: 32upx;
+								.li_center_introductory {
+									font-size: 32upx;
+									font-family: Microsoft YaHei;
+									font-weight: 400;
+									color: #333333;
+									line-height: 34upx;
+									margin-bottom: 12upx;
+									letter-spacing: 1px;
+								}
+								.li_center_star {
+									margin-bottom: 18upx;
+								}
+								.li_center_sort {
+									font-size: 24upx;
+									font-family: Microsoft YaHei;
+									font-weight: 400;
+									color: #999999;
+									line-height: 34upx;
+									margin-bottom: 5upx;
+								}
+								.li_center_all {
+									.arroind {
+										
+									}
+									.ios {
+										
+									}
+									.listend {
+										font-size: 24upx;
+										font-family: Microsoft YaHei;
+										font-weight: 400;
+										color: #CCCCCC;
+										line-height: 34upx;
+									}
+								}
+							}	
+							.li_right {
+								  text-align: center;
+							  .li_right-icon {
+								  font-size: 40upx;
+									margin-bottom: 15upx;
+									color: #EEAD45;
+							  }
+								  
+							  .li_right_text {
+								  font-size: 26upx;
+								  font-family: Microsoft YaHei;
+								  font-weight: bold;
+								  color: #EEAD45;
+								  line-height: 34upx;
+								  letter-spacing: 1px;
+							  }
+							}
+						}
 					}
 				}
 			}
+			
 		}
+		
+		/*  #endif  */
+	
 	 }
 	
 </style>

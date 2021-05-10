@@ -96,7 +96,9 @@
 		methods: {
 			//返回上一级
 			back () {
-				uni.navigateBack()
+				uni.switchTab({
+				    url: '../index/index'
+				});
 			},
 			
 			//获得焦点

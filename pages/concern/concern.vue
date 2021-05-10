@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<swiper style="height: 100%;"  :current="currIndex" @change="changItem">
-			<swiper-item>
+			<swiper-item  v-for="(item,index) in 2" :key='index'>
 				<scroll-view scroll-y="true" style="height: 100%;" >
 				<view class="concern_search">
 				 <view class="concern_search_icon el-icon-search">
@@ -26,21 +26,26 @@
 			
 				<view class="concern_list">
 					<view class="ul">
-						<view class="li" v-for="(item,index) in list" :key='index' @click="concern_list_item(index)">
-							<view class="li_kind">
-								<image class="imgs" src="../../images/cj.jpg" mode=""></image>
+						<view class="li" v-for="(item,index) in listype" :key='index'>
+							<view class="li_kind"  @click="concern_list_item(item)">
+								<image class="imgs" :src=" item.fans_head_url ||item.rem_head_url  " mode=""></image>
 								<view class="li_kind_text">
-								{{item.text}}
+								{{item.rem_user_name || item.fans_user_name}}
 								</view>
 							</view>
-							<view class="li_close">
-								+ 关注
+						<!-- 	<view class="li_close" @click="attention(item)" v-if="madeid===0">
+								关注
+							</view> -->
+							<view class="li_close" @click="unfollow(item)" v-if=" currIndex===0">
+								已关注
 							</view>
 							
 						</view>
 						
 					</view>
 				</view>
+				
+				
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
@@ -49,27 +54,13 @@
 				 <view class="concern_search_icon el-icon-search">
 				 
 				 </view>
-				<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索" focus >
+			<!-- 	<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索" focus > -->
 				<view class="concern_search_icon el-icon-close" v-if="close" @click="search_close">
 				
 				</view>
 				</view>
 							
-				<view class="concern_list">
-					<view class="ul">
-						<view class="li" v-for="(item,index) in list" :key='index' @click="concern_list_item(index)">
-							<view class="li_kind">
-								<image class="imgs" src="../../images/cj.jpg" mode=""></image>
-								<view class="li_kind_text">
-								{{item.text}}
-								</view>
-							</view>
-						
-							
-						</view>
-						
-					</view>
-				</view>
+				
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -92,36 +83,205 @@
 					{id:2,text:'粉丝'}
 				],
 				concern_list:[
-					{id:1,text:'宝哥'},
-					{id:2,text:'死神'},
-					{id:3,text:'死亡'},
-					{id:4,text:'宝哥他媳妇'},
-					{id:5,text:'思思'},
-					{id:6,text:'战神'}
+					
 				],
+				concern_lists:[],
+				lists:[],
 				list:[
-					{id:1,text:'宝哥'},
-					{id:2,text:'死神'},
-					{id:3,text:'死亡'},
-					{id:4,text:'宝哥他媳妇'},
-					{id:5,text:'思思'},
-					{id:6,text:'战神'}
-				]
+				
+				],
+				madeid:1 ,
+				recom_user_id:'',
+				recom_user_ids:'',
+				user_index:'',
+				homepage:[],
+				homepagefans:[]
 			}
 		},
-		onLoad(va) {
-			if (va.data==='1') {
-				this.currIndex=1
+	async onLoad(va) {
+	
+	    this.user_index = 	parseInt(   va.user_index)
+		console.log(  this.user_index )
+		this.recom_user_id = 	parseInt(  va.recom_user_id)
+		this.recom_user_ids = parseInt( va.recom_user_ids)
+	
+		console.log(this.recom_user_id,this.recom_user_ids )
+			if (va.items==='0') {
+				 this.recommendUserList()
+		
 			}
+			if (va.items==='1') {
+			    this.currIndex = 1
+			  this.fansUserList()
+			
+			   // console.log( this.homepagefans)
+			}
+		
 			
 		},
+	     mounted() {
+		  this.myRecommendUser()
+		  	this.myFansUser()
+	
+		},
+		computed:{
+			listype () {
+				let tablist
+				
+				if (this.currIndex===0) {
+			
+				 tablist =  this.homepage ||   this.list 
+				 
+				} else if (this.currIndex===1) {
+					
+					tablist = this.homepagefans || this.lists  
+			
+				
+				}
+				return tablist 
+			}
+		},
 		methods: {
+		
+			
+			//首页用户关注的信息
+			async recommendUserList () {
+				 const user_id = uni.getStorageSync('user_id')
+				
+				 const data = await this.$http.post('/api/recommendUserList',{
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+					 id:this.recom_user_id || this.recom_user_ids ||  this.user_index ,
+					
+				 });
+				    console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						
+					 this.homepage = DATA
+				
+					}
+			},
+			//首页用户粉丝的信息
+			async fansUserList () {
+				 const user_id = uni.getStorageSync('user_id')
+				
+				 const data = await this.$http.post('/api/fansUserList',{
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+					 id:this.recom_user_id || this.recom_user_ids ||  this.user_index,
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+					 this.homepagefans = DATA
+					}
+			},
+			async myRecommendUser () {
+				 const user_id = uni.getStorageSync('user_id')
+			
+				 const data = await this.$http.post('/api/myRecommendUser',{
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+					 user_id:user_id,
+					 search_value:''
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						this.concern_list = DATA
+						this.list = DATA
+						  console.log(this.list);
+					}
+			},
+			async myFansUser () {
+				 const user_id = uni.getStorageSync('user_id')
+				
+				 const data = await this.$http.post('/api/myFansUser',{
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+					 user_id:user_id,
+					 search_value:''
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						this.concern_lists = DATA
+						console.log(this.concern_lists);
+						this.lists = DATA 
+					}
+			},
+			async attention (va) {
+				// console.log(va)
+				// 	// if (this.detailsobj.is_attention==='') {
+				// 	// 	uni.showModal({
+				// 	// 		title:'提示',
+				// 	// 		content:'该功能需要登录使用',
+				// 	// 		success:(res)=> {
+				// 	// 			if (res.confirm) {
+				// 	// 		    uni.navigateTo({
+				// 	// 		    	url:'../login/login'
+				// 	// 		    })
+				// 	// 			 // this.detailsobj.is_attention = ''
+				// 	// 			}
+				// 	// 		}
+				// 	// 	})
+				// 	// }
+				
+				// 	const user_id = uni.getStorageSync('user_id')
+					
+				// 	let data = await this.$http.post('/api/addRecommend',{
+				// 	 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				// 	 user_id:user_id,
+				// 	 child_id:va.rem_id			
+				// 	});
+				// 	console.log(this.detailsobj )
+				
+				// 	const {CODE} = data
+				// 	if (CODE==='200') {
+				// 		this.madeid =  this.detailsobj.is_attention
+				// 		this.madeid = 1
+			 //        	this.myRecommendUser()
+				// 		console.log(this.madeid )
+						
+					
+				// 	}
+				},
+				
+			async unfollow () {
+				// const user_id = uni.getStorageSync('user_id')
+				
+				// let data = await this.$http.post('/api/cancelRecommend',{
+				//  token:'d6a2fa16e60777e390256ec85cc2f42e',
+				//  user_id:user_id,
+				//  child_id:this.detailsobj.user_id			
+				// });
+			 //    const {CODE,DATA} = data
+				// uni.showModal({
+				// 	title:'确定取消关注？',
+				// 	success: (res)=> {
+				// 		if (res.confirm) {
+				// 		if (CODE==='200') {
+				// 			this.madeid =  this.detailsobj.is_attention
+				// 			this.madeid = 0
+				// 		    this.myRecommendUser()
+				// 			console.log(this.madeid )
+							
+				// 		   }
+				// 		}
+				// 	}
+				// })
+			
+			},
 			//返回上一级页面
 			back () {
 			  uni.navigateBack()
 			},
 			
 			concernTable (va) {
+				
+			
 			  this.currIndex = va
 			},
 			changItem (va) {
@@ -132,32 +292,40 @@
 				this.list = []
 				this.textvalue = ''
 				this.close = false
+				// this.myRecommendUser()
 			},
-			concern_list_item () {
+			concern_list_item (va) {
+				const id = va.rem_id ||va.fans_id
+				console.log(id)
 				uni.navigateTo({
-					url:'../homepage/homepage'
+					url:`../homepage/homepage?index=${id}&recom_user_id=${this.recom_user_id}&&recom_user_idsyl=${this.recom_user_ids}`
 				})
 			},
 			search_site (va) {
 				
 				let val = va.detail.value;
 				console.log(val)
-				let {concern_list} = this
+				let {concern_list,concern_lists} = this
 				let arr = [];
 				for (let i = 0; i < concern_list.length; i++) {
-				
-					if (concern_list[i].text.indexOf(val) !==-1) {
-					
-						arr.push(concern_list[i]);
-						
-					}
+												
+				if (concern_list[i].rem_user_name.indexOf(val) !==-1) {
+													
+				arr.push(concern_list[i]);
+														
 				}
+			}
+				
+
 				console.log(arr)
 				if (!val) {
 					this.list = arr
+						this.lists = arr
 					this.close = false
+				
 				} else {
 					this.list = arr;
+						this.lists = arr
 					this.close = true
 				}
 			},
@@ -266,13 +434,14 @@
 					width: 128upx;
 					height: 52upx;
 					margin-top: 16upx;
-					background: #1482FF;
+					background: #CCCCCC;
 					border-radius: 4px;
 					text-align: center;
 					color: #fff;
 					font-family: Microsoft YaHei;
 					font-weight: 400;
 					line-height: 52upx;
+				
 				}
 			 }
 		 }

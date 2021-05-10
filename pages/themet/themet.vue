@@ -42,7 +42,7 @@
 		  	<scroll-view scroll-y="true" style="height: 1000upx;" >
 		  		<view class="swiper-item"  >
 					<view class="box-firend-ul">
-						<view class="box-firend-li" @click="dynamically">
+						<view class="box-firend-li" v-for="(item,index) in dynamicallyList" @click="dynamically">
 						<view class="box-firend-li-header">
 							<view class="box-firend-li-item-madile">
 								<view class="box-firend-li-item-madile-img">
@@ -98,172 +98,9 @@
 						
 						</view>
 						
-						<view class="box-firend-li" @click="dynamically">
-						<view class="box-firend-li-header">
-							<view class="box-firend-li-item-madile">
-								<view class="box-firend-li-item-madile-img">
-									<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
-								</view>
-								<view class="box-firend-li-item-madile-text">
-									<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-									<text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text>
-								</view>
-							
-							</view>
-							<view class="box-firend-li-item-letter">
-								<view class="box-firend-li-item-letter-left">
-									<view class="  box-firend-li-item-letter-left-praise">
-										赞
-									</view>
-									<view class="box-firend-li-item-letter-left-number">
-										5
-									</view>
-								</view>
-								<view class="box-firend-li-item-letter-right">
-									<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
-										
-									</view>
-									<view class="box-firend-li-item-letter-right-number">
-										11
-									</view>
-								</view>
-							
-							
-							</view>			
-						</view>
-						<view class="box-firend-li-content">
-							<view class="box-firend-li-content-title">
-								《英雄联盟》山海绘卷概念设计图公布
-							</view>
-							<view class="box-firend-li-content-text">
-							兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-							</view>
-							<view class="box-firend-li-content-img">
-								<view class="box-firend-li-content-img-ul">
-									<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-										<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
-									</view>
-								</view>
-							
-							
-							</view>
 						
-						
-						</view>
-						
-						
-						</view>
-						<view class="box-firend-li" @click="dynamically">
-						<view class="box-firend-li-header">
-							<view class="box-firend-li-item-madile">
-								<view class="box-firend-li-item-madile-img">
-									<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
-								</view>
-								<view class="box-firend-li-item-madile-text">
-									<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-									<text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text>
-								</view>
-							
-							</view>
-							<view class="box-firend-li-item-letter">
-								<view class="box-firend-li-item-letter-left">
-									<view class="  box-firend-li-item-letter-left-praise">
-										赞
-									</view>
-									<view class="box-firend-li-item-letter-left-number">
-										5
-									</view>
-								</view>
-								<view class="box-firend-li-item-letter-right">
-									<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
-										
-									</view>
-									<view class="box-firend-li-item-letter-right-number">
-										11
-									</view>
-								</view>
-							
-							
-							</view>			
-						</view>
-						<view class="box-firend-li-content">
-							<view class="box-firend-li-content-title">
-								《英雄联盟》山海绘卷概念设计图公布
-							</view>
-							<view class="box-firend-li-content-text">
-							兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-							</view>
-							<view class="box-firend-li-content-img">
-								<view class="box-firend-li-content-img-ul">
-									<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-										<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
-									</view>
-								</view>
-							
-							
-							</view>
-						
-						
-						</view>
-						
-						
-						</view>
-						
-						<view class="box-firend-li" @click="dynamically">
-						<view class="box-firend-li-header">
-							<view class="box-firend-li-item-madile">
-								<view class="box-firend-li-item-madile-img">
-									<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
-								</view>
-								<view class="box-firend-li-item-madile-text">
-									<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-									<text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text>
-								</view>
-							
-							</view>
-							<view class="box-firend-li-item-letter">
-								<view class="box-firend-li-item-letter-left">
-									<view class="  box-firend-li-item-letter-left-praise">
-										赞
-									</view>
-									<view class="box-firend-li-item-letter-left-number">
-										5
-									</view>
-								</view>
-								<view class="box-firend-li-item-letter-right">
-									<view class="box-firend-li-item-letter-right-message el-icon-chat-dot-square">
-										
-									</view>
-									<view class="box-firend-li-item-letter-right-number">
-										11
-									</view>
-								</view>
-							
-							
-							</view>			
-						</view>
-						<view class="box-firend-li-content">
-							<view class="box-firend-li-content-title">
-								《英雄联盟》山海绘卷概念设计图公布
-							</view>
-							<view class="box-firend-li-content-text">
-							兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-							</view>
-							<view class="box-firend-li-content-img">
-								<view class="box-firend-li-content-img-ul">
-									<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-										<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
-									</view>
-								</view>
-							
-							
-							</view>
-						
-						
-						</view>
-						
-						
-						</view>
+					
+					
 						
 					<!-- 第一个列表 -->
 						
@@ -296,7 +133,14 @@
 					{id:1,img:''},
 					{id:2,img:''},
 					{id:3,img:''}
-				]
+				],
+				//全部热帖
+				dynamicallyList:[
+					{id:1,},
+					{id:2,},
+					{id:3,},
+					{id:4,}
+				],
 			}
 		},
 		methods: {
@@ -309,7 +153,13 @@
 			},
 			changeTable (va) {
 				this.crrindex = va.detail.current
-			}
+			},
+			//跳转帖子详情
+			dynamically () {
+				uni.navigateTo({
+					url:'../details/details'
+				})
+			},
 		}
 	}
 </script>

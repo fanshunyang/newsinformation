@@ -57,7 +57,7 @@ $http.requestStart = function(options) {
 			uni.showLoading({
 				title: '加载中',
 				mask: true
-			});
+			}); 
 		}
 		requestNum += 1;
 	}
@@ -78,7 +78,7 @@ $http.requestStart = function(options) {
 		}
 	}
 	//请求前加入phoneNumber
-	options.header['phoneNumber'] = "10086";
+	// options.header['token'] = "d6a2fa16e60777e390256ec85cc2f42e";
 	
 	return options; // return false 表示请求拦截，不会继续请求
 }
@@ -104,8 +104,8 @@ $http.dataFactory = async function(res) {
 	// 	data: res.data,
 	// 	method: res.method,
 	// });
-	console.log(res)
-	if (res.response.data.CODE && res.response.data.CODE == '200') {
+	// console.log(res)
+	if (res.response.data.CODE && res.response.data.CODE == '200' ||res.response.data.CODE == 'ERROR001') {
 		let httpData = res.response.data;
 		// console.log(httpData)
 		if (typeof (httpData) == "string") {
@@ -113,12 +113,12 @@ $http.dataFactory = async function(res) {
 	
 		}
 		/*********以下只是模板(及共参考)，需要开发者根据各自的接口返回类型修改*********/
-
+		// console.log(httpData)
 		//判断数据是否请求成功
-		if (httpData.MESSAGE || httpData.CODE == '200') {
+		if (httpData.CODE == '200' ||  httpData.CODE == 'ERROR001' ) { 
 			// 返回正确的结果(then接受数据)
 			return Promise.resolve(httpData);
-		} else if (httpData.CODE == "1000" || httpData.CODE == "1001" || httpData.CODE == 1100) {
+		} else if (httpData.CODE == "1000" || httpData.CODE == "1001" || httpData.CODE == '1100') {
 			let content = '此时此刻需要您登录喔~';
 			if (loginPopupNum <= 0) {
 				loginPopupNum++;
@@ -129,9 +129,10 @@ $http.dataFactory = async function(res) {
 					cancelText: "再逛会",
 					success: function (res) {
 						loginPopupNum--;
+						console.log()
 						if (res.confirm) {
 							uni.reLaunch({
-								url: '/pages/login/login'
+								url: '/pages/login/login.vue'
 							});
 						}
 					}
@@ -163,7 +164,7 @@ $http.dataFactory = async function(res) {
 		// 返回错误的结果(catch接受数据)
 		return Promise.reject({
 			statusCode: res.response.statusCode,
-			errMsg: "【request】数据工厂验证不通过"
+			// errMsg: "【request】数据工厂验证不通过"
 		});
 	}
 };
@@ -173,10 +174,10 @@ $http.requestError = function (e) {
 	if (e.statusCode === 0) {
 		throw e;
 	} else {
-		uni.showToast({
-			title: "网络错误，请检查一下网络",
-			icon: "none"
-		});
+		// uni.showToast({
+		// 	title: "网络错误，请检查一下网络",
+		// 	icon: "none"
+		// });
 	}
 }
 export default $http;

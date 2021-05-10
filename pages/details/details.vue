@@ -32,24 +32,24 @@
 					<view class="text-part-ul">
 						<view class="text-part-li">
 							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" src="../../images/c.jpg" mode=""></image>
+								<image class="text-part-li-first-imgs" :src="detailsobj.news_img" mode=""></image>
 							</view>
 							<view class="text-part-li-title">
-								LPL战队积分榜排名：御三家暂时领跑TES与IG成难兄难弟
+							{{	detailsobj.new_title}}
 							</view>
 							<view class="text-part-li-user">
-								<image class="text-part-li-user-imgs" @click="lookpage" src="../../images/gg.jpg" mode=""></image>
+								<image class="text-part-li-user-imgs" @click="lookpage" :src="detailsobj.new_author_head_url" mode=""></image>
 								<view class="text-part-li-user-text">
-									<text class="text-part-li-user-text-secation">联盟资讯BOT</text>
-									<text class="text-part-li-user-text-times">5分钟前</text>
+									<text class="text-part-li-user-text-secation">{{detailsobj.new_author}}</text>
+									<text class="text-part-li-user-text-times">{{detailsobj.news_add_time}}</text>
 								</view>
 								<view class="text-part-li-user-close" :class="{'text-part-li-user-close-maded':madeid===1}" >
 									
-								   <view class="text-part-li-user-close-mide" @click="fn" v-if="madeid===0" >
+								   <view class="text-part-li-user-close-mide" @click="attention" v-if="madeid===0" >
 									  
 								   	+关注
 								   </view>
-								<view class="text-part-li-user-close-mide" @click="fnt" v-if="madeid===1">
+								<view class="text-part-li-user-close-mide" @click="unfollow" v-if=" madeid===1">
 								    已关注
 								   </view>
 								</view>
@@ -59,15 +59,33 @@
 								<view class="text-part-li-user-list-ul">
 									<view class="text-part-li-user-list-li">
 										<view class="text-part-li-user-list-li-action">
-										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规 										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规
+										{{detailsobj.news_p1}}
 										</view>
-										<image class="text-part-li-user-list-li-imgs" src="../../images/ak.jpg" mode=""></image>
+										<image class="text-part-li-user-list-li-imgs" v-if="detailsobj.news_p3_img===''?false:detailsobj.news_p3_img" :src="detailsobj.news_p3_img" mode=""></image>
 									</view>
 									<view class="text-part-li-user-list-li">
 										<view class="text-part-li-user-list-li-action">
-										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规 										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规
+										{{detailsobj.news_p2}}
 										</view>
-										<image class="text-part-li-user-list-li-imgs" src="../../images/ak.jpg" mode=""></image>
+									
+									</view>
+									<view class="text-part-li-user-list-li">
+										<view class="text-part-li-user-list-li-action">
+										{{detailsobj.news_p4}}
+										</view>
+									
+									</view>
+									<view class="text-part-li-user-list-li">
+										<view class="text-part-li-user-list-li-action">
+										{{detailsobj.news_p5}}
+										</view>
+									
+									</view>
+									<view class="text-part-li-user-list-li">
+										<view class="text-part-li-user-list-li-action">
+										{{detailsobj.news_p6}}
+										</view>
+									
 									</view>
 									
 								</view>
@@ -76,6 +94,14 @@
 						
 						</view>
 					</view>
+					<view class="article_like">
+					<view class="article_like_icon">
+						<image class="imgs" src="../../images/like.png" mode=""></image>
+					</view>
+					<view class="article_like_number">
+						{{detailsobj.news_show_num}}人喜欢
+					</view>
+						</view>
 					<!-- 文章评论 -->
 						<view class="comments"  >
 							<view class="comments-number">
@@ -274,20 +300,73 @@
 					{id:2,title:'评论'}
 				],
 				//文章评论
-				comment:[]
+				comment:[],
+				detailsobj:{},
+				detalisID:'',
 			} 
 		},
 		onLoad(options){
 			// this.detailData = JSON.parse(options.data);
+	        this.detalisID = JSON.parse(options.item)
 			this.loadNewsList();
 			this.loadEvaList();
 			this.comment = comment
 			
 		},
-		mounted() {
+		onShow() {
+			
+			 
+			// if () {
+				
+			// }
+		},
+	async mounted() {
+		const user_id = uni.getStorageSync('user_id')
+		if (user_id==='') {
+			this.madeid = 0
+		}
 		
+		// if (user_id==='') {
+		// 	uni.showModal({
+		// 		title:'该功能需要登录使用',
+		// 		success:(res)=> {
+		// 			if (res.confirm) {
+		// 		    uni.navigateTo({
+		// 		    	url:'../login/login'
+		// 		    })
+		// 			 // this.detailsobj.is_attention = ''
+		// 			}
+		// 		}
+		// 	})
+		// }
+	    await this.getSquareNewsDetail()
+			if ( this.detailsobj.is_attention===1) {
+				this.madeid=1
+			}
+			if ( this.detailsobj.is_attention===0) {
+				this.madeid=0
+			}
 		},
 		methods: {
+			//发布资讯详情
+			async getSquareNewsDetail () {
+				 const user_id = uni.getStorageSync('user_id')
+				
+				 const data = await this.$http.post('/api/getSquareNewsDetail',{
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+					 news_id:this.detalisID,
+					 user_id:user_id
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+			
+					   this.detailsobj = DATA
+					   
+					   	console.log(   this.detailsobj)
+					
+					}
+			},
 			//转发
 			retransmission () {
 		
@@ -309,17 +388,73 @@
 				// })
 			},
 			iconleft () {
-				uni.switchTab({
-					url:'../index/index'
-				})
+				// uni.switchTab({
+				// 	url:'../index/index'
+				// })
+				uni.navigateBack()
 			},
-			fn () {
-				  
-				this.madeid=1
-			},
-			fnt () {
-			this.madeid=0
+			async attention () {
+				if (this.detailsobj.is_attention==='') {
+					uni.showModal({
+						title:'提示',
+						content:'该功能需要登录使用',
+						success:(res)=> {
+							if (res.confirm) {
+						    uni.navigateTo({
+						    	url:'../login/login'
+						    })
+							 // this.detailsobj.is_attention = ''
+							}
+						}
+					})
+				}
 			
+				const user_id = uni.getStorageSync('user_id')
+				
+				let data = await this.$http.post('/api/addRecommend',{
+				 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				 user_id:user_id,
+				 child_id:this.detailsobj.user_id			
+				});
+				console.log(this.detailsobj )
+			
+				const {CODE} = data
+				if (CODE==='200') {
+					this.madeid =  this.detailsobj.is_attention
+					this.madeid = 1
+		        	this.getSquareNewsDetail()
+					console.log(this.madeid )
+					
+				
+				}
+			},
+			
+		async unfollow () {
+			const user_id = uni.getStorageSync('user_id')
+			
+			let data = await this.$http.post('/api/cancelRecommend',{
+			 token:'d6a2fa16e60777e390256ec85cc2f42e',
+			 user_id:user_id,
+			 child_id:this.detailsobj.user_id			
+			});
+		    const {CODE,DATA} = data
+			uni.showModal({
+				title:'确定取消关注？',
+				success: (res)=> {
+					if (res.confirm) {
+					if (CODE==='200') {
+						this.madeid =  this.detailsobj.is_attention
+						this.madeid = 0
+						this.getSquareNewsDetail()
+						console.log(this.madeid )
+						
+					   }
+					}
+				}
+			})
+			
+			
+		
 			},
 			changeclick (va) {
 	           this.currindex=va
@@ -533,6 +668,7 @@
 					display: flex;
 				.input-box-right-li {
 					display: flex;
+					align-items: center;
 					margin-right: 38upx;
 					margin-top: 10upx;
 					.input-box-right-icon {
@@ -650,7 +786,42 @@
 			
 	       	height: 100%;
 			.text-part {
+				.article_like {
+			
+				width: 195upx;
+				height: 58upx; 
+				margin:  0 auto;
+				border: 1px solid #FD652A;
+				border-radius: 29upx;
+				display: flex;
+				justify-content: center;
+							
+					padding-right: 18upx;
+				.article_like_icon {
+					flex: 1;	
+					padding-left: 18upx;
+					margin-top: 2px;
+					.imgs {
+						width: 30upx;
+						height: 26upx;
+					}
+				 }
+				  .article_like_number {
+					// width: 103upx;
+					height: 24upx;
+					font-size: 24upx;
+					font-family: Microsoft YaHei;
+					font-weight: bold;
+					color: #FD652A; 
+					line-height: 43upx;
+					text-align: center;
+					// padding-right: 18upx;
+					margin-top: 2px;
+					// letter-spacing: 1px;
+				   }
+				 }
 				.comments {
+					margin-top: 40upx;
 					.comments-number {
 					 // width: 138upx;
 					 // height: 23upx;
@@ -703,7 +874,7 @@
 								display: flex;
 								flex-direction: column;
 								.text-part-li-user-text-secation {
-									width: 170upx;
+									width: 186upx;
 									// height: 26upx;
 									font-size: 26upx;
 									font-family: Microsoft YaHei;
@@ -748,7 +919,8 @@
 						.text-part-li-user-list {
 							margin-top: 62upx;
 							.text-part-li-user-list-ul {
-								margin-bottom: 200upx;
+								// margin-bottom: 200upx;
+								margin-bottom: 40upx;
 								.text-part-li-user-list-li {
 									margin-bottom: 25upx;
 									.text-part-li-user-list-li-action {

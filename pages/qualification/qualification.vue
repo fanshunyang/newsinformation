@@ -25,33 +25,62 @@
 				<scroll-view  :scroll-y="true" class="scroll-box" >
 				<view class="text-part" v-if="loading===false">
 					<view class="text-part-ul">
-						<view class="text-part-li">
+						<view class="text-part-li" >
 							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" src="../../images/c.jpg" mode=""></image>
+								<image class="text-part-li-first-imgs" :src="particulars.re_news_img_url ||  particulars.special_news_img" mode=""></image>
 							</view>
 							<view class="text-part-li-title">
-								LPL战队积分榜排名：御三家暂时领跑TES与IG成难兄难弟
+								{{particulars.re_news_title || particulars.special_news_title}}
 							</view>
 						
 							<view class="text-part-li-generalize">
-							2021-03-19 04:54:54 作者：笛音
+						{{particulars.re_news_add_time  || particulars.special_news_add_time}} 作者：笛音
 							</view>
 							
 							<view class="text-part-li-user-list">
 								<view class="text-part-li-user-list-ul">
-									<view class="text-part-li-user-list-li">
+									<view class="text-part-li-user-list-li" v-for=" (item,index) in newslistsDetails" :key='index'>
 										<view class="text-part-li-user-list-li-action">
-										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规 										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规
+									    {{  item.re_news_p1 || item.special_news_p1}}
 										</view>
-										<image class="text-part-li-user-list-li-imgs" src="../../images/ak.jpg" mode=""></image>
-									</view>
-									<view class="text-part-li-user-list-li">
+										<image :style="{height:320 + 'upx'}" class="text-part-li-user-list-li-imgs" v-if="item.re_news_p3_img===''?false:item.re_news_p3_img " :src="item.re_news_p3_img " mode=""></image>
+										
+										<image class="text-part-li-user-list-li-imgs"  v-else-if=" item.special_news_p2_img===''?false:item.special_news_p2_img " :src=" item.special_news_p2_img" mode=""></image>
+										
 										<view class="text-part-li-user-list-li-action">
-										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规 										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规										伴随着2021英雄联盟LPL春季赛常规第二周赛程的结束，因为第一周只有两个比赛日的缘故，所以在第二周结束之后，LPL春季赛常规
+										{{  item.re_news_p2 || item.special_news_p3}}
+										</view>
+										<image class="text-part-li-user-list-li-imgs"  v-if="item.re_news_p7_img===''?false:item.re_news_p7_img || item.special_news_p4_img===''?false:item.special_news_p4_img" :src="item.re_news_p7_img || item.special_news_p4_img" mode=""></image>
+										
+											<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p4_img===''?false:item.special_news_p4_img" :src=" item.special_news_p4_img" mode=""></image>
+										
+										<view class="text-part-li-user-list-li-action"  >
+										{{  item.re_news_p6 || item.special_news_p5}}
+										</view>
+										<image class="text-part-li-user-list-li-imgs"  v-if="item.re_news_p11===''?false:item.re_news_p11 " :src="item.re_news_p11 || item.special_news_p8_img" mode=""></image>
+										
+										
+										<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p8_img===''?false:item.special_news_p8_img " :src=" item.special_news_p8_img" mode=""></image>
+										
+										<view class="text-part-li-user-list-li-action">
+										{{  item.re_news_p9 || item.special_news_p16}}
 										</view>
 										
-										<image class="text-part-li-user-list-li-imgs" src="../../images/ak.jpg" mode=""></image>
-									
+										<view class="text-part-li-user-list-li-action">
+										{{  item.re_news_p10 || item.special_news_p16}}
+										</view>
+										
+										<view class="text-part-li-user-list-li-action">
+										{{  item.re_news_13 ||item.special_news_p11}}
+										</view>
+										<image  class="text-part-li-user-list-li-imgs"  v-if="item.re_news_14_img===''?false:item.re_news_14_img "  :src="item.re_news_14_img || item.special_news_p15_img" mode=""></image>
+										
+											<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p15_img===''?false:item.special_news_p15_img "  :src="item.special_news_p15_img" mode=""></image>
+										
+										<view class="text-part-li-user-list-li-action">
+										{{  item.re_news_15 || item.special_news_p16}}
+										</view>
+										
 									</view>
 									
 								</view>
@@ -210,12 +239,12 @@
 						2
 					</view>
 				</view>
-			<view class="input-box-right-li">
+			<view class="input-box-right-li" @tap='enshrine'>
 				<view class="input-box-right-icon el-icon-star-off">
 					
 				</view>
 				<view class="input-box-right-number">
-					2
+					12
 				</view>
 			</view>
 			
@@ -252,6 +281,9 @@
 		data() {
 			return {
 				txt:'',
+			
+				particulars:{},
+				particularslist:[],
 				focus:false,
 				loading: true,
 				madeid:0 ,
@@ -265,20 +297,83 @@
 					{id:2,title:'评论'}
 				],
 				//文章评论
-				comment:[]
+				comment:[],
+			newslistsDetail:{},
+			newslistsDetails:[],
+			detaId:1,
+			ids:1,
+			jourId:1
 			} 
 		},
 		onLoad(options){
+		this.jourId = parseInt( options.items)
+		
+			// const particulars =  JSON.parse(decodeURIComponent(options.item))
+			// this.particulars = particulars
+			// this.particularslist.push(this.particulars)
+		
+			this.detaId =  options.item
+		this.ids =  parseInt(this.detaId)
 			// this.detailData = JSON.parse(options.data);
-			this.loadNewsList();
-			this.loadEvaList();
+			
+			
 			this.comment = comment
 			
 		},
 		mounted() {
-		
+			this.loadNewsList();
+			this.loadEvaList();
+		this.getRecommendNewsDetail()
+		this.getSpecialDetail()
 		},
 		methods: {
+			//推荐新闻资讯详情
+			async getRecommendNewsDetail () {
+			
+				// tabnav
+				let idst = this.ids
+				console.log(idst)
+				 let data = await this.$http.post('/api/getRecommendNewsDetail',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						re_id:idst,
+						// search_value:'腾讯'
+					
+				 });
+				  
+					const {DATA} = data
+					if (data.CODE==='200') {
+						  console.log(DATA);
+						this.newslistsDetail = DATA
+						this.particulars = this.newslistsDetail
+						this.newslistsDetails.push(this.newslistsDetail) 
+				
+					 uni.setStorageSync('show', DATA.re_news_show);
+					}
+			},
+			//专题新闻资讯详情
+			async getSpecialDetail () {
+			
+			
+				 let data = await this.$http.post('/api/getSpecialDetail',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						id:this.jourId,
+						// search_value:'腾讯'
+					
+				 });
+				  
+					const {DATA} = data
+					if (data.CODE==='200') {
+						
+						  this.newslistsDetail = DATA
+						  this.particulars = this.newslistsDetail
+						  this.newslistsDetails.push(this.newslistsDetail) 
+				// 		this.newslistsDetail = DATA
+				// 		this.particulars = this.newslistsDetail
+				// 		this.newslistsDetails.push(this.newslistsDetail) 
+				
+				// 	 uni.setStorageSync('show', DATA.re_news_show);
+					}
+			},
 			//转发
 			retransmission () {
 		
@@ -300,9 +395,25 @@
 				// })
 			},
 			iconleft () {
-				uni.switchTab({
-					url:'../index/index'
-				})
+				// uni.switchTab({
+				// 	url:'../index/index'
+				// })
+				uni.navigateBack()
+			},
+			//收藏
+		async	enshrine () {
+			 const user_id = uni.getStorageSync('user_id')
+				let data = await this.$http.post('/api/addDetailCollect',{
+				 detail_id:this.ids,
+				 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				 user_id:user_id,
+				 place_param:'news'
+				});
+				console.log(data)
+				const {CODE} = data
+			    if (CODE==="ERROR001") {
+			
+			     }
 			},
 			fn () {
 				  
@@ -690,7 +801,7 @@
 									}
 									.text-part-li-user-list-li-imgs {
 										width: 750upx;
-										height: 280upx;
+										height: 750upx;
 									}
 								}
 							}
