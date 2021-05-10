@@ -315,7 +315,7 @@
 				//下拉加载
 				// loadMoreStatus:0,
 				//切换轮播的id
-				tabCurrentIndex:1,
+				tabCurrentIndex:2,
 				//推荐列表
 				tabBars: [],
 				//滑动scroll
@@ -468,7 +468,7 @@
 					const {DATA} = data
 					if (data.CODE==='200') {
 					   this.classtype = DATA
-					  
+				
 					}
 			},
 			//获取游戏社区
@@ -488,7 +488,7 @@
 					  
 					   this.classify_item = DATA
 					   this.list = DATA
-					    	console.log(  this.classify_item )
+					    	console.log(   this.list )
 					}
 			},
 			
@@ -653,7 +653,7 @@
 				this.radiohide = true
 				this.icon_hide = true
 				this.addinferior = true
-				console.log()
+			
 			if (this.classtype) {
 			  this.content_hide = false
 			  this.addinferior = false
@@ -683,11 +683,10 @@
 					    console.log(data);
 						const {DATA,CODE} = data
 						if (CODE==='200') {
-				
-						
-						 // const tailor =  this.classtype.splice(va,1)
-						 this.getMyCommunity()
-						 this.getAllCommunity()
+							
+							await this.getMyCommunity()  
+					
+					    	 this.getAllCommunity()
 						}
 				
 					console.log(this.classtype)

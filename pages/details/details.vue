@@ -246,11 +246,12 @@
 					</view>
 				</view>
 			<view class="input-box-right-li">
-				<view class="input-box-right-icon el-icon-star-off">
-					
-				</view>
+			<view  @tap='enshrine' class="input-box-right-icon el-icon-star-off" v-if="favorite===0">
+				
+			</view>
+			<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
-					2
+					12
 				</view>
 			</view>
 			
@@ -286,6 +287,7 @@
 		},  
 		data() {
 			return {
+				favorite:0,
 				txt:'',
 				focus:false,
 				loading: true,
@@ -339,13 +341,8 @@
 		// 		}
 		// 	})
 		// }
-	    await this.getSquareNewsDetail()
-			if ( this.detailsobj.is_attention===1) {
-				this.madeid=1
-			}
-			if ( this.detailsobj.is_attention===0) {
-				this.madeid=0
-			}
+	     this.getSquareNewsDetail()
+		
 		},
 		methods: {
 			//发布资讯详情
@@ -363,7 +360,20 @@
 			
 					   this.detailsobj = DATA
 					   
-					   	console.log(   this.detailsobj)
+					   	console.log(  this.detailsobj)
+					
+						if ( this.detailsobj.is_attention===1) {
+							this.madeid=1
+						}
+						if ( this.detailsobj.is_attention===0) {
+							this.madeid=0
+						}
+					
+						if (this.detailsobj.is_collect===0) {
+								this.favorite = 0
+						} else if (this.detailsobj.is_collect===1) {
+								this.favorite = 1
+						}
 					
 					}
 			},
@@ -491,6 +501,43 @@
 			countermand () {
 				this.$refs.popup.close()
 			},
+			//收藏
+			async	enshrine () {
+				 const user_id = uni.getStorageSync('user_id')
+					let data = await this.$http.post('/api/addDetailCollect',{
+					 detail_id:this.detalisID,
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+					 user_id:user_id,
+					 place_param:'topic'
+					});
+					console.log(data)
+					const {CODE} = data
+				    if (CODE==="ERROR001") {
+						uni.showToast({
+								title:'收藏成功',
+							
+						})
+						this.favorite = 1
+				     }
+				},
+				//取消收藏
+				async clearfavorite () {
+					const user_id = uni.getStorageSync('user_id')
+					let data = await this.$http.post('/api/cancelDetailCollect',{
+					 detail_id:this.detalisID,
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+					 user_id:user_id,
+					place_param:'topic'
+				 });
+				 const {CODE} = data
+				   if (CODE==="200") {
+					   uni.showToast({
+					   		title:'收藏取消',
+					   	
+					   })
+					   	this.favorite = 0
+				   }
+				},
 			//查看别人主页
 			lookpage () {
 				uni.navigateTo({

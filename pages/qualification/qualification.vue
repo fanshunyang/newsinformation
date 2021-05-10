@@ -27,7 +27,7 @@
 					<view class="text-part-ul">
 						<view class="text-part-li" >
 							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" :src="particulars.re_news_img_url ||  particulars.special_news_img" mode=""></image>
+								<image class="text-part-li-first-imgs" :src="  particulars.re_news_img_url  ||  particulars.special_news_img " mode=""></image>
 							</view>
 							<view class="text-part-li-title">
 								{{particulars.re_news_title || particulars.special_news_title}}
@@ -232,19 +232,23 @@
 		  	</view>
 			<view class="input-box-right">
 				<view class="input-box-right-li">
-					<view class="input-box-right-icon">
+					<view class="input-box-right-icon" v-if="favorites===0" @tap='assist'>
 						<image class="imgs" src="../../images/zan.png" mode=""></image>
 					</view>
+					<view class="input-box-right-icon" v-if="favorites===1" @tap='clearassist'>
+						<image class="imgs" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;"  src="../../images/zanxuan.png" mode=""></image>
+					</view>
 					<view class="input-box-right-number">
-						2
+					<!-- {{particulars.numsArray.dianzan_num}} -->
 					</view>
 				</view>
-			<view class="input-box-right-li" @tap='enshrine'>
-				<view class="input-box-right-icon el-icon-star-off">
+			<view class="input-box-right-li">
+				<view  @tap='enshrine' class="input-box-right-icon el-icon-star-off" v-if="favorite===0">
 					
 				</view>
+				<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
-					12
+					<!-- {{particulars.numsArray.collect_num}} -->
 				</view>
 			</view>
 			
@@ -281,7 +285,8 @@
 		data() {
 			return {
 				txt:'',
-			
+				favorite:0,
+				favorites:0,
 				particulars:{},
 				particularslist:[],
 				focus:false,
@@ -307,7 +312,7 @@
 		},
 		onLoad(options){
 		this.jourId = parseInt( options.items)
-		
+		console.log(this.jourId)
 			// const particulars =  JSON.parse(decodeURIComponent(options.item))
 			// this.particulars = particulars
 			// this.particularslist.push(this.particulars)
@@ -320,11 +325,13 @@
 			this.comment = comment
 			
 		},
-		mounted() {
+		async mounted() {
 			this.loadNewsList();
 			this.loadEvaList();
 		this.getRecommendNewsDetail()
 		this.getSpecialDetail()
+	
+		
 		},
 		methods: {
 			//推荐新闻资讯详情
@@ -333,30 +340,49 @@
 				// tabnav
 				let idst = this.ids
 				console.log(idst)
+					 const user_id = uni.getStorageSync('user_id')
 				 let data = await this.$http.post('/api/getRecommendNewsDetail',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 						re_id:idst,
+						user_id:user_id
 						// search_value:'腾讯'
 					
 				 });
 				  
 					const {DATA} = data
 					if (data.CODE==='200') {
-						  console.log(DATA);
+				
 						this.newslistsDetail = DATA
 						this.particulars = this.newslistsDetail
 						this.newslistsDetails.push(this.newslistsDetail) 
-				
-					 uni.setStorageSync('show', DATA.re_news_show);
+				console.log(this.particulars)
+					 // uni.setStorageSync('show', DATA.re_news_show);
+					}
+					if (DATA.is_collect===0  ) {
+								this.favorite = 0	
+							
+					} else if (DATA.is_collect===1 ) {
+							this.favorite = 1
+							
+					}
+					
+					if (DATA.is_dianzan===0  ) {
+							
+							    this.favorites = 0 
+					} else if (DATA.is_dianzan===1 ) {
+						
+							this.favorites = 1
 					}
 			},
 			//专题新闻资讯详情
 			async getSpecialDetail () {
 			
+				 const user_id = uni.getStorageSync('user_id')
 			
 				 let data = await this.$http.post('/api/getSpecialDetail',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 						id:this.jourId,
+						user_id:user_id
 						// search_value:'腾讯'
 					
 				 });
@@ -366,6 +392,7 @@
 						
 						  this.newslistsDetail = DATA
 						  this.particulars = this.newslistsDetail
+						  console.log(  this.particulars)
 						  this.newslistsDetails.push(this.newslistsDetail) 
 				// 		this.newslistsDetail = DATA
 				// 		this.particulars = this.newslistsDetail
@@ -404,7 +431,7 @@
 		async	enshrine () {
 			 const user_id = uni.getStorageSync('user_id')
 				let data = await this.$http.post('/api/addDetailCollect',{
-				 detail_id:this.ids,
+				 detail_id:this.ids || this.jourId,
 				 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 user_id:user_id,
 				 place_param:'news'
@@ -412,9 +439,67 @@
 				console.log(data)
 				const {CODE} = data
 			    if (CODE==="ERROR001") {
-			
+					uni.showToast({
+							title:'收藏成功',
+						
+					})
+					this.favorite = 1
+					this.getRecommendNewsDetail()
 			     }
 			},
+			//取消收藏
+			async clearfavorite () {
+				const user_id = uni.getStorageSync('user_id')
+				let data = await this.$http.post('/api/cancelDetailCollect',{
+				 detail_id:this.ids || this.jourId,
+				 token:'d6a2fa16e60777e390256ec85cc2f42e',
+				 user_id:user_id,
+				place_param:'news'
+			 });
+			 const {CODE} = data
+			   if (CODE==="200") {
+				   uni.showToast({
+				   		title:'收藏取消',
+				   	
+				   })
+				   	this.favorite = 0
+					this.getRecommendNewsDetail()
+			   }
+			},
+			
+			//点赞
+			async	assist () {
+				 const user_id = uni.getStorageSync('user_id')
+					let data = await this.$http.post('/api/addDetailDianZan',{
+					 detail_id:this.ids || this.jourId,
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+					 user_id:user_id,
+					 place_param:'news'
+					});
+					console.log(data)
+					const {CODE} = data
+				    if (CODE==="ERROR001") {
+						
+						this.favorites = 1
+						this.getRecommendNewsDetail()
+				     }
+				},
+				//取消点赞
+				async clearassist () {
+					const user_id = uni.getStorageSync('user_id')
+					let data = await this.$http.post('/api/cancelDetailDianZan',{
+					 detail_id:this.ids || this.jourId,
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+					 user_id:user_id,
+					place_param:'news'
+				 });
+				 const {CODE} = data
+				   if (CODE==="200") {
+					 
+					   	this.favorites = 0
+						this.getRecommendNewsDetail()
+				   }
+				},
 			fn () {
 				  
 				this.madeid=1

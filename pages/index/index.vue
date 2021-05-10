@@ -616,6 +616,7 @@
 		this.getEspecialCat()
 		
 		this.gambit()
+	
 		},
 		onReady(){
 			/**
@@ -773,12 +774,12 @@
 		},
 		//推荐新闻资讯
 		async getRecommendNews () {
-		
+			
 			 let data = await this.$http.post('/api/getRecommendNews',{
 				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 					re_c_id:this.tabCurrentIndex,
 					// search_value:'腾讯' 
-				
+				 
 			 });
 			    // console.log(data);
 				const {DATA} = data

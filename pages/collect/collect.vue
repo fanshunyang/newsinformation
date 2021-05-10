@@ -19,13 +19,13 @@
 					<view class="recommend-list-li" @tap='maidan(item)' v-for="(item,index) in maidanList">
 						<view class="recommend-list-li-top" >
 						<view class="recommend-list-li-desc" style="display: flex; flex: 1;">
-							<image class="recommend-list-li-imgs" src="../../images/cj.jpg" mode=""></image>
+							<image class="recommend-list-li-imgs" v-if="currIndex===1" :src="item.new_author_head_url" mode=""></image>
 							<view class="recommend-list-li-label">
 								<view class="recommend-list-li-label-top">
-								{{item.new_author}}
+								{{item.re_news_title || item.new_author }}
 								</view>
 								<view class="recommend-list-li-label-bottom">
-								{{item.news_add_time}}
+								{{item.re_news_intro || item.new_title }}
 								</view>
 							</view>
 						  </view>
@@ -35,18 +35,18 @@
 										
 									</view> -->
 									<image class="imgs" src="../../images/zanxuan.png" mode=""></image>
-									<view class="recommend-list-li-area-number-left">
+									<!-- <view class="recommend-list-li-area-number-left">
 										11
-									</view>
+									</view> -->
 								</view>
 								<view class="recommend-list-li-area-right" v-if="currIndex===1">
 									<image class="imgs" src="../../images/shouxuan.png" mode=""></image>
 									<!-- <view class="recommend-list-li-area-icon-right el-icon-chat-dot-square">
 										
 									</view> -->
-									<view class="recommend-list-li-area-number-right">
+								<!-- 	<view class="recommend-list-li-area-number-right">
 										221
-									</view>
+									</view> -->
 								</view>
 													
 													
@@ -63,7 +63,7 @@
 							
 							<view class="recommend-list-li-bottom-img-ul">
 								<view class="recommend-list-li-bottom-img-li">
-									<image class="imgs" src="../../images/ac.jpg" mode=""></image>
+									<image class="imgs" :src="item.re_news_img_url || item.news_img" mode=""></image>
 								</view>
 								
 							</view>
@@ -98,8 +98,7 @@
 					{id:2,text:'帖子'},
 				],
 				maidanList:[
-					{id:1,new_author:'豆腐干地方',news_add_time:'2021-4-28',new_title:'但是但是公司的广告费大概多少'},
-					{id:2,new_author:'豆腐干地方',news_add_time:'2021-4-28',new_title:'但是但是公司的广告费大概多少'}
+					
 				]
 			}
 		},
@@ -108,11 +107,26 @@
 			
 		},
 	     mounted() {
-		
+		 this.myCollect()
 		},
 		
 		methods: {
-		
+		async myCollect () {
+				const user_id = uni.getStorageSync('user_id')
+			     let prams = this.currIndex===0?'news':'topic'
+				
+				let data = await this.$http.post('/api/myCollect',{	
+				token:'d6a2fa16e60777e390256ec85cc2f42e',
+		        user_id:user_id,
+			    place_param:prams
+				});
+				// console.log(data)
+				const {CODE,DATA} = data
+				if (CODE==='200') {
+					this.maidanList = DATA
+				
+				}
+			},
 		
 			//返回上一级页面
 			back () {
@@ -123,13 +137,27 @@
 				
 			
 			  this.currIndex = va
+			  console.log(this.currIndex)
+			  this.myCollect()
 			},
 			changItem (va) {
 			
 				this.currIndex = va.detail.current
+				this.myCollect()
 			},
 			
-			
+			maidan (va) {
+			    let id = va.id
+				if (this.currIndex===0) {
+					uni.navigateTo({
+						url:`../qualification/qualification?item=${id}`
+					})
+				} else if (this.currIndex===1) {
+					uni.navigateTo({
+						url:`../details/details?item=${id}`
+					})
+				}
+			},
 		
 			
 		}
