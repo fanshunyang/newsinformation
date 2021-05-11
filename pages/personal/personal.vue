@@ -22,9 +22,9 @@
 		      
 		        <image :src="cropFilePath" mode="aspectFit" style="width: 100%;"></image> -->
 		
-		<image class="imgs" src="../../images/cj.jpg" mode=""></image>
+		<image v-if="initialimgs" class="imgs" :src=" 'http://www.app.youxun.com/' + user_item.user_head_url" mode=""></image>
 		  <imagecropper :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
-		 <image @tap="upload" :src="cropFilePath" mode="aspectFit" style="width: 100upx; height: 100upx; border-radius: 50%; position: absolute; right: 10px; z-index: 222;"></image> 
+		 <image @tap="upload" :src="cropFilePath " mode="aspectFit" style="width: 100upx; height: 100upx; border-radius: 50%; position: absolute; right: 10px; z-index: 222;"></image> 
 	 </view>
 	 <view class="personal-list">
 	 	<view class="ul">
@@ -34,7 +34,7 @@
 	 			</view>
 				<view class="li-message">
 				
-				<input v-model="nickname" @input="nicknamechange" class="input" type="text" placeholder="王者荣耀" value="" />
+				<input v-model="nickname" @input="nicknamechange" class="input" type="text" :placeholder="user_item.user_name || username" value="" />
 				</view>
 	 		</view>
 			<view class="li">
@@ -43,7 +43,7 @@
 				</view>
 				<view class="li-message">
 				
-				<input @input="personalizedchange" v-model="personalized" class="input" type="text" placeholder="你的月亮代表我的心" value="" />
+				<input @input="personalizedchange" v-model="personalized" class="input" type="text" :placeholder="user_item.user_signature || signaturenames" value="" />
 				</view>
 			</view>
 			<view class="li">
@@ -52,14 +52,14 @@
 				</view>
 				<view class="li-message">
 			
-				<ldSelect value-key="value"    placeholder="选填"   @change="selectChange"  :list="options"   v-model="value"></ldSelect>
+				<ldSelect value-key="label"    :placeholder="user_item.user_sex || sexlabel"   @change="selectChange"  :list="options"   v-model="value"></ldSelect>
 			<!-- 	<input class="input" type="text" placeholder="发生的" value="" /> -->
 				</view>
 			</view>
-			<view class="li" @tap='birthday'>
+			<!-- <view class="li" @tap='birthday'>
 				<view class="li-nickname">
 				
-				生日
+				年龄
 				</view>
 				<view class="li-message">
 						{{values}}
@@ -79,7 +79,16 @@
 				</popup>
 			
 			
-				<!-- <input class="input" type="text" placeholder="发生的" value="" /> -->
+			
+				</view>
+			</view> -->
+			<view class="li">
+				<view class="li-nickname">
+			      年龄
+				</view>
+				<view class="li-message">
+				
+				<input class="input" @input='em_userage' v-model="userage" type="text" :placeholder="user_item.user_age || pleadr_eage " value="" />
 				</view>
 			</view>
 			<view class="li">
@@ -88,7 +97,7 @@
 				</view>
 				<view class="li-message">
 				
-				<input class="input" @input='em_ail' v-model="email" type="text" placeholder="请输入您的邮箱" value="" />
+				<input class="input" @input='em_ail' v-model="email" type="text" :placeholder="user_item.user_email || pleadr_eamil " value="" />
 				</view>
 			</view>
 			<view class="li">
@@ -98,7 +107,7 @@
 				<view class="li-message">
 			
 			
-				<vvSelect @change="pickerChanges"  v-model="categoryCode" placeholder="请选择所属类别" :list="categorys" valueKey="value" label="label"></vvSelect>
+				<vvSelect @change="pickerChanges"  v-model="categoryCode" :placeholder="user_item.user_education || selectcate" :list="categorys" valueKey="label" label="label"></vvSelect>
 				
 				<!-- <input class="input" type="text" placeholder="发生的" value="" /> -->
 				</view>
@@ -108,7 +117,7 @@
 			     职业
 				</view>
 				<view class="li-message">
-					<vvSelect @change="occupationchange"  v-model="occupation" placeholder="请选择所属类别" :list="categoryst" valueKey="value" label="label"></vvSelect>
+					<vvSelect @change="occupationchange"  v-model="occupation" :placeholder="user_item.user_occupation || selectcates" :list="categoryst" valueKey="label" label="label"></vvSelect>
 				<!-- <input class="input" type="text" placeholder="发生的" value="" /> -->
 				</view>
 			</view>
@@ -138,6 +147,19 @@
 			return {
 				hide:true,
 				tempFilePath:'',
+				userage:'',
+				username:'请输入您的名称',
+				sexlabel:'请选择',
+				signaturenames:'请输入您的个性签名',
+				selectcate:'请选择',
+				selectcates:'请选择',
+				pleadr_eamil:'请输入您的邮箱',
+				pleadr_eage:'请输入您的年龄',
+				user_item:{},
+				initialimgs:true,
+				user_url:'',
+				education:'',
+				occupationst:'',
 				email:'',
 				values:'',
 				cropFilePath:'',
@@ -196,27 +218,50 @@
 				// ]
 			}
 		},
-		onLoad() {
-			
+		onLoad(va) {
+		const user_item = 	JSON.parse(va.item)
+		
+			this.user_item = user_item
 			            // 回显
 			            // setTimeout(function(){
 			            //     that.value2 = ['选项2','选项4']
 			            // }, 2000)
 		},
 		mounted() {
-			
+		
 		},
 		methods: {
+			 async updatePersonalInfo () {
+					 const user_id = uni.getStorageSync('user_id')
+				     let data = await this.$http.post('/api/updatePersonalInfo',{
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
+					 user_id:user_id,
+					 user_name:this.nickname,
+					 user_age:this.userage,
+					 user_sex:this.value,
+					 user_head_url:this.user_url,
+					 user_occupation:this.occupationst,
+					 user_email:this.email,
+					 user_education:this.education,
+					 user_signature:this.personalized,
+					 
+					
+				 });
+				 console.log(data)
+			}, 
 			//返回上一级
 			back () {
 			  uni.navigateBack()
 			},
+			
 			//保存
 			save () {
+			
 				uni.showLoading({
 					title:'保存中',
-					success: (res) => {
-						console.log(res)
+					success: async (res) => {
+					await this.updatePersonalInfo()
+						
 						setTimeout(()=>{
 				            uni.hideLoading();
 						    uni.navigateTo({
@@ -237,17 +282,31 @@
 				     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 				     sourceType: ['album'], //从相册选择
 				      success: (res) => {
-					
+						console.log(res)
 				      this.tempFilePath = res.tempFilePaths.shift()
 					  
 				      }
 				   });
 			},
 			//确定裁剪
-			confirm (e) {
-				  this.tempFilePath = ''
-				   this.cropFilePath = e.detail.tempFilePath
-				 
+		async	confirm (e) {
+			this.tempFilePath = ''
+			 this.cropFilePath = e.detail.tempFilePath
+			const user_id = uni.getStorageSync('user_id')
+			let data = await this.$http.post('/api/uploadFile',{
+		     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+			user_id:user_id,
+			path:'my',
+			file: this.cropFilePath				
+			});
+				if (this.cropFilePath) {
+					this.initialimgs = false
+				}
+				const {CODE,DATA} = data
+			    if (CODE==='200') {
+				this.user_url = DATA
+			
+			    }
 			},
 			//取消裁剪
 			cancels () {
@@ -272,34 +331,41 @@
 			},
 			selectChange (val) {
 			  this.value = val
+			  console.log(  this.value )
 			},
-			birthday () {
-				  // this.show = true
-			 this.$refs.popup.open()
-			},
+			// birthday () {
+			// 	  // this.show = true
+			//  this.$refs.popup.open()
+			// },
 			// 确认事件
-			sure(e){
+			// sure(e){
 				
-				let times = e.a + '年' + e.b + '月' + e.c + '日'
-				this.values = times
-				if (this.values) {
-					this.hide =false  
+			// 	let times = e.a + '年' + e.b + '月' + e.c + '日'
+			// 	this.values = times
+			// 	if (this.values) {
+			// 		this.hide =false  
 				
-				}
-			  this.$refs.popup.close()
+			// 	}
+			// 	console.log(	this.values)
+			//   this.$refs.popup.close()
 			
 			
-			    // 输出 { year: 2020,month: 3,day: 23}
-			},
+			//     // 输出 { year: 2020,month: 3,day: 23}
+			// },
 			//取消
-			close(){
-			   this.$refs.popup.close()
-			},
+			// close(){
+			//    this.$refs.popup.close()
+			// },
 			occupationchange (e) {
-				console.log(e)
+			this.occupationst = e
 			},
 			pickerChanges (e) {
-					console.log(e)
+			this.education = e
+			},
+			//年龄
+			em_userage (va) {
+			  this.userage = va.detail.value
+			  console.log(  this.userage)
 			},
 			//邮箱
 			em_ail (va) {
