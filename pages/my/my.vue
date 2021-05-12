@@ -16,8 +16,8 @@
 		</view>
 		<scroll-view scroll-y="true" style="height: 100%;">
 			<view class="my-material" v-if='access_token || user_id' >
-				<view class="my-material-top" @tap='materialSetting'>
-					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src="materialobj.user_head_url" mode=""></image>
+				<view class="my-material-top" >
+					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" 'http://www.app.youxun.com/' + materialobj.user_head_url" mode=""></image>
 					
 					<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
 					
@@ -26,7 +26,7 @@
 							{{materialobj.user_name}}
 						</view>
 						<view class="material-disclosure-desc">
-							点击编辑个性签名
+						{{	materialobj.user_signature}}
 						</view>
 					</view>
 					<view class="my-material-top-icon el-icon-arrow-right">
@@ -255,13 +255,13 @@
 			  })
 		  },
 		  //到个人信息页面
-		  materialSetting () {
-			  uni.setStorageSync('token', this.token);
-			  uni.navigateTo({
-			  	url:'../personal/personal',
+		  // materialSetting () {
+			 //  uni.setStorageSync('token', this.token);
+			 //  uni.navigateTo({
+			 //  	url:'../personal/personal',
 				
-			  }) 
-		  },
+			 //  }) 
+		  // },
 		  //设置
 		  Setting () {
 			    uni.setStorageSync('token', this.token);

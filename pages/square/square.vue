@@ -684,9 +684,9 @@
 						const {DATA,CODE} = data
 						if (CODE==='200') {
 							
-							await this.getMyCommunity()  
+							 this.getMyCommunity()  && this.getAllCommunity()
 					
-					    	 this.getAllCommunity()
+					    	 
 						}
 				
 					console.log(this.classtype)

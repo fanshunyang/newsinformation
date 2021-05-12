@@ -258,6 +258,7 @@
                         destWidth: _this.cropW * pixelRatio,
                         destHeight: _this.cropH * pixelRatio,
                         success: (res) => {
+						
                             uni.hideLoading()
                             event.detail.tempFilePath = res.tempFilePath
                             _this.show = false

@@ -1,9 +1,10 @@
 {
-    "id": "zk-share-column",
-    "name": "分享栏",
-    "version": "1.0.1",
-    "description": "分享app时弹出的app栏",
+    "id": "fjj-images",
+    "name": "tongtong-图片上传预览",
+    "version": "1.0.6",
+    "description": "简单易用上传图片组件，可设置数量、预览、删除。",
     "keywords": [
-        "组件"
+        "上传",
+        "图片"
     ]
 }

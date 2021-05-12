@@ -238,11 +238,14 @@
 		  	</view>
 			<view class="input-box-right">
 				<view class="input-box-right-li">
-					<view class="input-box-right-icon">
+					<view class="input-box-right-icon" @tap='somebody'  v-if="favorites===0">
 						<image class="imgs" src="../../images/zan.png" mode=""></image>
 					</view>
+					<view class="input-box-right-icon" @tap='clearsomebody'  v-if="favorites===1">
+						<image  style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" class="imgs" src="../../images/zanxuan.png" mode=""></image>
+					</view>
 					<view class="input-box-right-number">
-						2
+						{{detailsobj.numsArray.dianzan_num}}
 					</view>
 				</view>
 			<view class="input-box-right-li">
@@ -251,7 +254,7 @@
 			</view>
 			<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
-					12
+						{{detailsobj.numsArray.collect_num}}
 				</view>
 			</view>
 			
@@ -288,6 +291,7 @@
 		data() {
 			return {
 				favorite:0,
+				favorites:0,
 				txt:'',
 				focus:false,
 				loading: true,
@@ -374,7 +378,11 @@
 						} else if (this.detailsobj.is_collect===1) {
 								this.favorite = 1
 						}
-					
+					   if (this.detailsobj.is_dianzan===0) {
+					   		this.favorites = 0
+					   } else if (this.detailsobj.is_dianzan===1) {
+					   		this.favorites = 1
+					   }
 					}
 			},
 			//转发
@@ -538,6 +546,37 @@
 					   	this.favorite = 0
 				   }
 				},
+				//点赞
+				async somebody () {
+					 const user_id = uni.getStorageSync('user_id')
+						let data = await this.$http.post('/api/addDetailDianZan',{
+						 detail_id:this.detalisID,
+						 token:'d6a2fa16e60777e390256ec85cc2f42e',
+						 user_id:user_id,
+						 place_param:'topic'
+						});
+						console.log(data)
+						const {CODE} = data
+					    if (CODE==="ERROR001") {
+						
+							this.favorites = 1
+					     }
+					},
+					//取消点赞
+					async clearsomebody () {
+						const user_id = uni.getStorageSync('user_id')
+						let data = await this.$http.post('/api/cancelDetailDianZan',{
+						 detail_id:this.detalisID,
+						 token:'d6a2fa16e60777e390256ec85cc2f42e',
+						 user_id:user_id,
+						place_param:'topic'
+					 });
+					 const {CODE} = data
+					   if (CODE==="200") {
+						 
+						   	this.favorites = 0
+					   }
+					},
 			//查看别人主页
 			lookpage () {
 				uni.navigateTo({

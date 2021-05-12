@@ -1,10 +1,10 @@
 <template>
 	<view class="setting">
 		<view class="setting-header" v-if="user_id " @tap='modification'>
-			<image class="imgs" src="../../images/cj.jpg" mode=""></image>
+			<image class="imgs" :src=" 'http://www.app.youxun.com/' + materialobj.user_head_url" mode=""></image>
 			<view class="setting-header-sorted">
 				<view class="setting-header-sorted-top">
-					玩家:王者荣耀Bot
+				{{materialobj.user_name}}
 				</view>
 				<view class="setting-header-sorted-bottom">
 				  ID:王者荣耀Bot
@@ -47,6 +47,7 @@
 			access_token:'',
 			user_id:'',
 			value:'',
+			materialobj:{},
 			}
 		},
 		onLoad(va) {
@@ -67,14 +68,29 @@
 		
 		},
 		mounted() {
-			
+		  this.getPersonalInfo()
 		},
 		
 		methods: {
+			//登录成功后个人资料
+			async getPersonalInfo () {
+				const user_id = uni.getStorageSync('user_id')
+				const data = await this.$http.post('/api/getPersonalInfo',{
+				token:'d6a2fa16e60777e390256ec85cc2f42e',
+				user_id:user_id			
+				});
+			
+				const {CODE,DATA} = data
+				if (CODE==='200') {
+					this.materialobj = DATA
+					
+					console.log(this.materialobj)
+				}
+			},
 			//修改个人信息
 			modification () {
 				uni.navigateTo({
-					url:'../personal/personal'
+					url:`../personal/personal?item=${encodeURIComponent (JSON.stringify(this.materialobj))}`
 				})
 			},
 		

@@ -22,7 +22,8 @@
 		      
 		        <image :src="cropFilePath" mode="aspectFit" style="width: 100%;"></image> -->
 		
-		<image v-if="initialimgs" class="imgs" :src=" 'http://www.app.youxun.com/' + user_item.user_head_url" mode=""></image>
+		<image v-if="initialimgs  " class="imgs" src="../../images/cj.jpg" mode=""></image>
+        	<image class="imgs" :src=" 'http://www.app.youxun.com/' +  user_item.user_head_url" mode=""></image>
 		  <imagecropper :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
 		 <image @tap="upload" :src="cropFilePath " mode="aspectFit" style="width: 100upx; height: 100upx; border-radius: 50%; position: absolute; right: 10px; z-index: 222;"></image> 
 	 </view>
@@ -34,7 +35,7 @@
 	 			</view>
 				<view class="li-message">
 				
-				<input v-model="nickname" @input="nicknamechange" class="input" type="text" :placeholder="user_item.user_name || username" value="" />
+				<input v-model="nickname" @input="nicknamechange" class="input" type="text" placeholder="请输入您的昵称" value="" />
 				</view>
 	 		</view>
 			<view class="li">
@@ -43,7 +44,7 @@
 				</view>
 				<view class="li-message">
 				
-				<input @input="personalizedchange" v-model="personalized" class="input" type="text" :placeholder="user_item.user_signature || signaturenames" value="" />
+				<input @input="personalizedchange" v-model="personalized" class="input" type="text" placeholder="请输入您的个性签名" value="" />
 				</view>
 			</view>
 			<view class="li">
@@ -52,7 +53,7 @@
 				</view>
 				<view class="li-message">
 			
-				<ldSelect value-key="label"    :placeholder="user_item.user_sex || sexlabel"   @change="selectChange"  :list="options"   v-model="value"></ldSelect>
+				<ldSelect value-key="label"    placeholder="请选择"   @change="selectChange"  :list="options"   v-model="value"></ldSelect>
 			<!-- 	<input class="input" type="text" placeholder="发生的" value="" /> -->
 				</view>
 			</view>
@@ -88,7 +89,7 @@
 				</view>
 				<view class="li-message">
 				
-				<input class="input" @input='em_userage' v-model="userage" type="text" :placeholder="user_item.user_age || pleadr_eage " value="" />
+				<input class="input" @input='em_userage' v-model="userage" type="text" placeholder="请输入您的年龄" value="" />
 				</view>
 			</view>
 			<view class="li">
@@ -97,7 +98,7 @@
 				</view>
 				<view class="li-message">
 				
-				<input class="input" @input='em_ail' v-model="email" type="text" :placeholder="user_item.user_email || pleadr_eamil " value="" />
+				<input class="input" @input='em_ail' v-model="email" type="text" placeholder="请输入您的邮箱" value="" />
 				</view>
 			</view>
 			<view class="li">
@@ -107,7 +108,7 @@
 				<view class="li-message">
 			
 			
-				<vvSelect @change="pickerChanges"  v-model="categoryCode" :placeholder="user_item.user_education || selectcate" :list="categorys" valueKey="label" label="label"></vvSelect>
+				<vvSelect @change="pickerChanges"  v-model="categoryCode" placeholder="请选择" :list="categorys" valueKey="label" label="label"></vvSelect>
 				
 				<!-- <input class="input" type="text" placeholder="发生的" value="" /> -->
 				</view>
@@ -117,7 +118,7 @@
 			     职业
 				</view>
 				<view class="li-message">
-					<vvSelect @change="occupationchange"  v-model="occupation" :placeholder="user_item.user_occupation || selectcates" :list="categoryst" valueKey="label" label="label"></vvSelect>
+					<vvSelect @change="occupationchange"  v-model="occupation" placeholder="请选择" :list="categoryst" valueKey="label" label="label"></vvSelect>
 				<!-- <input class="input" type="text" placeholder="发生的" value="" /> -->
 				</view>
 			</view>
@@ -148,15 +149,15 @@
 				hide:true,
 				tempFilePath:'',
 				userage:'',
-				username:'请输入您的名称',
-				sexlabel:'请选择',
-				signaturenames:'请输入您的个性签名',
-				selectcate:'请选择',
-				selectcates:'请选择',
-				pleadr_eamil:'请输入您的邮箱',
-				pleadr_eage:'请输入您的年龄',
+				// username:'请输入您的名称',
+				// sexlabel:'请选择',
+				// signaturenames:'请输入您的个性签名',
+				// selectcate:'请选择',
+				// selectcates:'请选择',
+				// pleadr_eamil:'请输入您的邮箱',
+				// pleadr_eage:'请输入您的年龄',
 				user_item:{},
-				initialimgs:true,
+				initialimgs:false,
 				user_url:'',
 				education:'',
 				occupationst:'',
@@ -206,7 +207,8 @@
 								     label: '企业、公司职员',
 								     value: 3
 								   }
-								   ], // 类别list
+								   ],
+								   userid:'',
 				// personal_list:[
 				// 	{id:1,nickname:'昵称',message:'王者荣耀Bot'},
 				// 	{id:2,nickname:'个性签名',message:'为了爱与和平'},
@@ -222,13 +224,19 @@
 		const user_item = 	JSON.parse(va.item)
 		
 			this.user_item = user_item
-			            // 回显
-			            // setTimeout(function(){
-			            //     that.value2 = ['选项2','选项4']
-			            // }, 2000)
+			    const user_id = uni.getStorageSync('user_id')
+				this.userid = user_id
+			
 		},
 		mounted() {
-		
+			this.nickname =this.user_item.user_name
+			this.userage = this.user_item.user_age
+			this.value = this.user_item.user_sex
+			this.user_url = this.user_item.user_head_url
+		    this.occupationst = this.user_item.user_occupation
+			this.email =  this.user_item.user_email
+			this.education = this.user_item.user_education
+			this.personalized =  this.user_item.user_signature
 		},
 		methods: {
 			 async updatePersonalInfo () {
@@ -256,12 +264,10 @@
 			
 			//保存
 			save () {
-			
+			 this.updatePersonalInfo()
 				uni.showLoading({
 					title:'保存中',
-					success: async (res) => {
-					await this.updatePersonalInfo()
-						
+					success:  (res) => {
 						setTimeout(()=>{
 				            uni.hideLoading();
 						    uni.navigateTo({
@@ -278,18 +284,19 @@
 			//图片上传
 			upload () {
 				  uni.chooseImage({
-				     count: 1, //默认9
+				     count:1, //默认9
 				     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 				     sourceType: ['album'], //从相册选择
 				      success: (res) => {
 						console.log(res)
 				      this.tempFilePath = res.tempFilePaths.shift()
-					  
+					  console.log(  this.tempFilePath)
 				      }
 				   });
 			},
 			//确定裁剪
 		async	confirm (e) {
+			console.log(e)
 			this.tempFilePath = ''
 			 this.cropFilePath = e.detail.tempFilePath
 			const user_id = uni.getStorageSync('user_id')

@@ -239,7 +239,7 @@
 						<image class="imgs" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;"  src="../../images/zanxuan.png" mode=""></image>
 					</view>
 					<view class="input-box-right-number">
-					<!-- {{particulars.numsArray.dianzan_num}} -->
+					{{particulars.numsArray.dianzan_num}}
 					</view>
 				</view>
 			<view class="input-box-right-li">
@@ -248,7 +248,7 @@
 				</view>
 				<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
-					<!-- {{particulars.numsArray.collect_num}} -->
+					{{particulars.numsArray.collect_num}}
 				</view>
 			</view>
 			
@@ -392,7 +392,22 @@
 						
 						  this.newslistsDetail = DATA
 						  this.particulars = this.newslistsDetail
-						  console.log(  this.particulars)
+						  console.log( DATA)
+						  if (DATA.is_collect===0  ) {
+						  			this.favorite = 0	
+						  		
+						  } else if (DATA.is_collect===1 ) {
+						  		this.favorite = 1
+						  		
+						  }
+						  
+						  if (DATA.is_dianzan===0  ) {
+						  		
+						  		    this.favorites = 0 
+						  } else if (DATA.is_dianzan===1 ) {
+						  	
+						  		this.favorites = 1
+						  }
 						  this.newslistsDetails.push(this.newslistsDetail) 
 				// 		this.newslistsDetail = DATA
 				// 		this.particulars = this.newslistsDetail
@@ -444,7 +459,8 @@
 						
 					})
 					this.favorite = 1
-					this.getRecommendNewsDetail()
+					this.getRecommendNewsDetail() || this.getSpecialDetail()
+					
 			     }
 			},
 			//取消收藏
@@ -463,7 +479,8 @@
 				   	
 				   })
 				   	this.favorite = 0
-					this.getRecommendNewsDetail()
+					this.getRecommendNewsDetail() || this.getSpecialDetail()
+					
 			   }
 			},
 			
@@ -481,7 +498,8 @@
 				    if (CODE==="ERROR001") {
 						
 						this.favorites = 1
-						this.getRecommendNewsDetail()
+						this.getRecommendNewsDetail() || this.getSpecialDetail()
+				
 				     }
 				},
 				//取消点赞
@@ -497,7 +515,8 @@
 				   if (CODE==="200") {
 					 
 					   	this.favorites = 0
-						this.getRecommendNewsDetail()
+						this.getRecommendNewsDetail() || this.getSpecialDetail()
+					
 				   }
 				},
 			fn () {
