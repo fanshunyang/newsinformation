@@ -16,7 +16,7 @@
 					</view>
 				</view>
 				<view class="feedback-textarea">
-					<textarea  class="textarea" :maxlength='200' v-model="textarea" value="" placeholder="请说明您的反馈信息，我们将不断改进~" />
+					<textarea  class="textarea" :maxlength='200' @input="inpt_textarea" v-model="textarea"  placeholder="请说明您的反馈信息，我们将不断改进~" />
 					<view class="feedback-textarea-calculate ">
 						{{textarea.length}}/200
 					</view>
@@ -42,7 +42,7 @@
 				  
 				  	 <imagecropper :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
 				  					
-				  	 <image @tap="upload" :src="cropFilePath" mode="aspectFit" style="width: 200upx; height: 200upx; border-radius: 12px; position: absolute; left: 30upx; z-index: 222;  "></image> 
+				  	 <image v-if="hideshow" @tap="upload" :src="cropFilePath" mode="aspectFit" style="width: 200upx; height: 200upx; border-radius: 12px; position: absolute; left: 30upx; z-index: 222;  "></image> 
 				  </view>
 				  
 			<!-- 	<view class="li" style="display: flex;" >
@@ -95,12 +95,12 @@
 			return {
 				textarea:'',
 				initialimgs:true,
+				hideshow:true,
 				imgList:[],
 				phoneNumber:'',
 			tempFilePath:'',
 			cropFilePath:'',
-			tempFilePathsp:"",
-			cropFilePathsp:'',
+		
 			user_url:'',
 			}
 		},
@@ -108,10 +108,10 @@
 	
 		},
 		methods: {
-		
+			//意见反馈
 			async opinion () {
 				const user_id = uni.getStorageSync('user_id')
-				const data = await this.$http.post('/api/opinion',{
+				const data = await this.$http.post('/api/addOpinion',{
 				token:'d6a2fa16e60777e390256ec85cc2f42e',
 				user_id:user_id,
 				opinion_title :this.textarea,
@@ -148,6 +148,7 @@
 			async	confirm (e) {
 				this.tempFilePath = ''
 				 this.cropFilePath = e.detail.tempFilePath
+				console.log( this.cropFilePath)
 				
 				const user_id = uni.getStorageSync('user_id')
 				let data = await this.$http.post('/api/uploadFile',{
@@ -251,6 +252,22 @@
 		     //发送
 		     send () {
 			 this.opinion()
+			 uni.showToast({
+				 title:'提交成功',
+				 success:(res)=> {
+					 console.log(res)
+				 	if (res.errMsg) {
+					setTimeout(()=>{
+						uni.reLaunch({
+							url:'../my/my'
+						})
+					},1500)
+					}
+				 }
+			 })
+			 this.phoneNumber = ''
+		     this.textarea  = ''
+			 this.hideshow = false
 	      	},
 			cellphone (va) {
 				if (this.phoneNumber==='') {
@@ -259,6 +276,13 @@
 			   this.phoneNumber = va.detail.value
 			   console.log( this.phoneNumber) 
 			},
+			inpt_textarea (va) {
+				if (this.textarea==='') {
+		           return
+				}
+				this.textarea = va.detail.value
+				console.log( this.textarea) 
+			}
 		}
 	}
 </script>

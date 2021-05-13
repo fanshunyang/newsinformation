@@ -32,13 +32,15 @@
 					<view class="text-part-ul">
 						<view class="text-part-li">
 							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" :src="detailsobj.news_img" mode=""></image>
+								<image class="text-part-li-first-imgs" v-if="detailsobj.news_detail_title==='1'" :src=" 'http://www.app.youxun.com/' + detailsobj.news_img" mode=""></image>
+								<image class="text-part-li-first-imgs" v-else :src="detailsobj.news_img" mode=""></image>
 							</view>
 							<view class="text-part-li-title">
 							{{	detailsobj.new_title}}
 							</view>
 							<view class="text-part-li-user">
-								<image class="text-part-li-user-imgs" @click="lookpage" :src="detailsobj.new_author_head_url" mode=""></image>
+								<image class="text-part-li-user-imgs" v-if="detailsobj.news_detail_title==='1'" @click="lookpage" :src=" 'http://www.app.youxun.com/' + detailsobj.new_author_head_url" mode=""></image>
+								<image class="text-part-li-user-imgs" v-else @click="lookpage" :src="detailsobj.new_author_head_url" mode=""></image>
 								<view class="text-part-li-user-text">
 									<text class="text-part-li-user-text-secation">{{detailsobj.new_author}}</text>
 									<text class="text-part-li-user-text-times">{{detailsobj.news_add_time}}</text>
@@ -313,7 +315,7 @@
 		},
 		onLoad(options){
 			// this.detailData = JSON.parse(options.data);
-	        this.detalisID = JSON.parse(options.item)
+	        this.detalisID = JSON.parse(options.item) 
 			this.loadNewsList();
 			this.loadEvaList();
 			this.comment = comment

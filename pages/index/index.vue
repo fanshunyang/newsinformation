@@ -114,15 +114,16 @@
 							盒友动态
 						</view>
 						<view class="box-firend-ul">
-							<view class="box-firend-li" @click="dynamically">
+							<view class="box-firend-li" v-for="(item,index) in box_firends" :key='index' @tap="dynamically(item)">
 							<view class="box-firend-li-header">
 								<view class="box-firend-li-item-madile">
 									<view class="box-firend-li-item-madile-img">
-										<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
+										<image v-if="item.news_detail_title==='1'" class="box-firend-li-item-madile-item-imgs" :src=" 'http://www.app.youxun.com/' + item.new_author_head_url" mode=""></image>
+										<image v-else class="box-firend-li-item-madile-item-imgs" :src="item.new_author_head_url" mode=""></image>
 									</view>
 									<view class="box-firend-li-item-madile-text">
-										<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-										<text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text>
+										<text class="box-firend-li-item-madile-text-one">{{item.new_author}}</text>
+										<!-- <text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text> -->
 									</view>
 								
 								</view>
@@ -151,15 +152,16 @@
 							</view>
 							<view class="box-firend-li-content">
 								<view class="box-firend-li-content-title">
-									《英雄联盟》山海绘卷概念设计图公布
+									{{item.new_title}}
 								</view>
-								<view class="box-firend-li-content-text">
+								<!-- <view class="box-firend-li-content-text">
 								兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-								</view>
+								</view> -->
 								<view class="box-firend-li-content-img">
 									<view class="box-firend-li-content-img-ul">
-										<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-											<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
+										<view class="box-firend-li-content-img-li">
+											<image v-if="item.news_detail_title==='1'" class="box-firend-li-content-img-li-imgs" :src=" 'http://www.app.youxun.com/' + item.news_img" mode=""></image>
+											<image v-else class="box-firend-li-content-img-li-imgs" :src="item.news_img" mode=""></image>
 										</view>
 									</view>
 								
@@ -580,7 +582,8 @@
 				re_id:1,
 				// re_news_show:'',
 				access_token:'',
-				user_id:''
+				user_id:'',
+				box_firends:[],
 			}
 		},
 		computed: {
@@ -841,6 +844,25 @@
 					
 					this.gametype = DATA
 					console.log(this.gametype) 
+					
+				
+				}
+		},
+		
+		//首页关注最新发布讯息
+		async getEspecialCat () {
+			// tabnav
+			 let data = await this.$http.post('/api/getSquareNews',{
+				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+				
+				
+			 });
+			    // console.log(data);
+				const {DATA} = data
+				if (data.CODE==='200') {
+					
+					this.box_firends = DATA
+					console.log(this.box_firends) 
 					
 				
 				}
@@ -1182,9 +1204,10 @@
 				})
 			},
 			//关注 盒有动态跳转详情
-			dynamically () {
+			dynamically (va) {
+				let id = va.id
 				uni.navigateTo({
-					url:'../details/details'
+					url:`../details/details?item=${id}`
 					// url:'../button/button'
 				})
 			},
@@ -1457,8 +1480,8 @@
 								margin-left: 30upx;
 								margin-right: 30upx;
 								.box-firend-li-content-title {
-									width: 513upx;
-									height: 26upx;
+									/* width: 513upx; */
+									/* height: 26upx; */
 									font-size: 30upx;
 									font-family: Microsoft YaHei;
 									font-weight: bold;
@@ -1511,7 +1534,7 @@
 									.box-firend-li-item-madile-text {
 										margin-left: 24upx;
 										.box-firend-li-item-madile-text-one {
-											width: 180upx;
+											/* width: 180upx; */
 											height: 26upx;
 											font-size: 26upx;
 											font-family: Microsoft YaHei;

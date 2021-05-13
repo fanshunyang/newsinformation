@@ -299,6 +299,7 @@
 			console.log(e)
 			this.tempFilePath = ''
 			 this.cropFilePath = e.detail.tempFilePath
+			 console.log( this.cropFilePath)
 			const user_id = uni.getStorageSync('user_id')
 			let data = await this.$http.post('/api/uploadFile',{
 		     token:'d6a2fa16e60777e390256ec85cc2f42e',					

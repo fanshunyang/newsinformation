@@ -17,7 +17,7 @@
 				  <view class="invitation-header-right-draft">
 				  	草稿（0）
 				  </view>
-				  <view class="invitation-header-right-send">
+				  <view class="invitation-header-right-send" @tap='send'>
 				  	发送
 				  </view>
 			  	
@@ -29,13 +29,13 @@
 		  </view>
 		  <view class="invitation-main">
 			  <view class="invitation-main-input-top">
-			  	<input class="input" @blur="blur" @focus="focus"  type="text" value="" placeholder="标题" />
+			  	<input class="input" @blur="blur" @focus="focus" v-model="topics_title" @input="input_title"  type="text"  placeholder="标题" />
 				<view class="invitation-main-input-title">
 					如何写好标题
 				</view>
 			  </view>
 			  <view class="invitation-main-input-bottom">
-			  	<textarea @blur="blur" @focus="focus" focus :maxlength='-1' class="input" type="text" value="" placeholder="写上你的标题会增加更多的曝光量哦！" />
+			  	<textarea @blur="blur" @focus="focus" focus v-model="topics_texta" @input="inputs_text" :maxlength='-1' class="input" type="text" value="" placeholder="写上你的标题会增加更多的曝光量哦！" />
 			  </view>
 		  	
 			
@@ -44,7 +44,7 @@
 			  <view class="invitation-bottom-attachment" @click='addtopic'>
 			  #	添加话题
 			  </view>
-			  <view class="invitation-bottom-community">
+			  <!-- <view class="invitation-bottom-community">
 				  <view class="invitation-bottom-community-left">
 				  	选择社区
 				  </view>
@@ -54,7 +54,7 @@
 				  </view>
 			  	
 				
-			  </view>
+			  </view> -->
 			  <view class="invitation-bottom-classify">
 			  	<view class="invitation-bottom-classify-icon el-icon-arrow-down" @click="ensconce">
 			  		
@@ -66,9 +66,12 @@
 					 <view class="invitation-bottom-classify-icon-classify-classification">
 					 	@
 					 </view>
-					 <view class="invitation-bottom-classify-icon-classify-classification el-icon-picture">
+					 <view @tap='uploadClick' class="invitation-bottom-classify-icon-classify-classification el-icon-picture">
 					 	
 					 </view>
+					 <imagecropper style="z-index: 2222222;" :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
+					 				  					
+					 <image v-if="hideshow" @tap="upload" :src="cropFilePath" mode="aspectFit" style="width:32upx; height: 32upx;  position: absolute; left: 658upx; z-index: 222;  "></image> 
 				</view>
 				
 				
@@ -86,21 +89,97 @@
 </template>
 
 <script>
+	 import imagecropper from '../../components/invinbg-image-cropper/invinbg-image-cropper.vue'
 	export default {
+		components: {
+			imagecropper
+		},
 		data() {
 			return {
 				lose:false,
-			
+			    topics_title:'',
+				topics_texta:'',
+				hideshow:true,
+				tempFilePath:'',
+				cropFilePath:'',
+				user_url:'',
 			}
 		},
 		methods: {
+			//发布帖子
+			async createTopic  () {
+				const user_id = uni.getStorageSync('user_id')
+				const data = await this.$http.post('/api/createTopic ',{
+				token:'d6a2fa16e60777e390256ec85cc2f42e',
+				user_id:user_id,
+				topic_title :this.topics_title,
+				topic_img:this.user_url,
+				topic_param:1,
+				topic_content:this.topics_texta,
+				});
+				console.log(data)
+				// const {CODE,DATA} = data
+				// if (CODE==='200') {
+				// 	this.materialobj = DATA
+					
+				// 	console.log(this.materialobj)
+				// }
+			},
 			//返回上一级
 			back () {
 				uni.switchTab({
 				    url: '../index/index'
 				});
 			},
+			input_title (va) {
+				this.topics_title =  va.detail.value
+			},
+			inputs_text (va) {
+			this.topics_texta = va.detail.value
 			
+			},
+			uploadClick () {
+				
+			},
+			//图片上传
+				upload () {
+					  uni.chooseImage({
+					     count: 1, //默认9
+					     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					     sourceType: ['album'], //从相册选择
+					      success: (res) => {
+							console.log(res)
+					      this.tempFilePath = res.tempFilePaths.shift()
+							
+					      }
+					   });
+				},
+				
+				//确定裁剪
+			async	confirm (e) {
+				this.tempFilePath = ''
+				 this.cropFilePath = e.detail.tempFilePath
+				console.log( this.cropFilePath)
+				
+				const user_id = uni.getStorageSync('user_id')
+				let data = await this.$http.post('/api/uploadFile',{
+			     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+				user_id:user_id,
+				path:'my',
+				file: this.cropFilePath	
+				});
+					if (this.cropFilePath) {
+						this.initialimgs = false
+					}
+					const {CODE,DATA} = data
+				    if (CODE==='200') {
+					this.user_url = DATA
+				
+				    }
+				},
+			cancels () {
+				
+			},
 			//获得焦点
 			focus () {
 				this.lose = true
@@ -119,11 +198,22 @@
 				uni.hideKeyboard()
 					this.lose = false
 			},
+			
 			//添加话题
 			addtopic () {
 			
 				uni.navigateTo({
 					url:'../topic/topic'
+				})
+			},
+			//发送
+			send () {
+				this.createTopic()
+				this.hideshow = false
+				this.topics_title = ''
+				this.topics_texta = ''
+				uni.reLaunch({
+					url:'../index/index'
 				})
 			},
 		}

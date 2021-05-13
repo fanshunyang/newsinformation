@@ -143,7 +143,9 @@
 	  					<view class="recommend-list-li" @tap='maidan(item)' v-for="(item,index) in maidanList">
 	  						<view class="recommend-list-li-top" >
 	  						<view class="recommend-list-li-desc" style="display: flex; flex: 1;">
-	  							<image class="recommend-list-li-imgs" :src="item.new_author_head_url" mode=""></image>
+	  						
+								<image v-if="item.news_detail_title==='1'" class="recommend-list-li-imgs" :src=" 'http://www.app.youxun.com/' + item.new_author_head_url" mode=""></image>
+									<image v-else class="recommend-list-li-imgs" :src="item.new_author_head_url" mode=""></image>
 	  							<view class="recommend-list-li-label">
 	  								<view class="recommend-list-li-label-top">
 	  								{{item.new_author}}
@@ -187,7 +189,8 @@
 	  							
 	  							<view class="recommend-list-li-bottom-img-ul">
 	  								<view class="recommend-list-li-bottom-img-li">
-	  									<image class="imgs" :src="item.news_img" mode=""></image>
+										<image v-if="item.news_detail_title==='1'" class="imgs" :src=" 'http://www.app.youxun.com/' + item.news_img" mode=""></image>
+	  									<image v-else class="imgs" :src="item.news_img" mode=""></image>
 	  								</view>
 	  								
 	  							</view>
@@ -315,7 +318,7 @@
 				//下拉加载
 				// loadMoreStatus:0,
 				//切换轮播的id
-				tabCurrentIndex:2,
+				tabCurrentIndex:1,
 				//推荐列表
 				tabBars: [],
 				//滑动scroll

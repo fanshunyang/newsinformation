@@ -67,10 +67,15 @@
 				 });
 					const {DATA} = data
 					if (data.CODE==='200') {
+					
 					const {access_token,user_id} = DATA.user_info		 
 					uni.setStorageSync('access_token', access_token);
 					uni.setStorageSync('user_id', user_id);
-				    
+					//#ifdef APP-PLUS
+					  plus.storage.setItem('user_id', user_id)
+					//#endif
+				 
+				
 					uni.reLaunch({
 						url:'../index/index' 
 					})
