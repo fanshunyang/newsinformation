@@ -6,7 +6,7 @@
 		* imageUrl 背景图
 		* url 跳转链接
 		*  -->
-	<!-- #ifndef MP -->
+	<!-- #ifndef MP --> 
 	<!-- <mix-advert 
 		ref="mixAdvert" 
 		:timedown="8" 
