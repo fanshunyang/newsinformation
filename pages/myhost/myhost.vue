@@ -31,7 +31,7 @@
 				<view class="homepage-bottom-list-li" @tap='myinlistclick(item)' v-for="(item,index) in myinviList ">
 					<view class="homepage-bottom-list-li-type-top">
 						<view class="homepage-bottom-list-li-left">
-							<image class="imgs" :src="item.new_author_head_url" mode=""></image>
+							<image class="imgs" :src=" 'http://www.app.youxun.com/' + item.new_author_head_url" mode=""></image>
 							<view class="homepage-bottom-list-li-left-maddle">
 								<view class="homepage-bottom-list-li-left-desc">
 									{{item.new_author}}
@@ -72,7 +72,7 @@
 						</view>
 						<view class="homepage-bottom-list-li-bottom-list-img">
 							<view class="homepage-bottom-list-li-bottom-list-img-li">
-								<image class="imgs" :src="item.news_img" mode=""></image>
+								<image class="imgs" :src=" 'http://www.app.youxun.com/' + item.news_img" mode=""></image>
 							</view>
 							<!-- <view class="homepage-bottom-list-li-bottom-list-img-li">
 								<image class="imgs" src="../../images/zb.jpg" mode=""></image>
@@ -129,9 +129,9 @@
 			},
 			myinlistclick (va) {
 			     const id = va.id
-				// uni.navigateTo({
-				// 	url:`../details/details?item=${id}`
-				// })
+				uni.navigateTo({
+					url:`../details/details?item=${id}`
+				})
 			},
 			//返回上一级
 			upleave () {

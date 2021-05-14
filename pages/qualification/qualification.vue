@@ -27,35 +27,40 @@
 					<view class="text-part-ul">
 						<view class="text-part-li" >
 							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" :src="  particulars.re_news_img_url  ||  particulars.special_news_img " mode=""></image>
+								
+								<image class="text-part-li-first-imgs" :src="  particulars.re_news_img_url  ||  particulars.special_news_img || newsobjgl.new_img_url  " mode=""></image>
+				
 							</view>
 							<view class="text-part-li-title">
-								{{particulars.re_news_title || particulars.special_news_title}}
+								{{particulars.re_news_title || particulars.special_news_title || newsobjgl.news_title}}
 							</view>
 						
 							<view class="text-part-li-generalize">
-						{{particulars.re_news_add_time  || particulars.special_news_add_time}} 作者：笛音
+						{{particulars.re_news_add_time  || particulars.special_news_add_time || newsobjgl.news_add_time}} 作者：笛音
 							</view>
 							
 							<view class="text-part-li-user-list">
 								<view class="text-part-li-user-list-ul">
 									<view class="text-part-li-user-list-li" v-for=" (item,index) in newslistsDetails" :key='index'>
 										<view class="text-part-li-user-list-li-action">
-									    {{  item.re_news_p1 || item.special_news_p1}}
+									    {{  item.re_news_p1 || item.special_news_p1 || newsobjgl.news_p1}}
 										</view>
 										<image :style="{height:320 + 'upx'}" class="text-part-li-user-list-li-imgs" v-if="item.re_news_p3_img===''?false:item.re_news_p3_img " :src="item.re_news_p3_img " mode=""></image>
 										
 										<image class="text-part-li-user-list-li-imgs"  v-else-if=" item.special_news_p2_img===''?false:item.special_news_p2_img " :src=" item.special_news_p2_img" mode=""></image>
 										
+											<image class="text-part-li-user-list-li-imgs"  v-else-if=" newsobjgl.news_p2_img===''?false:newsobjgl.news_p2_img " :src=" newsobjgl.news_p2_img" mode=""></image>
+										
 										<view class="text-part-li-user-list-li-action">
-										{{  item.re_news_p2 || item.special_news_p3}}
+										{{  item.re_news_p2 || item.special_news_p3 ||newsobjgl.news_p3 }}
 										</view>
 										<image class="text-part-li-user-list-li-imgs"  v-if="item.re_news_p7_img===''?false:item.re_news_p7_img || item.special_news_p4_img===''?false:item.special_news_p4_img" :src="item.re_news_p7_img || item.special_news_p4_img" mode=""></image>
 										
 											<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p4_img===''?false:item.special_news_p4_img" :src=" item.special_news_p4_img" mode=""></image>
+											<image class="text-part-li-user-list-li-imgs"  v-else-if="newsobjgl.news_p6===''?false:newsobjgl.news_p6" :src=" newsobjgl.news_p6" mode=""></image>
 										
 										<view class="text-part-li-user-list-li-action"  >
-										{{  item.re_news_p6 || item.special_news_p5}}
+										{{  item.re_news_p6 || item.special_news_p5 || newsobjgl.news_p4}}
 										</view>
 										<image class="text-part-li-user-list-li-imgs"  v-if="item.re_news_p11===''?false:item.re_news_p11 " :src="item.re_news_p11 || item.special_news_p8_img" mode=""></image>
 										
@@ -63,22 +68,23 @@
 										<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p8_img===''?false:item.special_news_p8_img " :src=" item.special_news_p8_img" mode=""></image>
 										
 										<view class="text-part-li-user-list-li-action">
-										{{  item.re_news_p9 || item.special_news_p16}}
+										{{  item.re_news_p9 || item.special_news_p16 || newsobjgl.news_p5}}
 										</view>
 										
 										<view class="text-part-li-user-list-li-action">
-										{{  item.re_news_p10 || item.special_news_p16}}
+										{{  item.re_news_p10 || item.special_news_p16 ||newsobjgl.news_p7}}
 										</view>
 										
 										<view class="text-part-li-user-list-li-action">
-										{{  item.re_news_13 ||item.special_news_p11}}
+										{{  item.re_news_13 ||item.special_news_p11 ||newsobjgl.news_p8}}
 										</view>
 										<image  class="text-part-li-user-list-li-imgs"  v-if="item.re_news_14_img===''?false:item.re_news_14_img "  :src="item.re_news_14_img || item.special_news_p15_img" mode=""></image>
 										
 											<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p15_img===''?false:item.special_news_p15_img "  :src="item.special_news_p15_img" mode=""></image>
+											<image class="text-part-li-user-list-li-imgs"  v-else-if="newsobjgl.news_p6===''?false:newsobjgl.news_p6"  :src="newsobjgl.news_p6" mode=""></image>
 										
 										<view class="text-part-li-user-list-li-action">
-										{{  item.re_news_15 || item.special_news_p16}}
+										{{  item.re_news_15 || item.special_news_p16 ||newsobjgl.news_p9}}
 										</view>
 										
 									</view>
@@ -307,31 +313,35 @@
 			newslistsDetails:[],
 			detaId:1,
 			ids:1,
-			jourId:1
+			jourId:1,
+			itemid:'',
+			newsobjgl:{}
+			// itemp:{},
 			} 
 		},
 		onLoad(options){
 		this.jourId = parseInt( options.items)
+		  
 		console.log(this.jourId)
-			// const particulars =  JSON.parse(decodeURIComponent(options.item))
-			// this.particulars = particulars
-			// this.particularslist.push(this.particulars)
-		
+			
 			this.detaId =  options.item
+		
+			this.itemid = 	 parseInt( options.itemid)
+			console.log(	this.itemid)
 		this.ids =  parseInt(this.detaId)
 			// this.detailData = JSON.parse(options.data);
-			
-			
+			// this.itemp =  JSON.parse(decodeURIComponent(options.itemp)) 
+			// console.log(this.itemp)
 			this.comment = comment
 			
 		},
-		async mounted() {
+		 mounted() {
 			this.loadNewsList();
 			this.loadEvaList();
 		this.getRecommendNewsDetail()
 		this.getSpecialDetail()
 	
-		
+		this.getSpecialGlDetail()
 		},
 		methods: {
 			//推荐新闻资讯详情
@@ -343,7 +353,7 @@
 					 const user_id = uni.getStorageSync('user_id')
 				 let data = await this.$http.post('/api/getRecommendNewsDetail',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
-						re_id:idst,
+						re_id:idst ,
 						user_id:user_id
 						// search_value:'腾讯'
 					
@@ -408,12 +418,33 @@
 						  	
 						  		this.favorites = 1
 						  }
-						  this.newslistsDetails.push(this.newslistsDetail) 
+						  // this.newslistsDetails.push(this.newslistsDetail) 
 				// 		this.newslistsDetail = DATA
 				// 		this.particulars = this.newslistsDetail
 				// 		this.newslistsDetails.push(this.newslistsDetail) 
 				
 				// 	 uni.setStorageSync('show', DATA.re_news_show);
+					}
+			},
+			
+			//首页游戏攻略详情
+			async getSpecialGlDetail () {
+			
+				 const user_id = uni.getStorageSync('user_id')
+			
+				 let data = await this.$http.post('/api/getSpecialGlDetail',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						id:this.itemid,
+						
+						// search_value:'腾讯'
+					
+				 });
+				  
+					const {DATA} = data
+					if (data.CODE==='200') {
+						this.newsobjgl = DATA
+				
+						  this.newslistsDetails.push(this.newsobjgl) 
 					}
 			},
 			//转发

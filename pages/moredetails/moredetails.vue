@@ -18,7 +18,7 @@
 				游戏简介
 			</view>
 			<view class="moredetails-text-desc">
-			{{item.gm_detail_p2}}
+			{{item.gm_detail_p2 ||item}}
 			</view>
 			
 			
@@ -37,6 +37,7 @@
 		},
 		onLoad(va) {
 			const item=  JSON.parse(decodeURIComponent(va.item))
+			console.log(item)
 		    this.item = item
 		},
 		mounted() {

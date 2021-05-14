@@ -8,7 +8,7 @@
 					
 				</view>
 				<view class="homepage-header-title">
-					赛博朋克
+				{{box_game.gm_title}}
 				</view>
 				<view class="homepage-header-right">
 					<view class="homepage-header-right-search el-icon-search" @click="search">
@@ -42,17 +42,17 @@
 				<scroll-view scroll-y="true" style="height: 100%;">	
 				<view class="swiper-box-game" >
 					<view class="swiper-box-game-banner">
-						<image class="imgs" src="../../images/ac.jpg" mode=""></image>
+						<image class="imgs" :src="box_game.gm_detail_title_img" mode=""></image>
 					</view>
 					<view class="swiper-box-game-introduce">
 						<view class="swiper-box-game-introduce-main">
 							<view class="swiper-box-game-introduce-left">
 								<view class="swiper-box-game-introduce-left-colset">
-								赛博朋克
+								{{box_game.gm_name}}
 								</view>
-								<view class="swiper-box-game-introduce-left-text">
+								<!-- <view class="swiper-box-game-introduce-left-text">
 									Cyberpunk
-								</view>
+								</view> -->
 							</view>
 							<view class="swiper-box-game-introduce-right">
 								<view class="swiper-box-game-introduce-right-icon el-icon-download">
@@ -65,8 +65,8 @@
 						</view>
 						<view class="swiper-box-game-introduce-bottom">
 							<view class="swiper-box-game-introduce-bottom-label">
-								<view class="swiper-box-game-introduce-bottom-label-item" v-for="(item,index) in labels " :key='index'>
-								{{item.text}}
+								<view class="swiper-box-game-introduce-bottom-label-item">
+								{{box_game.gm_cat_str}}
 								</view>
 								
 							</view>
@@ -79,25 +79,25 @@
 							<view class="swiper-box-game-brief-left">
 							游戏简介
 							</view>
-							<view class="swiper-box-game-brief-right">
+							<view class="swiper-box-game-brief-right" @tap='moread'>
 								更多  >
 							</view>
 							
 							
 						</view>
 						<view class="swiper-box-game-brief-clsoun">
-							<view class="swiper-box-game-brief-clsoun-left">
+						<!-- 	<view class="swiper-box-game-brief-clsoun-left">
 							大小 1.6GB
 							</view>
 							<view class="swiper-box-game-brief-clsoun-right">
 								版本 1.51.1.23
-							</view>
+							</view> -->
 							
 							
 						</view>
 						<view class="swiper-box-game-brief-bottom">
 							<view class="swiper-box-game-brief-bottom-top">
-								简介： 《赛博朋克》是全球首款5V5英雄公平对战手游，腾讯MOBA手游大作！作为一款MOBA类游戏，《王者荣耀》特色多多，在同
+								简介： {{box_game.gm_detail_p1}}
 							</view>
 							<view class="swiper-box-game-brief-bottom-clousn">
 								<view class="swiper-box-game-brief-bottom-clousn-left">
@@ -189,18 +189,18 @@
 				
 				<swiper-item>
 				<scroll-view scroll-y="true" style="height: 100%;">
-				<maidan></maidan>
+				<maidan :box_games='box_game'></maidan>
 				</scroll-view>
 				
 				</swiper-item>
 				
 				<swiper-item>
-					<management></management>
+					<management :mangent='box_game'></management>
 				</swiper-item>
 				
 				<swiper-item>
 					<scroll-view scroll-y="true" style="height: 100%;" >
-							<strategy></strategy>
+							<strategy :stratey='box_game'></strategy>
 					</scroll-view>
 				
 				</swiper-item>
@@ -245,18 +245,42 @@
 					{id:1,text:'头条'},
 					{id:1,text:'多人'},
 					{id:1,text:'第三方射击'}
-				]
+				],
+				box_game:{},
+				indexId:'',
 			}
 		},
 		onShow() {
 		
 		},
 		onLoad(va) {
+		this.indexId = 	parseInt(va.items)
 			
 			this.tabIndex = parseInt(va.item)
 				this.comment = comment
 		},
+		mounted() {
+			this.getSpecialOneInfo()
+		},
 		methods: {
+			//首页关注最新发布讯息
+			async getSpecialOneInfo () {
+				
+				 let data = await this.$http.post('/api/getSpecialOneInfo',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						special_id:this.indexId
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+						   
+						this.box_game= DATA
+						console.log(this.box_game) 
+						
+					
+					}
+			},
 			//返回
 			back () {
 				uni.navigateBack()
@@ -265,6 +289,11 @@
 			toggleMask (type) {
 				
 					this.$refs.ygcComment.toggleMask(type);
+			},
+			moread () {
+				uni.navigateTo({
+					url:`../moredetails/moredetails?item=${encodeURIComponent (JSON.stringify(	this.box_game.gm_detail_p2))}`
+				})
 			},
 			//转发
 			transmit () {
@@ -559,7 +588,7 @@ page, .homepage{
 						font-weight: 400;
 						color: #999999;
 						line-height: 43upx;
-						letter-spacing: 1px;
+						letter-spacing: 1px; 
 					}
 				}
 				.confirm-btn{
@@ -572,7 +601,7 @@ page, .homepage{
 				.swiper-box-game-banner {
 					.imgs {
 						width: 750upx;
-						height: 280upx;
+						height: 450upx;
 					}
 				}
 				.swiper-box-game-introduce {
@@ -700,7 +729,7 @@ page, .homepage{
 					.swiper-box-game-brief-bottom {
 						// display: flex;
 						.swiper-box-game-brief-bottom-top {
-							height: 107upx;
+							// height: 107upx;
 							font-size: 24upx;
 							font-family: Microsoft YaHei;
 							font-weight: 400;

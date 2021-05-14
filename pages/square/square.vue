@@ -587,9 +587,10 @@
 				})
 			},
 			//广场首推
-			recommendRegard () {
+			recommendRegard (va) {
+				let id = va.id
 				uni.navigateTo({
-					url:`../homebranch/homebranch?item=${1}`
+					url:`../homebranch/homebranch?item=${1}&items=${id}`
 				})
 			
 			},

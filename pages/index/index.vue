@@ -264,7 +264,7 @@
 										<view class="panel-content-box-background">
 											<view class="panel-content-box-background-area" @click="homebranch">
 												<view class="panel-content-box-background-area-img">
-														<image class="area-imgs" :src=" 'http://www.app.youxun.com' + gametype.special_head_url" mode=""></image>
+														<image class="area-imgs" :src=" 'http://www.app.youxun.com/' + gametype.special_head_url" mode=""></image>
 												</view>
 												<view class="panel-content-box-background-area-item">
 													<view class="panel-content-box-background-area-item-top">
@@ -499,9 +499,11 @@
 				swiperitem:[
 					
 				],
-				tabCurrentIndex: 0, //当前选项卡索引
+				
+					//当前选项卡索引
+				tabCurrentIndex: 0, 
 				//全局轮播下标
-			    tabCurrentIndexs:0,
+			    tabCurrentIndexs:1,
 				scrollLeft: 0, //顶部选项卡左滑距离
 				enableScroll: true, 
 				//新闻详情前4个
@@ -616,8 +618,8 @@
 		this.getRecommendGame()
 		this.getSpecialCat()
 		this.getBannerNews()
-		this.getEspecialCat()
-		
+		this.getSpecialOne()
+		this.getSquareNews()
 		this.gambit()
 	
 		},
@@ -831,9 +833,9 @@
 				}
 		},
 		//游戏专题
-		async getEspecialCat () {
+		async getSpecialOne () {
 			// tabnav
-			 let data = await this.$http.post('/api/getEspecialCat',{
+			 let data = await this.$http.post('/api/getSpecialOne',{
 				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 				
 				
@@ -850,7 +852,7 @@
 		},
 		
 		//首页关注最新发布讯息
-		async getEspecialCat () {
+		async getSquareNews () {
 			// tabnav
 			 let data = await this.$http.post('/api/getSquareNews',{
 				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
@@ -1213,8 +1215,8 @@
 			},
 			//跳转首页分支
 			homebranch () {
-				uni.navigateTo({
-					url:`../homebranch/homebranch?item=${0}`
+				uni.navigateTo({ 
+					url:`../homebranch/homebranch?item=${0}&items=${this.gametype.id}`
 				})
 			},
 		}

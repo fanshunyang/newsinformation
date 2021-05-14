@@ -13,15 +13,15 @@
 		</view>
 		<view class="maidan-bottom">
 			<view class="box-firend-ul">
-				<view class="box-firend-li" v-for="(item,index) in plazaList" :key='index' @click="dynamically">
+				<view class="box-firend-li" v-for="(item,index) in plazaList" :key='index' @click="dynamically(item)">
 				<view class="box-firend-li-header">
 					<view class="box-firend-li-item-madile">
 						<view class="box-firend-li-item-madile-img">
-							<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
+							<image class="box-firend-li-item-madile-item-imgs" :src="  item.new_author_head_url" mode=""></image>
 						</view>
 						<view class="box-firend-li-item-madile-text">
-							<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-							<view class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</view>
+							<text class="box-firend-li-item-madile-text-one">{{item.new_author}}</text>
+							<!-- <view class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</view> -->
 						</view>
 					
 					</view>
@@ -48,15 +48,14 @@
 				</view>
 				<view class="box-firend-li-content">
 					<view class="box-firend-li-content-title">
-						《英雄联盟》山海绘卷概念设计图公布
+						{{item.news_detail_title}}
 					</view>
-					<view class="box-firend-li-content-text">
-					兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-					</view>
+					<!-- <view class="box-firend-li-content-text">
+					</view> -->
 					<view class="box-firend-li-content-img">
 						<view class="box-firend-li-content-img-ul">
-							<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-								<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
+							<view class="box-firend-li-content-img-li">
+								<image class="box-firend-li-content-img-li-imgs" :src="item.news_img" mode=""></image>
 							</view>
 						</view>
 					
@@ -99,11 +98,16 @@
 		mixLoadMore,
 		},
 		props: {
-		
+			box_games:Object,
+			default () {
+				return {} 
+			}
+		 
 			
 		},
 		data() {
 			return {
+			
 				loadMoreStatus:0,
 			maidanLabel:[
 				{id:1,text:'吃鸡大神'},
@@ -112,9 +116,7 @@
 			],
 			//广场列表
 			plazaList:[
-				{id:1},
-				{id:2},
-				{id:3}
+			
 			],
 			//盒有动态
 			boxfirendimg:[
@@ -124,11 +126,21 @@
 			]
 			}
 		},
+	
 		mounted() {
+		this.box_sqlist()
+	
+		},
+		onLoad() {
 		
 		},
 		methods: {
-			
+		box_sqlist () {
+			setTimeout(()=>{
+				const {special_sq_list} = this.box_games
+			    this.plazaList = special_sq_list
+			},500)
+		},
 			//全局下拉和上拉刷新
 			loadData(type){
 				// if(type === 'add'){
@@ -188,9 +200,10 @@
 				}
 			},	
 			//跳转帖子详情页
-			dynamically () {
+			dynamically (va) {
+				let id = va.id
 				uni.navigateTo({
-					url:'../../pages/details/details'
+					url:`../../pages/details/details?item=${id}`
 				})
 			},
 		}
@@ -243,7 +256,7 @@
 					margin-right: 30upx;
 					.box-firend-li-content-title {
 						width: 513upx;
-						height: 26upx;
+						// height: 26upx;
 						font-size: 26upx;
 						font-family: Microsoft YaHei;
 						font-weight: bold;

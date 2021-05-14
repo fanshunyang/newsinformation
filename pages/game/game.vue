@@ -405,7 +405,7 @@
 		  },
 		  //找游戏切换
 		  chagnetabls (va) {
-			   this.currIndex = va.detail.current
+			   this.currIndex = va.detail.current 
 			  this.getSearchGame()
 		  },
 		  //游戏介绍

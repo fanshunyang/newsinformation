@@ -4,28 +4,27 @@
 		<view class="main">
 			<view class="main-ul">
 			
-				<view class="main-li" v-for="(item,index) in informationList" @tap='information'>
+				<view class="main-li" v-for="(item,index) in informationList" @tap='information(item)'>
 					<view class="main-li-left">
 						<view class="main-li-left-top">
 							<view class="main-li-left-number">
 								
 							</view>
 							<view class="main-li-left-desc">
-								笔记本电脑清灰换硅脂需要
-								什么工具
+							{{item.special_news_detiial_title}}
 							</view>
 						</view>
 						<view class="main-li-left-bottom">
 						
 							<view class="main-li-left-title">
-								20分钟前 . 绝地求生
+							{{item.special_news_add_time}}
 							</view>
 							<view class="main-li-left-leave">
-								<view class="main-li-left-leave-icon el-icon-chat-dot-square">
+								<view class="main-li-left-leave-icon el-icon-view">
 									
 								</view>
 								<view class="main-li-left-leave-number">
-									222
+									{{item.special_news_zx_show}}
 								</view>
 							
 							
@@ -35,7 +34,7 @@
 					</view>
 					
 				  <view class="main-li-right">
-					<image class="imgs" src="../../images/cjb.jpg" mode=""></image>
+					<image class="imgs" :src="item.special_news_img" mode=""></image>
 				 </view>
 				</view>
 				
@@ -52,26 +51,34 @@
 		
 		},
 		props: {
-		
+		mangent:Object,
+		default () {
+			return {}
+		  }
 		},
 		data() {
 			return {
 			  informationList:[
-				  {id:1},
-				  {id:2},
-				  {id:3},
-				  {id:4}
+				
 			  ]	
 			}
 		},
 		mounted() {
-		
+		 this.zx_list()
 		},
 		methods: {
+			zx_list () {
+				setTimeout(()=>{
+					const {special_zx_list} = this.mangent
+					this.informationList = special_zx_list
+					console.log(	this.informationList )
+				},500)
+			},
 			//跳转新闻资讯
-			information () {
+			information (va) {
+				let id = va.id
 				uni.navigateTo({
-					url:'../../pages/qualification/qualification'
+					url:`../../pages/qualification/qualification?items=${id}`
 				})
 			},
 		}
