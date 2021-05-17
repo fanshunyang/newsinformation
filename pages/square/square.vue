@@ -130,7 +130,7 @@
 	  				<scroll-view scroll-x>
 	  					<view class="recommend-ul">
 	  						<view class="recommend-li" @tap='recommendRegard(item)' v-for="(item,index) in recommend_scroll " :key='index'>
-	  							<image class="recommend-li-imgs" :src=" 'http://www.app.youxun.com' + item.special_head_url" mode=""></image>
+	  							<image class="recommend-li-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.special_head_url" mode=""></image>
 	  							<view class="recommend-li-text">{{item.special_cat_name}}</view>
 	  						</view>
 	  						
@@ -144,7 +144,7 @@
 	  						<view class="recommend-list-li-top" >
 	  						<view class="recommend-list-li-desc" style="display: flex; flex: 1;">
 	  						
-								<image v-if="item.news_detail_title==='1'" class="recommend-list-li-imgs" :src=" 'http://www.app.youxun.com/' + item.new_author_head_url" mode=""></image>
+								<image v-if="item.news_detail_title==='1'" class="recommend-list-li-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.new_author_head_url" mode=""></image>
 									<image v-else class="recommend-list-li-imgs" :src="item.new_author_head_url" mode=""></image>
 	  							<view class="recommend-list-li-label">
 	  								<view class="recommend-list-li-label-top">
@@ -189,7 +189,7 @@
 	  							
 	  							<view class="recommend-list-li-bottom-img-ul">
 	  								<view class="recommend-list-li-bottom-img-li">
-										<image v-if="item.news_detail_title==='1'" class="imgs" :src=" 'http://www.app.youxun.com/' + item.news_img" mode=""></image>
+										<image v-if="item.news_detail_title==='1'" class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.news_img" mode=""></image>
 	  									<image v-else class="imgs" :src="item.news_img" mode=""></image>
 	  								</view>
 	  								
@@ -366,7 +366,7 @@
 				//搜索的值
 				textvalue:'',
 				classtype:[],
-				clasfilyID:1,
+				clasfilyID:1, 
 			}
 		},
 		onLoad() {
@@ -566,9 +566,10 @@
 	
 		
 			//游讯话题
-			travel () {
+			travel (va) {
+				
 				uni.navigateTo({
-					url:'../themet/themet'
+					url:`../themet/themet?item=${encodeURIComponent (JSON.stringify(va))}`
 				})
 			},
 			//游讯热帖
@@ -580,8 +581,8 @@
 			},
 			//广场跳转帖子详情
 			maidan (va) {
-				const id = va.id
-				  	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}`
+				const id = va.id   
+				  
 				uni.navigateTo({
 					url:`../details/details?item=${encodeURIComponent (JSON.stringify(id))}`
 				})

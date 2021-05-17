@@ -1,6 +1,6 @@
 import request from "./request/core/request.js";
 // 全局配置的请求域名
-let baseUrl = "http://www.app.youxun.com";
+let baseUrl = "http://appyouxun.hundredzy.com";
 //可以new多个request来支持多个域名请求
 let $http = new request({
 	//接口请求地址

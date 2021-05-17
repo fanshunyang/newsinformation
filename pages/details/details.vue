@@ -32,14 +32,14 @@
 					<view class="text-part-ul">
 						<view class="text-part-li">
 							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" v-if="detailsobj.news_detail_title==='1'" :src=" 'http://www.app.youxun.com/' + detailsobj.news_img" mode=""></image>
+								<image class="text-part-li-first-imgs" v-if="detailsobj.news_detail_title==='1'" :src=" 'http://appyouxun.hundredzy.com/' + detailsobj.news_img" mode=""></image>
 								<image class="text-part-li-first-imgs" v-else :src="detailsobj.news_img" mode=""></image>
 							</view>
 							<view class="text-part-li-title">
 							{{	detailsobj.new_title}}
 							</view>
 							<view class="text-part-li-user">
-								<image class="text-part-li-user-imgs" v-if="detailsobj.news_detail_title==='1'" @click="lookpage" :src=" 'http://www.app.youxun.com/' + detailsobj.new_author_head_url" mode=""></image>
+								<image class="text-part-li-user-imgs" v-if="detailsobj.news_detail_title==='1'" @click="lookpage" :src=" 'http://appyouxun.hundredzy.com/' + detailsobj.new_author_head_url" mode=""></image>
 								<image class="text-part-li-user-imgs" v-else @click="lookpage" :src="detailsobj.new_author_head_url" mode=""></image>
 								<view class="text-part-li-user-text">
 									<text class="text-part-li-user-text-secation">{{detailsobj.new_author}}</text>
@@ -105,13 +105,13 @@
 					</view>
 						</view>
 					<!-- 文章评论 -->
-						<view class="comments"  >
+						<!-- <view class="comments"  >
 							<view class="comments-number">
 								共11条评论
 							</view> 
 							<comments v-for="(item,index) in comment" :key='item.id' :comment='item'></comments>
 							
-						</view>
+						</view> -->
 					
 			    </view>
 			
@@ -225,7 +225,7 @@
 			
 		
 		</popup>
-		  	<view class="input-box">
+		  <!-- 	<view class="input-box">
 		  		<text class="yticon icon-huifu"></text>
 		  		<view
 				@click="toggleMask('show')"
@@ -237,8 +237,8 @@
 				</view> 
 				
 		  		
-		  	</view>
-			<view class="input-box-right">
+		  	</view> -->
+			<view class="input-box-right" style="width: 550px;">
 				<view class="input-box-right-li">
 					<view class="input-box-right-icon" @tap='somebody'  v-if="favorites===0">
 						<image class="imgs" src="../../images/zan.png" mode=""></image>
@@ -247,7 +247,7 @@
 						<image  style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" class="imgs" src="../../images/zanxuan.png" mode=""></image>
 					</view>
 					<view class="input-box-right-number">
-						{{detailsobj.numsArray.dianzan_num}}
+						<!-- {{detailsobj.numsArray.dianzan_num}} -->
 					</view>
 				</view>
 			<view class="input-box-right-li">
@@ -256,7 +256,7 @@
 			</view>
 			<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
-						{{detailsobj.numsArray.collect_num}}
+						<!-- {{detailsobj.numsArray.collect_num}} -->
 				</view>
 			</view>
 			
@@ -414,7 +414,8 @@
 				uni.navigateBack()
 			},
 			async attention () {
-				if (this.detailsobj.is_attention==='') {
+				const user_id = uni.getStorageSync('user_id')
+				if (user_id==='') {
 					uni.showModal({
 						title:'提示',
 						content:'该功能需要登录使用',
@@ -428,9 +429,6 @@
 						}
 					})
 				}
-			
-				const user_id = uni.getStorageSync('user_id')
-				
 				let data = await this.$http.post('/api/addRecommend',{
 				 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 user_id:user_id,
@@ -447,6 +445,8 @@
 					
 				
 				}
+				
+								
 			},
 			
 		async unfollow () {

@@ -32,11 +32,11 @@
 	export default {
 		data() {
 			return {
-				phone_number:'16413665448',
+				phone_number:'15713665448',
 				title:'欢迎回来',
 				phoneNumber:'',
 				openid:'',
-				access_token:'',
+				access_token:'', 
 				token:1
 			}
 		},
@@ -83,13 +83,13 @@
 				
 			},
 			phoneNumbers () {
-			
+			// console.log(111)
 		
 			// let _this = this
 			 uni.preLogin({
 			provider: 'univerify',
 			success:(res)=> { //预登录成功
-				 						// 显示一键登录选项
+				 			 			// 显示一键登录选项
 			console.log(res);
 				 						
 			uni.login({
@@ -141,13 +141,14 @@
 			  ]
 			  }
 			},
-			success:(res)=> { // 登录成功
-										
+			success: async (res)=> { // 登录成功
+						
 			this.openid = res.authResult.openid;
 			this.access_token = res.authResult.access_token;
 			console.log(res.authResult); // {openid:'deviceIDlength+deviceID+gyuid',access_token:'接口返回的 token'}
 			console.log(this.openid);
 			console.log("access_token",this.access_token);
+			
 			// 客户端(调用云函数)  调用云函数来实现整个业务逻辑
 			// 在得到access_token后，通过callfunction调用云函数
 			uniCloud.callFunction({
@@ -156,7 +157,7 @@
 			  access_token: this.access_token, // 客户端一键登录接口返回的access_token
 			  openid: this.openid // 客户端一键登录接口返回的openid
 			  }
-			   }).then(res => {
+			   }).then( async res=> {
 													
 				console.log("获取成功");
 				console.log(res);
@@ -166,13 +167,30 @@
 				this.phoneNumber=res.result.data.phoneNumber;
 			 
 			
-				   uni.setStorageSync('too', this.phoneNumber);
+				   // uni.setStorageSync('too', this.phoneNumber);
 				uni.closeAuthView()
-				uni.switchTab({
-					url:'../index/index' 
+				const data = await this.$http.post('/api/userLogin',{
+				token:'d6a2fa16e60777e390256ec85cc2f42e',
+				phone_number:this.phoneNumber,
+				});
+				 const {DATA} = data
+				if (data.CODE==='200') {
+									
+				const {access_token,user_id} = DATA.user_info		 
+				uni.setStorageSync('access_token', access_token);
+				uni.setStorageSync('user_id', user_id);
+				//#ifdef APP-PLUS
+				plus.storage.setItem('user_id', user_id)
+				//#endif
+				
+								
+				uni.reLaunch({
+				url:'../index/index' 
 				})
+			 }  
 			
-				}						
+			
+			}						
 				 								
 			    // res.result = {
 				//   code: '',

@@ -28,7 +28,7 @@
 		<view class="journalism-part">
 			<scroll-view scroll-y="true" style="height: 100%;" >
 			<view class="journalism-part-img" >
-				<image class="imgs" :src=" 'http://www.app.youxun.com' + journalisonitem.special_head_url" mode=""></image>
+				<image class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + journalisonitem.special_head_url" mode=""></image>
 			</view>
 			
 			<view class="main">
@@ -54,7 +54,7 @@
 										
 									</view>
 									<view class="main-li-left-leave-number">
-										22
+									{{item.special_news_zx_show}}
 									</view>
 								
 								
@@ -66,6 +66,10 @@
 					  <view class="main-li-right">
 						<image class="imgs" :src="item.special_news_img" mode=""></image>
 					 </view>
+					</view>
+					
+					<view  v-if="journalismList.length===0" class="" style="text-align: center;" >
+						暂无该信息列表数据~~~
 					</view>
 					
 				</view>

@@ -62,7 +62,7 @@
 	>
 	<!-- 关注 -->
 		<swiper-item>
-			<mix-pulldown-refresh ref="mixPulldownRefreshs" class="panel-content" :top="90" @refresh="onPulldownRereshs" @setEnableScroll="setEnableScroll">
+		<!-- 	<mix-pulldown-refresh ref="mixPulldownRefreshs" class="panel-content" :top="90" @refresh="onPulldownRereshs" @setEnableScroll="setEnableScroll"> -->
 				<scroll-view 
 				class="panel-scroll-box"
 				:scroll-y="true" 
@@ -96,7 +96,7 @@
 						</view>
 					</view>
 					
-					<view class="attention-main">
+					<view class="attention-main"  v-if="userLoginId">
 						<view class="attention-main-ul">
 							<view class="attention-main-li" @tap='skip(item)' v-for="(item,index) in attentionmain" :key='index'>
 							<view class="	attention-main-li-text">
@@ -118,10 +118,11 @@
 							<view class="box-firend-li-header">
 								<view class="box-firend-li-item-madile">
 									<view class="box-firend-li-item-madile-img">
-										<image v-if="item.news_detail_title==='1'" class="box-firend-li-item-madile-item-imgs" :src=" 'http://www.app.youxun.com/' + item.new_author_head_url" mode=""></image>
+										<image v-if="item.news_detail_title==='1'" class="box-firend-li-item-madile-item-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.new_author_head_url" mode=""></image>
 										<image v-else class="box-firend-li-item-madile-item-imgs" :src="item.new_author_head_url" mode=""></image>
 									</view>
 									<view class="box-firend-li-item-madile-text">
+										
 										<text class="box-firend-li-item-madile-text-one">{{item.new_author}}</text>
 										<!-- <text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text> -->
 									</view>
@@ -160,7 +161,7 @@
 								<view class="box-firend-li-content-img">
 									<view class="box-firend-li-content-img-ul">
 										<view class="box-firend-li-content-img-li">
-											<image v-if="item.news_detail_title==='1'" class="box-firend-li-content-img-li-imgs" :src=" 'http://www.app.youxun.com/' + item.news_img" mode=""></image>
+											<image v-if="item.news_detail_title==='1'" class="box-firend-li-content-img-li-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.news_img" mode=""></image>
 											<image v-else class="box-firend-li-content-img-li-imgs" :src="item.news_img" mode=""></image>
 										</view>
 									</view>
@@ -173,6 +174,10 @@
 							
 							
 							</view>
+							
+							
+							
+							
 							
 						<!-- 第一个列表 -->
 							
@@ -198,10 +203,10 @@
 				</view> -->
 			
 				
-				<mix-load-more :status="loadMoreStatus"></mix-load-more>
+				<!-- <mix-load-more :status="loadMoreStatus"></mix-load-more> -->
 				</scroll-view>
 			
-			</mix-pulldown-refresh>
+			<!-- </mix-pulldown-refresh> -->
 			
 		</swiper-item>
 		
@@ -373,10 +378,10 @@
 													新闻专题
 												</view>
 												
-												<scroll-view class="floor-list" scroll-x >
+												<scroll-view class="floor-list" scroll-x > 
 													<view class="new-special-news-ul">
 														<view class="new-special-news-li" @tap='study(item)' v-for="(item,index) in journalism" :key='index'> 
-															<image class="new-special-news-li-imgs" :src=" 'http://www.app.youxun.com' + item.special_head_url" mode=""></image>
+															<image class="new-special-news-li-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.special_head_url" mode=""></image>
 															<view class="new-special-news-title">
 															{{item.special_cat_name}}
 															</view>
@@ -670,9 +675,10 @@
 			},
 		methods: {
 			//跳转话题
-			skip () {
+			skip (va) {
+				
 				uni.navigateTo({
-					url:'../themet/themet'
+					url:`../themet/themet?item=${encodeURIComponent (JSON.stringify(va))}`
 				})
 			},
 			//关注登录
@@ -972,7 +978,7 @@
 			},
 			//新闻专题
 			study (va) {
-				const value = va
+				const value = va 
 				
 				 	// url:`../commercials/commercials?item=${encodeURIComponent (JSON.stringify(id))}` 
 				uni.navigateTo({

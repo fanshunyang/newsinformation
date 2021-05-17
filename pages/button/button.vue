@@ -83,6 +83,7 @@
 		    		uni.saveFile({
 		    			tempFilePath: file,
 		    			success: (saveFile) => {
+					
 		    			//pathToBase64为uniapp 插件市场的插件内方法
 		    				pathToBase64(saveFile.savedFilePath).then(base64 => {
 		    					//用完就删

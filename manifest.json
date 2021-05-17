@@ -6,7 +6,7 @@
     "versionCode" : "100",
     "transformPx" : false,
     // 跨域问题
-    "launch_path" : "http://www.app.youxun.com",
+    "launch_path" : "http://appyouxun.hundredzy.com",
     "app-plus" : {
         /* 5+App特有相关 */
         "usingComponents" : true,

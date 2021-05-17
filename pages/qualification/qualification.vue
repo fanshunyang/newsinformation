@@ -105,13 +105,13 @@
 				</view>
 					</view>
 					<!-- 文章评论 -->
-						<view class="comments"  >
+						<!-- <view class="comments"  >
 							<view class="comments-number">
 								共11条评论
 							</view> 
 							<comments v-for="(item,index) in comment" :key='item.id' :comment='item'></comments>
 							
-						</view>
+						</view> -->
 					
 			    </view>
 			
@@ -223,7 +223,7 @@
 			
 		
 		</popup>
-		  	<view class="input-box">
+		  	<!-- <view class="input-box">
 		  		<text class="yticon icon-huifu"></text>
 		  		<view
 				@click="toggleMask('show')"
@@ -235,9 +235,9 @@
 				</view> 
 				
 		  		
-		  	</view>
-			<view class="input-box-right">
-				<view class="input-box-right-li">
+		  	</view> -->
+			<view class="input-box-right" style="width: 550px;">
+				<view class="input-box-right-li"  >
 					<view class="input-box-right-icon" v-if="favorites===0" @tap='assist'>
 						<image class="imgs" src="../../images/zan.png" mode=""></image>
 					</view>
@@ -245,7 +245,7 @@
 						<image class="imgs" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;"  src="../../images/zanxuan.png" mode=""></image>
 					</view>
 					<view class="input-box-right-number">
-					{{particulars.numsArray.dianzan_num}}
+					<!-- {{particulars.numsArray.dianzan_num}} -->
 					</view>
 				</view>
 			<view class="input-box-right-li">
@@ -254,7 +254,7 @@
 				</view>
 				<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
-					{{particulars.numsArray.collect_num}}
+					<!-- {{particulars.numsArray.collect_num}} -->
 				</view>
 			</view>
 			
@@ -315,8 +315,9 @@
 			ids:1,
 			jourId:1,
 			itemid:'',
-			newsobjgl:{}
+			newsobjgl:{},
 			// itemp:{},
+		
 			} 
 		},
 		onLoad(options){
@@ -530,7 +531,7 @@
 						
 						this.favorites = 1
 						this.getRecommendNewsDetail() || this.getSpecialDetail()
-				
+					
 				     }
 				},
 				//取消点赞
@@ -627,7 +628,7 @@
 			display: flex;
 			align-items: center;
 			height: 90upx;
-			padding: 0 30upx;
+			padding: 0 40upx;
 			box-shadow: 0 -1px 3px rgba(0,0,0,.04); 
 			background-color: #fff;
 			z-index: 1111111111;

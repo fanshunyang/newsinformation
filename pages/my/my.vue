@@ -17,7 +17,7 @@
 		<scroll-view scroll-y="true" style="height: 100%;">
 			<view class="my-material" v-if='access_token || user_id' >
 				<view class="my-material-top" >
-					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" 'http://www.app.youxun.com/' + materialobj.user_head_url" mode=""></image>
+					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" 'http://appyouxun.hundredzy.com/' + materialobj.user_head_url" mode=""></image>
 					
 					<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
 					

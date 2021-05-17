@@ -6,18 +6,18 @@
 						
 		  </view>
 		  <view class="themet-header">
-		  
+			<image class="imgs"  :src="tehntobj.gambit_img_url" mode=""></image>
 		  </view>
 		  <view class="themet-left-icon el-icon-arrow-left" @click="back">
 		  	
 		  </view>
 		  <view class="themet-son">
 		  	<view class="themet-son-left">
-		  	  <image class="imgs" src="../../images/cja.jpg" mode=""></image>
+		  	  <image class="imgs" :src="tehntobj.gambit_img_url" mode=""></image>
 		  	</view>
 		  	<view class="themet-son-right">
 		  		<view class="themet-son-right-text">
-		  			#王者荣耀#
+		  		{{tehntobj.gambit_name}}
 		  		</view>
 		  		<view class="themet-son-right-text">
 		  			5排崛起！
@@ -38,19 +38,19 @@
 				</view>
 			</view>
 		  <swiper style="height: 100%;" :current="crrindex" @change="changeTable">
-		  	<swiper-item style="1000upx" >
+		  	<swiper-item style="1000upx" v-for="(item,index) in navbar" :key='index'>
 		  	<scroll-view scroll-y="true" style="height: 1000upx;" >
 		  		<view class="swiper-item"  >
 					<view class="box-firend-ul">
-						<view class="box-firend-li" v-for="(item,index) in dynamicallyList" @click="dynamically">
+						<view class="box-firend-li" v-for="(item,index) in dynamicallyList" @click="dynamically(item)">
 						<view class="box-firend-li-header">
 							<view class="box-firend-li-item-madile">
 								<view class="box-firend-li-item-madile-img">
-									<image class="box-firend-li-item-madile-item-imgs" src="../../images/gg.jpg" mode=""></image>
+									<image class="box-firend-li-item-madile-item-imgs" :src="item.new_author_head_url" mode=""></image>
 								</view>
 								<view class="box-firend-li-item-madile-text">
-									<text class="box-firend-li-item-madile-text-one">联盟资讯BOT</text>
-									<text class="box-firend-li-item-madile-text-two">6分钟前·盒友杂谈</text>
+									<text class="box-firend-li-item-madile-text-one">{{item.new_author}}</text>
+									<text class="box-firend-li-item-madile-text-two">{{item.news_add_time}}</text>
 								</view>
 							
 							</view>
@@ -77,15 +77,15 @@
 						</view>
 						<view class="box-firend-li-content">
 							<view class="box-firend-li-content-title">
-								《英雄联盟》山海绘卷概念设计图公布
+								{{item.new_title}}
 							</view>
-							<view class="box-firend-li-content-text">
+							<!-- <view class="box-firend-li-content-text">
 							兄弟们，死亡细胞打折了,史低，我之前玩儿盗版的都没 打通关，这个我还买不买啊
-							</view>
+							</view> -->
 							<view class="box-firend-li-content-img">
 								<view class="box-firend-li-content-img-ul">
-									<view class="box-firend-li-content-img-li" v-for="(item,index) in  boxfirendimg" :key='index'>
-										<image class="box-firend-li-content-img-li-imgs" src="../../images/yl.jpg" mode=""></image>
+									<view class="box-firend-li-content-img-li" >
+										<image class="box-firend-li-content-img-li-imgs" :src="item.news_img" mode=""></image>
 									</view>
 								</view>
 							
@@ -110,13 +110,7 @@
 				</view>
 		  	</scroll-view>
 		  	</swiper-item>
-		  	<swiper-item>
-		  	<scroll-view scroll-y="true" style="height: 100%;" >
-		  		<view class="swiper-items">
-		  			2
-		  		</view>
-		  	</scroll-view>
-		  	</swiper-item>
+		 
 		  </swiper>
 		 
 	</view>
@@ -126,7 +120,7 @@
 	export default {
 		data() {
 			return {
-				navbar:[{id:1,text:'全部'},{id:2,text:'最新'}],
+				navbar:[{id:0,text:'全部'},{id:1,text:'最新'}],
 				crrindex:0,
 				//盒有动态
 				boxfirendimg:[
@@ -136,28 +130,60 @@
 				],
 				//全部热帖
 				dynamicallyList:[
-					{id:1,},
-					{id:2,},
-					{id:3,},
-					{id:4,}
+				
 				],
+				thements:{},
+				tehntobj:{}
 			}
 		},
+		onLoad(va) {
+		this.thements =	JSON.parse(decodeURIComponent(va.item)) 
+		console.log(this.thements)
+		},
+		mounted() {
+		  this.gambitList()
+		},
 		methods: {
+			//首页--话题新闻-- 话题新闻列表
+			async gambitList () {
+			
+				 const user_id = uni.getStorageSync('user_id')
+				 const param = this.crrindex===0?'is_hot':'is_new '
+				 let data = await this.$http.post('/api/gambitList',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+						gambit_name:this.thements.gambit_name,
+						gambit_param:param
+					
+					
+				 });
+				  
+					const {DATA,CODE} = data
+					if (CODE==='200') {
+					 this.tehntobj = DATA.info
+					 console.log( this.tehntobj)
+					const {newsList} =    DATA
+					this.dynamicallyList = newsList
+					}
+			},
 			//返回上一级
 			back () {
 				uni.navigateBack()
 			},
 			tabBar (va) {
+			
 				this.crrindex = va
+			
+				this.gambitList()
 			},
 			changeTable (va) {
 				this.crrindex = va.detail.current
+					this.gambitList()
 			},
 			//跳转帖子详情
-			dynamically () {
+			dynamically (va) {
+				const id = va.id
 				uni.navigateTo({
-					url:'../details/details'
+					url:`../details/details?item=${id}`
 				})
 			},
 		}
@@ -183,10 +209,13 @@
 	.themet-header {
 	-webkit-filter: contrast(100%) brightness(50%) blur(1px);  /* Chrome, Safari, Opera */
 	    filter:  contrast(100%) brightness(50%) blur(1px);
-	
-		height: 288upx;
-	   background: url(../../images/cja.jpg) no-repeat ;
 		
+		
+	   // background: url(../../images/cja.jpg) no-repeat ;
+		.imgs {
+			width: 750upx;
+			height: 288upx;
+		}
 		
 	}
 	.themet-left-icon {
@@ -329,7 +358,7 @@
 							flex-direction: column;
 							margin-left: 24upx;
 							.box-firend-li-item-madile-text-one {
-								width: 180upx;
+								// width: 180upx;
 								height: 26upx;
 								font-size: 26upx;
 								font-family: Microsoft YaHei;

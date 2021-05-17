@@ -1,13 +1,13 @@
 <template>
 	<view class="setting">
 		<view class="setting-header" v-if="user_id " @tap='modification'>
-			<image class="imgs" :src=" 'http://www.app.youxun.com/' + materialobj.user_head_url" mode=""></image>
+			<image class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + materialobj.user_head_url" mode=""></image>
 			<view class="setting-header-sorted">
 				<view class="setting-header-sorted-top">
 				{{materialobj.user_name}}
 				</view>
 				<view class="setting-header-sorted-bottom">
-				  ID:王者荣耀Bot
+				{{materialobj.user_signature}}
 				</view>
 			</view>
 			<view class="setting-header-alter">
@@ -22,7 +22,7 @@
 		<view class="setting-message-list">
 			<view class="ul">
 				<view class="li">
-				<view class="li-item">
+				<view class="li-item" @tap='picture'>
 						头像框设置
 				</view>
 				<view class="li-icon el-icon-arrow-right">
@@ -96,6 +96,9 @@
 		
 			//退出登录
 		 log_out () {
+			 // uni.navigateTo({
+			 // 	url:'../login/login'
+			 // })
 				uni.showModal({
 				  
 				    content: '您确定要退出吗？',
@@ -139,7 +142,15 @@
 				});
 				
 			},
-		}
+			//头像框
+			picture () {
+				uni.showToast({
+					title:'该功能暂未开通,敬请期待!', 
+					icon:'none',
+					duration:2000
+				})
+			},
+ 		}
 	}
 </script>
 

@@ -23,7 +23,7 @@
 		        <image :src="cropFilePath" mode="aspectFit" style="width: 100%;"></image> -->
 		
 		<image v-if="initialimgs  " class="imgs" src="../../images/cj.jpg" mode=""></image>
-        	<image class="imgs" :src=" 'http://www.app.youxun.com/' +  user_item.user_head_url" mode=""></image>
+        	<image class="imgs" :src=" 'http://appyouxun.hundredzy.com/' +  user_item.user_head_url" mode=""></image>
 		  <imagecropper :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
 		 <image @tap="upload" :src="cropFilePath " mode="aspectFit" style="width: 100upx; height: 100upx; border-radius: 50%; position: absolute; right: 10px; z-index: 222;"></image> 
 	 </view>
@@ -135,6 +135,9 @@
 	import minpopup from '../../components/min-picker/min-popup.vue'
 	import minpicker from '../../components/min-picker/min-picker.vue'
 	import vvSelect from '@/components/vv-select/vv-select'
+	import {pathToBase64,  //图片路径转base64
+			base64ToPath,  //base64码转图片
+		} from '../../js_sdk/mmmm-image-tools/index.js'
 	export default {
 		components: {
 		imagecropper,
@@ -164,6 +167,7 @@
 				email:'',
 				values:'',
 				cropFilePath:'',
+				cropFilePathApp:'',
 				nickname:'',
 				personalized:'',
 				value: '',
@@ -291,7 +295,7 @@
 						console.log(res)
 				      this.tempFilePath = res.tempFilePaths.shift()
 					  console.log(  this.tempFilePath)
-				      }
+				      } 
 				   });
 			},
 			//确定裁剪
@@ -299,22 +303,29 @@
 			console.log(e)
 			this.tempFilePath = ''
 			 this.cropFilePath = e.detail.tempFilePath
-			 console.log( this.cropFilePath)
-			const user_id = uni.getStorageSync('user_id')
-			let data = await this.$http.post('/api/uploadFile',{
-		     token:'d6a2fa16e60777e390256ec85cc2f42e',					
-			user_id:user_id,
-			path:'my',
-			file: this.cropFilePath				
-			});
-				if (this.cropFilePath) {
-					this.initialimgs = false
-				}
-				const {CODE,DATA} = data
-			    if (CODE==='200') {
-				this.user_url = DATA
+			 console.log( this.cropFilePath) 
+		
+				pathToBase64( this.cropFilePath).then( async base64 => {
+				  this.cropFilePathApp = base64
+				 const user_id = uni.getStorageSync('user_id')
+				 	let data = await this.$http.post('/api/uploadFile',{
+				     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+				 			user_id:user_id,
+				 			path:'my',
+				 			file:  this.cropFilePathApp			
+				 			});
+							console.log(data)
+				 				if (this.cropFilePath) {
+				 					this.initialimgs = false
+				 				}
+				 				const {CODE,DATA} = data
+				 			   if (CODE==='200') {
+				 			   this.user_url = DATA
+				 			
+				 		}
+				})
 			
-			    }
+				
 			},
 			//取消裁剪
 			cancels () {
