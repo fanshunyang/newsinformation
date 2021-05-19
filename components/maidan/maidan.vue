@@ -68,7 +68,9 @@
 				
 				</view>
 				
-		
+				<view v-if="plazaList.length===0"  style="text-align: center;">
+				抱歉~~没有该信息列表数据
+				</view>
 			
 			<!-- 第一个列表 -->
 				
@@ -139,6 +141,7 @@
 			setTimeout(()=>{
 				const {special_sq_list} = this.box_games
 			    this.plazaList = special_sq_list
+				console.log( this.plazaList)
 			},500)
 		},
 			//全局下拉和上拉刷新

@@ -149,7 +149,7 @@
 					
 				</view>
 				<view class="transmit-input">
-					<input  :focus="focus" type="text" class="text"  @focus='fcus' v-model="txt" placeholder="说点什么吧" />
+					<input  type="text" class="text" @input="transmitInpt"   v-model="transtxt" placeholder="说点什么吧" />
 				</view>
 				<view class="transmit-matter">
 					<view class="transmit-matter-title">
@@ -290,12 +290,12 @@
 		},  
 		data() {
 			return {
-				txt:'',
+				transtxt:'',
 				favorite:0,
 				favorites:0,
 				particulars:{},
 				particularslist:[],
-				focus:false,
+			
 				loading: true,
 				madeid:0 ,
 				detailData: {},
@@ -483,9 +483,9 @@
 				 user_id:user_id,
 				 place_param:'news'
 				});
-				console.log(data)
+			
 				const {CODE} = data
-			    if (CODE==="ERROR001") {
+			    if (CODE==="200") {
 					uni.showToast({
 							title:'收藏成功',
 						
@@ -525,9 +525,10 @@
 					 user_id:user_id,
 					 place_param:'news'
 					});
-					console.log(data)
+						console.log(data)
+					console.log(data.CODE)
 					const {CODE} = data
-				    if (CODE==="ERROR001") {
+				    if (CODE==="200") {
 						
 						this.favorites = 1
 						this.getRecommendNewsDetail() || this.getSpecialDetail()
@@ -599,6 +600,11 @@
 				uni.navigateTo({
 					url:'../homepage/homepage'
 				})
+			},
+			//分享输入信息
+			transmitInpt (va) {
+			 this.transtxt = va.detail.value
+			 console.log( this.transtxt)
 			},
 		}
 	}

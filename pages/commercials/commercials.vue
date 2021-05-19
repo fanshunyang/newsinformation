@@ -14,7 +14,7 @@
 					<view class="homepage-header-right-search el-icon-search" @click="search">
 						
 					</view>
-					<view class="homepage-header-right-box el-icon-message">
+					<view class="homepage-header-right-box el-icon-message"  @click="commercis">
 						
 					</view>
 					
@@ -109,18 +109,18 @@
 							
 						</view>
 						
-						<view class="swiper-box-game-comment">
+						<!-- <view class="swiper-box-game-comment">
 							<view class="swiper-box-game-comment-title">
 								相关评论
 							</view>
-							<!-- 文章评论 -->
+						
 								<view class="comments"  >
 								
 									<comments v-for="(item,index) in comment" :key='item.id' :comment='item'></comments>
 								    
 								</view>
 							
-						</view>
+						</view> -->
 						
 				<!-- 底部评论 -->
 				  <view class="bottom" @touchmove.stop.prevent="" >
@@ -132,7 +132,7 @@
 					
 				</ygcComment>
 						
-				  	<view class="input-box">
+				 <!-- 	<view class="input-box">
 				  		<text class="yticon icon-huifu"></text>
 				  		<view
 						@click="toggleMask('show')"
@@ -144,8 +144,8 @@
 						</view> 
 						
 				  		
-				  	</view>
-					<view class="input-box-right">
+				  	</view> -->
+					<!-- <view class="input-box-right">
 						<view class="input-box-right-li">
 							<view class="input-box-right-icon">
 								<image class="imgs" src="../../images/zan.png" mode=""></image>
@@ -172,7 +172,7 @@
 							
 						</view>
 					</view>
-					</view>
+					</view> -->
 				  </view>
 					
 					</view>
@@ -257,12 +257,17 @@ import market from "../../js_sdk/dc-market/market.js"
 			},
 			//下载
 			download () {
-				market.open({
-				ios:'682211190', 
+				// market.open({
+				// ios:'682211190', 
 				
-				// android:'com.tencent.mm'
-				  // key:'思思'
-				});    
+				// // android:'com.tencent.mm'
+				//   // key:'思思'
+				// });   
+				 uni.showToast({
+				 	title:'该游戏暂时无法下载 敬请期待!',
+					icon:'none',
+					duration:2000
+				 })
 			},
 			//更多信息
 			moreDetails () {
@@ -303,8 +308,20 @@ import market from "../../js_sdk/dc-market/market.js"
 			// 	this.tabIndex = va.detail.current
 			// },
 			search () {
-				uni.navigateTo({
-					url:'../search/search'
+				// uni.navigateTo({
+				// 	url:'../search/search'
+				// })
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
+				})
+			},
+			commercis () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
 				})
 			},
 		}

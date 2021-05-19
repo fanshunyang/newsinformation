@@ -351,10 +351,17 @@
             "path" : "pages/setting/setting",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "设置",
+                // "navigationBarTitleText": "设置",
                 "enablePullDownRefresh": false,
 			    "navigationBarTextStyle" : "black",
-			    "navigationBarBackgroundColor":"#FFFFFF"
+			    "navigationBarBackgroundColor":"#FFFFFF",
+				"app-plus": {
+					"softinputNavBar": "none",
+					"titleNView": false,
+					"bounce": "none",
+					"softinputMode": "adjustResize"
+				
+				}
             }
             
         }
@@ -433,10 +440,17 @@
             "path" : "pages/gameeasier/gameeasier",
             "style" :                                                                                    
             {
-             "navigationBarTitleText": "热门推荐",
+             "navigationBarTitleText": "",
                "enablePullDownRefresh": false,
              "navigationBarTextStyle" : "black",
-             "navigationBarBackgroundColor":"#FFFFFF"
+             "navigationBarBackgroundColor":"",
+			 "app-plus": {
+			 	"softinputNavBar": "none",
+			 	"titleNView": false,
+			 	"bounce": "none",
+			 	"softinputMode": "adjustResize"
+			 
+			 }
             }
             
         }
@@ -444,10 +458,17 @@
             "path" : "pages/newcompany/newcompany",
           "style" :
           {
-           "navigationBarTitleText": "最新上市",
+           "navigationBarTitleText": "",
              "enablePullDownRefresh": false,
            "navigationBarTextStyle" : "black",
-           "navigationBarBackgroundColor":"#FFFFFF"
+           "navigationBarBackgroundColor":"#FFFFFF",
+		   "app-plus": {
+		   	"softinputNavBar": "none",
+		   	"titleNView": false,
+		   	"bounce": "none",
+		   	"softinputMode": "adjustResize"
+		   
+		   }
           }
         }
         ,{
@@ -509,6 +530,22 @@
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/webview/webview",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+				// "app-plus": {
+				// 	"softinputNavBar": "none",
+				// 	"titleNView": false,
+				// 	"bounce": "none",
+				// 	"softinputMode": "adjustResize"
+				
+				// }
             }
             
         }

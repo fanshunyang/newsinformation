@@ -124,7 +124,7 @@
 			</view>
 		  	</swiper-item>
 		  	<swiper-item>
-		  		<view class="swiper-item">2</view>
+		  		<view class="swiper-item">抱歉~~暂时没有该功能</view>
 		  	</swiper-item>
 		  </swiper>
 	
@@ -522,7 +522,7 @@
 					});
 					console.log(data)
 					const {CODE} = data
-				    if (CODE==="ERROR001") {
+				    if (CODE==="200") {
 						uni.showToast({
 								title:'收藏成功',
 							
@@ -559,7 +559,7 @@
 						});
 						console.log(data)
 						const {CODE} = data
-					    if (CODE==="ERROR001") {
+					    if (CODE==="200") {
 						
 							this.favorites = 1
 					     }

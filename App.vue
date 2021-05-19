@@ -2,7 +2,23 @@
 	  
 	export default {
 		onLaunch: function () {
-			console.log('App Launch')
+		// #ifdef APP-PLUS  
+			  const user_id = uni.getStorageSync('user_id') 
+			//判断是否存在登录信息
+			if(!user_id){
+				//不存在则跳转登录页
+				uni.reLaunch({
+					url:"./pages/login/login", 
+					success:()=>{
+						//跳转完页面后再关闭启动页
+						plus.navigator.closeSplashscreen(); 
+					}
+				})
+			}else{
+				//存在则关闭启动页进入首页
+			     plus.navigator.closeSplashscreen();
+			}
+			// #endif
 			
 		},
 		onShow: function () {

@@ -10,13 +10,13 @@
 			<view class="my-nav-set el-icon-setting" @tap='Setting'>
 				
 			</view>
-			<view class="my-nav-label el-icon-message">
+			<view class="my-nav-label el-icon-message" @tap='mymessage'>
 				 
 			</view>
 		</view>
 		<scroll-view scroll-y="true" style="height: 100%;">
 			<view class="my-material" v-if='access_token || user_id' >
-				<view class="my-material-top" >
+				<view class="my-material-top" @tap='mypersonal'>
 					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" 'http://appyouxun.hundredzy.com/' + materialobj.user_head_url" mode=""></image>
 					
 					<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
@@ -88,7 +88,7 @@
 				</view>
 			</view>
 			<view class="my-banner" >
-				<image v-for="(item,index) in bannerList" class="imgs" :src="item.img" mode=""></image>
+				<image @tap='wbbanner(item)' v-for="(item,index) in bannerList" class="imgs" :src="item.img" mode=""></image>
 			</view>
 			<view class="my-message-list">
 				<view class="ul">
@@ -285,6 +285,11 @@
 		  materialclassfilythree () {
 			  
 		  },
+		  mypersonal () {
+			  uni.navigateTo({
+			  	url:'../setting/setting'
+			  })
+		  },
 		  materialclassfilyfour () {
 			  uni.navigateTo({
 			  	url:'../myhost/myhost'
@@ -302,6 +307,18 @@
 			 	url:'../collect/collect'
 			 }) 
 		  },
+		  mymessage () {
+			  uni.showToast({
+			    title:'该功能暂未开放 敬请期待!',
+			    icon:'none',
+			    duration:2000
+			  })
+		  },
+		  wbbanner (va) {
+			 uni.navigateTo({
+			 	url:`../webview/webview?items=${va.account}`
+			 })  
+		  }
 		}
 	}
 </script>

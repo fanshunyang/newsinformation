@@ -38,6 +38,9 @@
 				 </view>
 				</view>
 				
+				<view v-if="informationList.length===0" style="text-align: center;">
+				抱歉~~没有该信息列表数据
+				</view>
 			</view>
 		</view>
 	</view>

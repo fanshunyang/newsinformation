@@ -44,7 +44,7 @@
 				 	
 				 </view>
 				 
-				 <view class="nav-word el-icon-message">
+				 <view class="nav-word el-icon-message" @click="homemessage">
 				 
 				 </view>
 				 
@@ -230,7 +230,7 @@
 					2
 				</view> -->
 				<!-- 下拉刷新组件 -->
-				<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="90" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll">
+			<!-- 	<mix-pulldown-refresh ref="mixPulldownRefresh" class="panel-content" :top="90" @refresh="onPulldownReresh" @setEnableScroll="setEnableScroll"> -->
 					<!-- 内容部分 -->
 					
 					<swiper 
@@ -269,7 +269,7 @@
 										<view class="panel-content-box-background">
 											<view class="panel-content-box-background-area" @click="homebranch">
 												<view class="panel-content-box-background-area-img">
-														<image class="area-imgs" :src=" 'http://www.app.youxun.com/' + gametype.special_head_url" mode=""></image>
+												  <image class="area-imgs" :src=" 'http://appyouxun.hundredzy.com/' + gametype.special_head_url" mode=""></image>
 												</view>
 												<view class="panel-content-box-background-area-item">
 													<view class="panel-content-box-background-area-item-top">
@@ -466,11 +466,11 @@
 								
 								<!-- 上滑加载更多组件 -->
 							
-								<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more>
+							<!-- 	<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more> -->
 							</scroll-view>
 						</swiper-item>
 					</swiper>
-				</mix-pulldown-refresh>
+				<!-- </mix-pulldown-refresh> -->
 				
 			</view>
 		</swiper-item>
@@ -556,10 +556,7 @@
 					title:'新闻专题',
 					subLable:'',
 					list:[
-						{id:1, name:'cat', img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616835881&t=80a9e0425b7fe4e53d1c5e4f36116ab4'},
-						{id:2, name:'cat', img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616835881&t=80a9e0425b7fe4e53d1c5e4f36116ab4'},
-						{id:3, name:'cat', img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616835881&t=80a9e0425b7fe4e53d1c5e4f36116ab4'},
-						{id:4, name:'cat', img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg&refer=http%3A%2F%2Fa0.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616835881&t=80a9e0425b7fe4e53d1c5e4f36116ab4'},
+					
 
 					]
 				},    
@@ -608,11 +605,16 @@
 				return user_id
 			}
 		},
-		async onLoad() {
+		async onLoad() { 
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			this.loadTabbars();
-				
+				uni.preloadPage({
+					url:'../game/game', 
+					complete(va) {
+						console.log(va)
+					},
+				})
 				// this.loadData('add');
 		},
 		
@@ -697,8 +699,20 @@
 			
 			//搜索
 			search () {
-				uni.navigateTo({
-					url:'../search/search'  
+				// uni.navigateTo({
+				// 	url:'../search/search'  
+				// })
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
+				})
+			},
+			homemessage () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
 				})
 			},
 			//关注用户列表
@@ -984,7 +998,7 @@
 				uni.navigateTo({
 					url:`../journalism/journalism?item=${encodeURIComponent (JSON.stringify(value))}`
 				})
-			},
+			}, 
 			//下拉刷新
 			onPulldownReresh(){
 				this.loadNewsList('refresh');

@@ -1,5 +1,18 @@
 <template>
 	<view class="setting">
+		<view class="status_bar">
+		         <!-- 这里是状态栏 --> 
+					
+						
+		  </view>
+		  <view class="nav-header" style="display: flex; padding-left: 30upx; padding-right: 30upx;">
+		  	<view @tap='backstap' class="nav-header-left el-icon-arrow-left" style="font-size: 40upx;">
+		  		
+		  	</view>
+			<view class="nav-header-right" style="margin:  0 auto; font-family: Microsoft YaHei;font-weight: bold;color: #333232; letter-spacing: 1px;">
+				设置
+			</view>
+		  </view>
 		<view class="setting-header" v-if="user_id " @tap='modification'>
 			<image class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + materialobj.user_head_url" mode=""></image>
 			<view class="setting-header-sorted">
@@ -72,6 +85,13 @@
 		},
 		
 		methods: {
+			//返回
+			backstap () {
+				
+				uni.reLaunch({
+					url:'../my/my'
+				})
+			},
 			//登录成功后个人资料
 			async getPersonalInfo () {
 				const user_id = uni.getStorageSync('user_id')
@@ -158,9 +178,18 @@
 	page, .setting {
 		height: 100%;
 		overflow: hidden;
+	
 	}
+	
+	.status_bar {
+	
+	     height: var(--status-bar-height);
+	     width: 100%; 
+		 background-color: #fff;
+		
+	 }
  .setting {
-	 background-color: #F1F1F1;
+	 // background-color: #F1F1F1;
 	.setting-header {
 		background-color: #fff;
 		display: flex;

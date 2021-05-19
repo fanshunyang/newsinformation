@@ -33,13 +33,13 @@
 										<view class="li_text">
 											{{item.gm_name}}
 										</view>
+										
+									</view>
+									<view class="li_grade">
+										<uni-rate v-model="item.gm_star" @change="onChange( $event, item)" :is-fill="false" :max="5" :touchable="false" :size="14" ></uni-rate>   
 										<view class="li_grade_mark">
 											{{item.gm_star}}
 										</view>
-									</view>
-									<view class="li_grade">
-										<uni-rate v-model="item.gm_star" @change="onChange( $event, item)" :is-fill="false" :max="9" :touchable="false" :size="11" ></uni-rate>   
-									
 									</view>
 									
 									
@@ -51,6 +51,7 @@
 						<view class="game_advertising">
 						<carousel :img-list="imgList" url-key="img" @selected="selectedBanner"></carousel>
 						</view>
+						<!-- <web-view :webview-styles="webviewStyles" src="https://uniapp.dcloud.io/static/web-view.html">1</web-view> -->
 					<view class="game_recommended" >
 						<view class="game_recommended-title-all">
 							<view class="game_recommended-title-left">
@@ -60,7 +61,7 @@
 								更多 >
 							</view>
 							
-							
+							 
 						</view>
 						
 						<view class="ul">
@@ -108,61 +109,63 @@
 						</view>
 						<view class="game_classify">
 							<view class="ul">
-								<view class="li" :class="{'fily':index===currIndex}" @click="gameclassify(item)" v-for="(item,index) in  game_classify" :key='index'>
+								<view class="li" :class="{'fily':item.id===currIndex}" @click="gameclassify(item)" v-for="(item,index) in  game_classify" :key='index'>
 									{{item.text}}
 								</view>
 							</view>
 						</view>
-						 <swiper style="height: 520px;" :current="currIndex" @change="chagnetabls">
-						 	<swiper-item style="height: 100%;"   v-for="(item,index) in  game_classify" :key='index'>
-						 		<scroll-view scroll-y="true" style="height: 100%;">
-						 		<view class="game_swiper-item">
-						 			<view class="ul">
-						 				<view class="li" @tap='makeGame(item)' v-for="(item,index) in makegame" :key='index'>
-						 				<image  :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
-						 				<view class="li_center">
-						 					<view class="li_center_introductory">
-						 					{{item.gm_name}}
-						 					</view>
-						 					<view class="li_center_star">
-						 							<uni-rate   v-model="item.gm_star" :is-fill="false" :max="9"  :touchable="false" :size="10.5" ></uni-rate>   
-						 					</view>
-						 					<view class="li_center_sort">
-						 				{{item.gm_cat_str}}
-						 					</view>
-						 					<view class="li_center_all">
-						 						<view class="arroind">
-						 							
-						 						</view>
-						 						<view class="ios">
-						 							
-						 						</view>
-						 						<view class="listend">
-						 							{{item.gm_update_time}} 上市
-						 						</view>
-						 					</view>
-						 				</view>
-						 				<view class="li_right">
-						 					<view class="li_right-icon el-icon-download">
-						 						
-						 					</view>
-						 					<view class="li_right_text">
-						 						下载
-						 					</view>
-						 				</view>
-						 				
-						 				</view>
-						 				
-						 				
-						 			</view>
-						 			
-						 			
-						 		</view>
-						 		</scroll-view>
+						
+						<scroll-view scroll-y="true" style="height: 100%;">
+						<view class="game_swiper-item">
+							<view class="ul">
+								<view class="li" @tap='makeGame(item)' v-for="(item,index) in makegame" :key='index'>
+								<image  :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
+								<view class="li_center">
+									<view class="li_center_introductory">
+									{{item.gm_name}}
+									</view>
+									<view class="li_center_star">
+											<uni-rate   v-model="item.gm_star" :is-fill="false" :max="5"  :touchable="false" :size="10.5" ></uni-rate>   
+									</view>
+									<view class="li_center_sort">
+								{{item.gm_cat_str}}
+									</view>
+									<view class="li_center_all">
+										<view class="arroind">
+											
+										</view>
+										<view class="ios">
+											
+										</view>
+										<view class="listend">
+											{{item.gm_update_time}} 上市
+										</view>
+									</view>
+								</view>
+								<view class="li_right">
+									<view class="li_right-icon el-icon-download">
+										
+									</view>
+									<view class="li_right_text">
+										下载
+									</view>
+								</view>
+								
+								</view>
+								
+								
+							</view>
 							
+							
+						</view>
+						</scroll-view>
+						<!-- <swiper style="height: 520px;" :current="currIndex" @change="chagnetabls">
+						 	<swiper-item style="height: 100%;"   v-for="(item,index) in  game_classify" :key='index'>
+
+							 
 						 	</swiper-item>
 						 
-						 </swiper>
+						 </swiper> -->
 					</view>
 			</view>
 		</scroll-view>
@@ -185,7 +188,7 @@
 		data() {
 			return {
 				
-				currIndex:0,
+				currIndex:1,
 				tabCurrentIndex:0,
 				tabBars:[],
 				//推荐前九个
@@ -193,10 +196,10 @@
 				
 				],
 				game_classify:[
-					{id:0,text:'近期热度'},
-					{id:1,text:'评分最高'},
-					{id:2,text:'最新上市'},
-					{id:3,text:'即将上市'}
+					{id:1,text:'近期热度'},
+					{id:2,text:'评分最高'},
+					{id:3,text:'最新上市'},
+					{id:4,text:'即将上市'}
 				],
 				game_recommendlist:[
 					
@@ -211,7 +214,8 @@
 					
 				],
 				star:'',
-				classfily:1
+				classfily:1,
+
 			}
 		},
 		onLoad() {
@@ -252,7 +256,7 @@
 				// tabnav
 				 let data = await this.$http.post('/api/getAllGame',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
-					    gm_c_id:this.classfily
+					    gm_c_id: this.tabCurrentIndex
 						// search_value:'腾讯'
 					
 				 });
@@ -350,30 +354,31 @@
 		
 		  },
 		  changeitem (va) {
-			this.classfily =  va.detail.current
-			if (this.classfily===0) {
-				this.classfily = 1
-				this.getAllGame()
-			} else if (this.classfily===1) {
-				this.classfily = 2
-				this.getAllGame()
-			}else if (this.classfily===2) {
-				this.classfily = 3
-				this.getAllGame()
-			} else if (this.classfily===3) {
-				this.classfily = 4
-				this.getAllGame()
-			}else if (this.classfily===4) {
-				this.classfily = 5
-				this.getAllGame()
-			}else if (this.classfily===5) {
-				this.classfily = 6
-				this.getAllGame()
-			}else if (this.classfily===6) {
-				this.classfily = 7
-				this.getAllGame()
-			}
+			// this.classfily =  va.detail.current
+			// if (this.classfily===0) {
+			// 	this.classfily = 1
+			// 	this.getAllGame()
+			// } else if (this.classfily===1) {
+			// 	this.classfily = 2
+			// 	this.getAllGame()
+			// }else if (this.classfily===2) {
+			// 	this.classfily = 3
+			// 	this.getAllGame()
+			// } else if (this.classfily===3) {
+			// 	this.classfily = 4
+			// 	this.getAllGame()
+			// }else if (this.classfily===4) {
+			// 	this.classfily = 5
+			// 	this.getAllGame()
+			// }else if (this.classfily===5) {
+			// 	this.classfily = 6
+			// 	this.getAllGame()
+			// }else if (this.classfily===6) {
+			// 	this.classfily = 7
+			// 	this.getAllGame()
+			// }
 			 this.tabCurrentIndex = va.detail.current
+			 this.getAllGame()
 			 // if ( this.tabCurrentIndex===0) {
 			 //   this.tabCurrentIndex=1
 			 //   this.classfily =  this.tabCurrentIndex
@@ -391,23 +396,29 @@
 		  },
 		  gameMore () {
 			  uni.navigateTo({
-			  	url:'../gameeasier/gameeasier'
+			  	url:'../gameeasier/gameeasier' 
 			  })
 		  },
 		  //广告位轮播
 		  selectedBanner (item,index) {
-			  console.log(item)
+			 // const url = 'https://www.baidu.com/'
+			 console.log(item.account)
+			  uni.navigateTo({
+			  	url:`../webview/webview?items=${encodeURIComponent(item.account)}`
+			  })
+			  
 		  },
 		    //找游戏
 		  gameclassify (va) {
 			  this.currIndex = va.id
+			  console.log(this.currIndex)
 			  this.getSearchGame()
 		  },
 		  //找游戏切换
-		  chagnetabls (va) {
-			   this.currIndex = va.detail.current 
-			  this.getSearchGame()
-		  },
+		  // chagnetabls (va) {
+			 //   this.currIndex = va.detail.current 
+			 //  this.getSearchGame()
+		  // },
 		  //游戏介绍
 		  gameReferral (va) {
 			  const id =  va.gm_id
@@ -523,7 +534,7 @@ page, .game{
 					.ul {
 						display: flex;
 						flex-wrap: wrap;
-						justify-content: space-between;
+						justify-content: space-around;
 						.li {
 							display: flex;
 							flex-direction: column;
@@ -550,20 +561,20 @@ page, .game{
 								    overflow:hidden;
 								    text-overflow:ellipsis;
 								}
+								
+							}
+							
+							.li_grade {
+								
+								display: flex;
+								// width: 80px;
 								.li_grade_mark {
-									margin-left: 12upx;
+									margin-left: 22upx;
 									font-size: 24upx;
 									font-family: Microsoft YaHei;
 									font-weight: bold;
 									color: #666666;
 								}
-							}
-							
-							.li_grade {
-								
-								// display: flex;
-								// width: 80px;
-								
 							}
 						}
 					}

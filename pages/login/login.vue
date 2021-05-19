@@ -19,8 +19,8 @@
 		  	<view class="t-e cl">
 				
 				<view class="t-g" @click="phoneNumbers"><image src="@/static/sj.jpg"></image></view>
-		  		<view class="t-g"><image src="@/static/wx.png"></image></view>
-		  		<view class="t-g"><image src="@/static/qq.png"></image></view>
+		  		<view class="t-g" @tap='weixin'><image src="@/static/wx.png"></image></view>
+		  		<view class="t-g" @tap='QQ'><image src="@/static/qq.png"></image></view>
 		  	</view>
 		  </view>
 	<button type="default" @click="phoneNumberall">手机号登录</button>
@@ -81,6 +81,20 @@
 					})
 				 }  
 				
+			},
+			weixin () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
+				})
+			},
+			QQ () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
+				})
 			},
 			phoneNumbers () {
 			// console.log(111)

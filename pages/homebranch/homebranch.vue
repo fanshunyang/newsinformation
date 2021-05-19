@@ -14,7 +14,7 @@
 					<view class="homepage-header-right-search el-icon-search" @click="search">
 						
 					</view>
-					<view class="homepage-header-right-box el-icon-message">
+					<view class="homepage-header-right-box el-icon-message" @tap='homepagemessage'>
 						
 					</view>
 					
@@ -40,7 +40,10 @@
 				<swiper-item >
 					
 				<scroll-view scroll-y="true" style="height: 100%;">	
-				<view class="swiper-box-game" >
+				<view v-if="box_game.gm_name=== undefined && box_game.gm_detail_title_img=== undefined &&  box_game.gm_cat_str===undefined && box_game.gm_detail_p1===undefined" style="text-align: center; letter-spacing: 2px; margin-top: 150px;">
+				抱歉~~没有该信息列表数据
+				</view>
+				<view class="swiper-box-game" v-else>
 					<view class="swiper-box-game-banner">
 						<image class="imgs" :src="box_game.gm_detail_title_img" mode=""></image>
 					</view>
@@ -117,21 +120,21 @@
 						
 					</view>
 					
-					<view class="swiper-box-game-comment">
+					<!-- <view class="swiper-box-game-comment">
 						<view class="swiper-box-game-comment-title">
 							相关评论
 						</view>
-						<!-- 文章评论 -->
+					
 							<view class="comments"  >
 							
 								<comments v-for="(item,index) in comment" :key='item.id' :comment='item'></comments>
 							    
 							</view>
 						
-					</view>
+					</view> -->
 					
 			<!-- 底部评论 -->
-			  <view class="bottom" @touchmove.stop.prevent="" >
+			  <!-- <view class="bottom" @touchmove.stop.prevent="" >
 			<ygcComment
 			ref="ygcComment" 
 			        :placeholder="'发布评论'" 
@@ -152,8 +155,8 @@
 					</view> 
 					
 			  		
-			  	</view>
-				<view class="input-box-right">
+			  	</view> -->
+				<!-- <view class="input-box-right">
 					<view class="input-box-right-li">
 						<view class="input-box-right-icon">
 							1
@@ -180,10 +183,12 @@
 						
 					</view>
 				</view>
-				</view>
-			  </view>
+				</view> -->
+			  <!-- </view> -->
 				
 				</view>
+				
+			
 				</scroll-view>
 				</swiper-item>
 				
@@ -276,8 +281,9 @@
 					if (data.CODE==='200') {
 						   
 						this.box_game= DATA
+					
 						console.log(this.box_game) 
-						
+					
 					
 					}
 			},
@@ -321,8 +327,20 @@
 				this.tabIndex = va.detail.current
 			},
 			search () {
-				uni.navigateTo({
-					url:'../search/search'
+				// uni.navigateTo({
+				// 	url:'../search/search'
+				// })
+				uni.showToast({
+					title:'该功能暂未开放 敬请期待!',
+					icon:'none',
+					duration:2000
+				})
+			},
+			homepagemessage () {
+				uni.showToast({
+					title:'该功能暂未开放 敬请期待!',
+					icon:'none',
+					duration:2000
 				})
 			},
 		}

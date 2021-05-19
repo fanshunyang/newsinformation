@@ -28,7 +28,7 @@
 	 				 	
 	 				 </view>
 	 				 
-	 				 <view class="nav-word el-icon-message">
+	 				 <view class="nav-word el-icon-message" @click="squaremessage">
 	 				 
 	 				 </view>
 	 				 
@@ -120,7 +120,7 @@
 	  			<view class="recommend-img">  
 
 					<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
-						<swiper-item v-for="(item,index) in swiperbanner" :key='index'>
+						<swiper-item @tap='plaza(item)' v-for="(item,index) in swiperbanner" :key='index'>
 						<image class="imgs" :src="item.img" mode=""></image>
 						</swiper-item>
 						
@@ -162,7 +162,7 @@
 	  									</view> -->
 										<image class="imgs" src="../../images/zan.png" mode=""></image>
 	  									<view class="recommend-list-li-area-number-left">
-	  										11
+	  										{{item.numsArray.dianzan_num}}
 	  									</view>
 	  								</view>
 	  								<view class="recommend-list-li-area-right">
@@ -171,7 +171,7 @@
 	  										
 	  									</view> -->
 	  									<view class="recommend-list-li-area-number-right">
-	  										221
+	  									{{item.numsArray.collect_num}}
 	  									</view>
 	  								</view>
 	  													
@@ -564,7 +564,11 @@
 				
 			},
 	
-		
+			plaza (va) {
+				uni.navigateTo({
+					url:`../webview/webview?items=${ encodeURIComponent(va.account) }`
+				})
+			},
 			//游讯话题
 			travel (va) {
 				
@@ -590,6 +594,7 @@
 			//广场首推
 			recommendRegard (va) {
 				let id = va.id
+				console.log(id)
 				uni.navigateTo({
 					url:`../homebranch/homebranch?item=${1}&items=${id}`
 				})
@@ -677,7 +682,7 @@
 			},
 			//点击编辑筛选
 		  async	tabslice (va,item) {
-				//删除推荐
+			
 				console.log(item)
 						const user_id = uni.getStorageSync('user_id')
 					 let data = await this.$http.post('/api/delCommunity',{
@@ -753,17 +758,32 @@
 				}
 			
 			},
+		
+		
+			//点击我的社区跳转
 			classtypeClick (va) {
-				console.log(va)
+				const id = va.gm_id
 				uni.navigateTo({
-					url:`../homebranch/homebranch?item=${1}`
+					url:`../homebranch/homebranch?item=${1}&items=${id}`
 				})
 			},
 			search () {
-				uni.navigateTo({
-					url:'../search/search'
+				// uni.navigateTo({
+				// 	url:'../search/search'
+				// })
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
 				})
-			}
+			},
+			squaremessage () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!',
+				  icon:'none',
+				  duration:2000
+				})
+			},
 		}
 	}
 </script>

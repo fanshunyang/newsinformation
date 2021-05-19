@@ -1,26 +1,42 @@
 <template>
 	<view class="gameeasier">
-		<view class="concern_search">
-		 <view class="concern_search_icon el-icon-search">
-		 
-		 </view>
-		<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索" focus >
-		<view class="concern_search_icon el-icon-close" v-if="close" @click="search_close">
-		
-		</view>
-		</view>
-		
-		<view class="WaterfallFlow">
-			<view class="ul">
-				<view class="li" v-for="(item,index) in  list" @tap='WaterfallFlowClick(item)'>
-					<image class="imgs" :src="item.gm_img" mode=""></image>
-					<view class="li-text">
-						{{item.gm_name}}
-					</view>
-				</view>
-			
+		<view class="status_bar">
+		         <!-- 这里是状态栏 -->
+					
+						
+		  </view>
+		<view class="nav-header">
+			<view class="nav-header-left el-icon-arrow-left" @tap='back'>
+				
+			</view>
+			<view class="nav-header-right">
+				热门推荐
 			</view>
 		</view>
+		
+		<scroll-view scroll-y="true"  style="height: 100%;">
+			<view class="concern_search">
+					 <view class="concern_search_icon el-icon-search">
+					  
+					 </view>
+					<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索"  >
+					<view class="concern_search_icon el-icon-close" v-if="close" @click="search_close">
+					
+					</view>
+					</view>
+			<view class="WaterfallFlow">
+						<view class="ul">
+							<view class="li" v-for="(item,index) in  list" @tap='WaterfallFlowClick(item)'>
+								<image class="imgs" :src="item.gm_img" mode=""></image>
+								<view class="li-text">
+									{{item.gm_name}}
+								</view>
+							</view>
+						
+						</view>
+					</view>
+		</scroll-view>
+		
 	</view>
 </template>
 
@@ -45,6 +61,10 @@
 		 	this.getTotalSearchGame()
 		 },
 		methods: {
+			//返回上一个页面
+			back () {
+				uni.navigateBack()
+			},
 			//获取更多游戏
 			async getTotalSearchGame () {
 				// tabnav
@@ -111,14 +131,40 @@
 </script>
 
 <style lang="scss">
+	page, .gameeasier{
+			background-color: #FFFFFF;
+			height: 100%;
+			overflow: hidden;
+			
+		}
+	.status_bar {
+	     height: var(--status-bar-height);
+	     width: 100%; 	  
+	 }
 .gameeasier {
+	
+	.nav-header {
+		display: flex;
+		padding-left: 30upx;
+		padding-right: 30upx;
+		.nav-header-left {
+			font-size: 40upx;
+		}
+		.nav-header-right {
+			margin:  0 auto;
+			font-family: Microsoft YaHei;
+			font-weight: bold;
+			color: #333333;
+			letter-spacing: 2px;
+		}
+	}
 	.concern_search {
 		
 			 display: flex;
 			 height: 60upx;
 			margin-left: 30upx;
 			margin-right: 30upx;
-			margin-top: 24upx;
+			margin-top: 74upx;
 			 background-color: #f3f3f3;
 			 position: fixed;
 			 top: 30px;

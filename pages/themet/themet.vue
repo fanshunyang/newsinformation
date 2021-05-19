@@ -39,7 +39,7 @@
 			</view>
 		  <swiper style="height: 100%;" :current="crrindex" @change="changeTable">
 		  	<swiper-item style="1000upx" v-for="(item,index) in navbar" :key='index'>
-		  	<scroll-view scroll-y="true" style="height: 1000upx;" >
+		  	<scroll-view scroll-y="true" style="height:100%;" >
 		  		<view class="swiper-item"  >
 					<view class="box-firend-ul">
 						<view class="box-firend-li" v-for="(item,index) in dynamicallyList" @click="dynamically(item)">
@@ -220,16 +220,17 @@
 	}
 	.themet-left-icon {
 		position: absolute;
-		top: 0px;
+		top: 50px;
 		padding-left: 30upx;
 		padding-right: 30upx;
-		font-size: 20px;
+		font-size: 25px;
 		margin-bottom: 49upx;
+		z-index: 422;
 	// margin-top: 20px;
 	}
 	.themet-son {
 		position: absolute;
-		top: 50px;
+		top: 100px;
 		display: flex;
 		padding-left: 30upx;
 		padding-right: 30upx;
