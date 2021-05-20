@@ -419,7 +419,7 @@
 						  	
 						  		this.favorites = 1
 						  }
-						  // this.newslistsDetails.push(this.newslistsDetail) 
+						  this.newslistsDetails.push(this.newslistsDetail) 
 				// 		this.newslistsDetail = DATA
 				// 		this.particulars = this.newslistsDetail
 				// 		this.newslistsDetails.push(this.newslistsDetail) 

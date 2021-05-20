@@ -561,6 +561,7 @@
 	    "selectedColor" : "#046AFF",
 	    "borderStyle" : "white",
 	    "backgroundColor" : "#ffffff",
+		"iconWidth":"28px",
 	    "list" : [
 	        {
 	            "pagePath" : "pages/index/index",
@@ -578,6 +579,7 @@
 			    "pagePath" : "pages/invitation/invitation",
 			    "iconPath" : "static/fa.png",
 			    "selectedIconPath" : "static/fa.png"
+				
 			    // "text" : "发布"
 			},
 			{

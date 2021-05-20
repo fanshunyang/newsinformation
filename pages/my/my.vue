@@ -166,7 +166,7 @@
 		},
 		
 		onLoad() {
-		
+			
 	// 	   let value = uni.getStorageSync('tokens')
 		
 	// 	  console.log(value)
@@ -209,7 +209,7 @@
 		},
 		methods: {
 			//登录成功后个人资料
-			async getPersonalInfo () {
+			async getPersonalInfo () { 
 				const user_id = uni.getStorageSync('user_id')
 				const data = await this.$http.post('/api/getPersonalInfo',{
 				token:'d6a2fa16e60777e390256ec85cc2f42e',
@@ -219,7 +219,7 @@
 				const {CODE,DATA} = data
 				if (CODE==='200') {
 					this.materialobj = DATA
-					
+					  
 					console.log(this.materialobj)
 				}
 			},
@@ -316,7 +316,7 @@
 		  },
 		  wbbanner (va) {
 			 uni.navigateTo({
-			 	url:`../webview/webview?items=${va.account}`
+			 	url:`../webview/webview?items=${va.account}` 
 			 })  
 		  }
 		}

@@ -707,6 +707,9 @@
 				  icon:'none',
 				  duration:2000
 				})
+				uni.navigateTo({
+					url:'../button/button'
+				})
 			},
 			homemessage () {
 				uni.showToast({

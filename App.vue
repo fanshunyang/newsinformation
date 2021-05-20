@@ -52,7 +52,7 @@
 		background-color: #888888;
 	}
 	uni-swiper .uni-swiper-dot-active {
-		background-color: #fff;
+		background-color: #fff; 
 	}
 	uni-tabbar .uni-tabbar-border {
 		height: 0;

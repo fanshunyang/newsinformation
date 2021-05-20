@@ -823,7 +823,7 @@
 	  		}
 	  		.nas-items {
 	  		/* color: #999999; */
-	  		margin-right: 16upx;
+	  		margin-right: 30upx;
 	  				
 	  	  }
 	  		

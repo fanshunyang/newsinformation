@@ -9,6 +9,7 @@
 		<view class="" @tap=' clickt'>
 			1111111
 		</view>
+		<!-- <button style="margin-top: 30px;" @click="weixinLo">微信登录</button> -->
 	</view>
 </template>
 
@@ -37,6 +38,21 @@
 			//#endif
 		},
 		methods: {
+			// weixinLo () {
+			// 	uni.login({
+			// 		provider:'weixin',
+			// 		success(res) {
+			// 			const {access_token,openid,unionid} = res.authResult
+			// 			if (access_token && openid && unionid) {
+			// 				uni.reLaunch({
+			// 					url:'../index/index'
+			// 				})
+			// 			}
+			// 			// console.log(res.authResult)
+						
+			// 		},
+			// 	})
+			// },
 			clickt () {
 				  plus.storage.clear()
 			},

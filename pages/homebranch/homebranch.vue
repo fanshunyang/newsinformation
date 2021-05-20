@@ -61,7 +61,7 @@
 								<view class="swiper-box-game-introduce-right-icon el-icon-download">
 									
 								</view>
-								<view class="swiper-box-game-introduce-right-dowolad">
+								<view class="swiper-box-game-introduce-right-dowolad" @tap='uploads'>
 									去下载
 								</view>
 							</view>
@@ -338,7 +338,14 @@
 			},
 			homepagemessage () {
 				uni.showToast({
-					title:'该功能暂未开放 敬请期待!',
+					title:'该功能暂未开放 敬请期待!', 
+					icon:'none',
+					duration:2000
+				})
+			},
+			uploads () {
+				uni.showToast({
+					title:'该游戏暂未开放 敬请期待!',
 					icon:'none',
 					duration:2000
 				})
@@ -670,7 +677,7 @@ page, .homepage{
 						
 					}
 					.swiper-box-game-introduce-bottom {
-						margin-top: 30upx;
+						// margin-top: 30upx;
 						padding-left: 30upx;
 						padding-right: 30upx;
 						.swiper-box-game-introduce-bottom-label {
