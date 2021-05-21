@@ -8,7 +8,7 @@
 			  
 			  </view>
 		
-			  <view class="contentsy-tranmist "  @click="transmit">
+			  <view class="contentsy-tranmist "  @click="transmit" v-if="user_id">
 				<image class="imgs" src="../../images/fx.png" mode=""></image>
 			  </view>
 			  <view class="contentsy-nav-share el-icon-more">
@@ -28,7 +28,7 @@
 						<view class="text-part-li" >
 							<view class="text-part-li-img">
 								
-								<image class="text-part-li-first-imgs" :src="  particulars.re_news_img_url  ||  particulars.special_news_img || newsobjgl.new_img_url  " mode=""></image>
+								<image @tap='prenect' class="text-part-li-first-imgs" :src="  particulars.re_news_img_url  ||  particulars.special_news_img || newsobjgl.new_img_url  " mode=""></image>
 				
 							</view>
 							<view class="text-part-li-title">
@@ -153,12 +153,12 @@
 				</view>
 				<view class="transmit-matter">
 					<view class="transmit-matter-title">
-						@联盟资讯
+						@笛音
 					</view>
 					<view class="transmit-matter-quers">
 						<image class="imgs" src="../../images/gg.jpg" mode=""></image>
 						<view class="transmit-matter-quers-text">
-							网友热议：机械音效自选系统上线,你是怀旧...
+						{{particulars.re_news_title}}
 						</view>
 						
 					</view>
@@ -167,7 +167,7 @@
 				</view>
 				<view class="transmit-distinction-ul">
 					<view class="transmit-distinction-li">
-					<view class="transmit-distinction-li-item">
+					<view class="transmit-distinction-li-item" @tap='weixin'>
 						<view class="transmit-distinction-li-img">
 							<image class="transmit-distinction-li-img-icon" src="../../images/wechat.png" mode=""></image>
 						</view>
@@ -179,7 +179,7 @@
 					</view>
 					
 					<view class="transmit-distinction-li">
-					<view class="transmit-distinction-li-item">
+					<view class="transmit-distinction-li-item" @tap='QQ'>
 						<view class="transmit-distinction-li-img">
 							<image class="transmit-distinction-li-img-icon" src="../../images/wechat.png" mode=""></image>
 						</view>
@@ -316,11 +316,15 @@
 			jourId:1,
 			itemid:'',
 			newsobjgl:{},
+			user_id:'',
 			// itemp:{},
 		
 			} 
 		},
 		onLoad(options){
+		 const user_id = uni.getStorageSync('user_id')
+		this.user_id = user_id
+		
 		this.jourId = parseInt( options.items)
 		  
 		console.log(this.jourId)
@@ -334,6 +338,9 @@
 			// this.itemp =  JSON.parse(decodeURIComponent(options.itemp)) 
 			// console.log(this.itemp)
 			this.comment = comment
+			
+		},
+		onShow() {
 			
 		},
 		 mounted() {
@@ -606,6 +613,51 @@
 			 this.transtxt = va.detail.value
 			 console.log( this.transtxt)
 			},
+			//分享微信
+			weixin () {
+			   uni.share({ 
+			   provider: "weixin",
+			   scene: "WXSceneSession",
+			   type: 0,
+			   href:this.particulars.re_news_title_url,
+			   title:this.particulars.re_news_title,
+			   summary:this.particulars.re_news_intro,                         
+			   imageUrl: "http:*******************",
+			   success: function(res) {
+			   console.log(res);
+			   },
+			   fail: function(err) {
+			   console.log("fail:" + JSON.stringify(err));
+			   }
+			 });
+			
+			},
+			QQ () {
+			  uni.share({
+			    provider: "qq",
+			  //   scene: "WXSceneSession",
+			    type: 0,
+			    href:this.particulars.re_news_title_url,
+			    title:this.particulars.re_news_title,
+			    summary:this.particulars.re_news_intro,                         
+			    imageUrl: "http:*******************",
+			    success: function(res) {
+			    console.log(res);
+			    },
+			    fail: function(err) {
+			    console.log("fail:" + JSON.stringify(err));
+			    }
+			  });
+			},
+			prenect () {
+		    let photoList = [];
+			const imgall =  this.particulars.re_news_img_url  ||  this.particulars.special_news_img || this.newsobjgl.new_img_url  
+			photoList.push(imgall)
+			 uni.previewImage({
+			    current: 0,
+			    urls:photoList  
+			   });
+			},
 		}
 	}
 </script>
@@ -724,7 +776,7 @@
 							
 						}
 						.transmit-matter-quers-text {
-							width: 566upx;
+							// width: 566upx;
 							height: 24upx;
 							font-size: 24upx;
 							font-family: Microsoft YaHei;

@@ -707,9 +707,7 @@
 				  icon:'none',
 				  duration:2000
 				})
-				uni.navigateTo({
-					url:'../button/button'
-				})
+			
 			},
 			homemessage () {
 				uni.showToast({
@@ -774,7 +772,7 @@
 			 let data = await this.$http.post('/api/getBannerNews',{
 				 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 				
-				
+				 
 			 });
 			    // console.log(data);
 				const {DATA} = data
@@ -833,12 +831,12 @@
 					
 					this.recommendation = DATA
 					console.log(this.recommendation) 
-					
+					  
 				
 				}
 		},
 		//新闻专题
-		async getSpecialCat () {
+		async getSpecialCat () { 
 			// tabnav
 			 let data = await this.$http.post('/api/getSpecialCat',{
 				 	token:'d6a2fa16e60777e390256ec85cc2f42e',

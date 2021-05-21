@@ -75,7 +75,7 @@
 			console.log(access_token,user_id)
 			if (access_token && user_id) {
 			this.access_token = access_token
-			this.user_id = user_id
+			this.user_id = user_id 
 			
 			}
 		

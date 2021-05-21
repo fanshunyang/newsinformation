@@ -16,15 +16,18 @@
 		  	<view class="t-b">{{ title }}</view>
 		
 		  	<view class="t-f"><text>———请选择您当前需要登录的平台———</text></view>
-		  	<view class="t-e cl">
+		  	<view class="t-e cl" style="margin-left: 110px;">
 				
 				<view class="t-g" @click="phoneNumbers"><image src="@/static/sj.jpg"></image></view>
-		  		<view class="t-g" @tap='weixin'><image src="@/static/wx.png"></image></view>
+				
+		  		<!-- <view class="t-g" @tap='weixin'><image src="@/static/wx.png"></image></view> -->
 		  		<view class="t-g" @tap='QQ'><image src="@/static/qq.png"></image></view>
 		  	</view>
 		  </view>
-	<button type="default" @click="phoneNumberall">手机号登录</button>
-	 
+		  
+		    <!-- #ifdef H5 -->
+	         <button type="default" @click="phoneNumberall">手机号登录</button>
+	        <!-- #endif -->
 	</view>
 </template>
 
@@ -82,51 +85,51 @@
 				 }  
 				
 			},
-			weixin () {
-				// uni.showToast({
-				//   title:'该功能暂未开放 敬请期待!',
-				//   icon:'none',
-				//   duration:2000
-				// })
+			// weixin () {
+			// 	// uni.showToast({
+			// 	//   title:'该功能暂未开放 敬请期待!',
+			// 	//   icon:'none',
+			// 	//   duration:2000
+			// 	// })
 				
-					uni.getProvider({
-						service:'oauth',
-						success(res) {
-							console.log(res)
-							if (res.provider.indexOf('weixin')) {
-								uni.login({
-									provider:'weixin',
-									success(res) {
-									  console.log(res.authResult.openid)
+			// 		uni.getProvider({
+			// 			service:'oauth',
+			// 			success(res) {
+			// 				console.log(res)
+			// 				if (res.provider.indexOf('weixin')) {
+			// 					uni.login({
+			// 						provider:'weixin',
+			// 						success(res) {
+			// 						  console.log(res.authResult.openid)
 									   
-									  uni.getUserInfo({
-									  	  provider: 'weixin',
-									  	  success: async (res)=> {
-											  const {openId,nickName,avatarUrl} = res.userInfo
-											  console.log( openId, nickName , avatarUrl)
-											  //发送请求
-											// const data = await this.$http.post('/api/userLogin',{
-											// nickname:nickName,
-											// avatarurl:avatarUrl,
-											// openid:openId
-											// });
-											   const data  = {
-												   code:'200'
-											   }
-											 if (data.code==='200') {
-												 uni.setStorageSync('openid', openId);
-												 uni.reLaunch({
-												 	url:'../index/index'
-												 })
-											 }
-									  	  }
-									  })
-									},
-								})
-							}
-						}
-					})
-			},
+			// 						  uni.getUserInfo({
+			// 						  	  provider: 'weixin',
+			// 						  	  success: async (res)=> {
+			// 								  const {openId,nickName,avatarUrl} = res.userInfo
+			// 								  console.log( openId, nickName , avatarUrl)
+			// 								  //发送请求
+			// 								// const data = await this.$http.post('/api/userLogin',{
+			// 								// nickname:nickName,
+			// 								// avatarurl:avatarUrl,
+			// 								// openid:openId
+			// 								// });
+			// 								   const data  = {
+			// 									   code:'200'
+			// 								   }
+			// 								 if (data.code==='200') {
+			// 									 uni.setStorageSync('openid', openId);
+			// 									 uni.reLaunch({
+			// 									 	url:'../index/index'
+			// 									 })
+			// 								 }
+			// 						  	  }
+			// 						   })
+			// 						},
+			// 					})
+			// 				}
+			// 			}
+			// 		})
+			// },
 			QQ () {
 				// uni.showToast({
 				//   title:'该功能暂未开放 敬请期待!', 

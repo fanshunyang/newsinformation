@@ -60,7 +60,11 @@
                     }
                 },
                 "oauth" : {
-                    "univerify" : {}
+                    "univerify" : {},
+                    "qq" : {
+                        "appid" : "1111862352"
+                    },
+                    "apple" : {}
                 },
                 "ad" : {}
             },
