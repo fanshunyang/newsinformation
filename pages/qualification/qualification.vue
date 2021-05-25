@@ -11,7 +11,7 @@
 			  <view class="contentsy-tranmist "  @click="transmit" v-if="user_id">
 				<image class="imgs" src="../../images/fx.png" mode=""></image>
 			  </view>
-			  <view class="contentsy-nav-share el-icon-more">
+			  <view class="contentsy-nav-share el-icon-more" @tap='moreadd'>
 			  	
 			  </view>
 			
@@ -166,7 +166,7 @@
 					
 				</view>
 				<view class="transmit-distinction-ul">
-					<view class="transmit-distinction-li">
+					<!-- <view class="transmit-distinction-li">
 					<view class="transmit-distinction-li-item" @tap='weixin'>
 						<view class="transmit-distinction-li-img">
 							<image class="transmit-distinction-li-img-icon" src="../../images/wechat.png" mode=""></image>
@@ -176,7 +176,7 @@
 						</view>
 					</view>
 						
-					</view>
+					</view> -->
 					
 					<view class="transmit-distinction-li">
 					<view class="transmit-distinction-li-item" @tap='QQ'>
@@ -595,8 +595,13 @@
 			},
 			//转发
 			transmit () {
-				this.$refs.popup.open()
-				this.focus  = true
+			uni.showToast({
+			  title:'该功能暂未开放 敬请期待!', 
+			  icon:'none',
+			  duration:2000
+			})
+				// this.$refs.popup.open()
+				// this.focus  = true
 			},
 			//取消分享
 			countermand () {
@@ -613,25 +618,33 @@
 			 this.transtxt = va.detail.value
 			 console.log( this.transtxt)
 			},
-			//分享微信
-			weixin () {
-			   uni.share({ 
-			   provider: "weixin",
-			   scene: "WXSceneSession",
-			   type: 0,
-			   href:this.particulars.re_news_title_url,
-			   title:this.particulars.re_news_title,
-			   summary:this.particulars.re_news_intro,                         
-			   imageUrl: "http:*******************",
-			   success: function(res) {
-			   console.log(res);
-			   },
-			   fail: function(err) {
-			   console.log("fail:" + JSON.stringify(err));
-			   }
-			 });
-			
+			//更多
+			moreadd () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!', 
+				  icon:'none',
+				  duration:2000
+				})
 			},
+			//分享微信
+			// weixin () {
+			//    uni.share({ 
+			//    provider: "weixin",
+			//    scene: "WXSceneSession",
+			//    type: 0,
+			//    href:this.particulars.re_news_title_url,
+			//    title:this.particulars.re_news_title,
+			//    summary:this.particulars.re_news_intro,                         
+			//    imageUrl: "http:*******************",
+			//    success: function(res) {
+			//    console.log(res);
+			//    },
+			//    fail: function(err) {
+			//    console.log("fail:" + JSON.stringify(err));
+			//    }
+			//  });
+			
+			// },
 			QQ () {
 			  uni.share({
 			    provider: "qq",

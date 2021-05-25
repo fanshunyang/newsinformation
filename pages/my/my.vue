@@ -315,9 +315,14 @@
 			  })
 		  },
 		  wbbanner (va) {
-			 uni.navigateTo({
-			 	url:`../webview/webview?items=${va.account}` 
-			 })  
+			 // uni.navigateTo({
+			 // 	url:`../webview/webview?items=${va.account}` 
+			 // })  
+			 uni.showToast({
+			   title:'该功能暂未开放 敬请期待!',
+			   icon:'none',
+			   duration:2000
+			 })
 		  }
 		}
 	}

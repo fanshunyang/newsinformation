@@ -20,9 +20,27 @@
 			
 				
 		   </view>
-		 
+		    <!-- 插屏广告 -->
+			<popup  ref="popup" type="center"  :mask-click="false" >
+				<view class="popup-all"  v-show="closeion" v-for="(item,index) in plaque" :key='index'>
+					<view class="popup-header">
+					 <image class="imgs" :src="item.img" mode=""></image>
+					</view>
+					<view class="popup-bottom">
+						<view class="popup-bottom-text">
+							{{item.name}}
+						</view>
+						<view class="btn" @tap='lookdetas(item)'>
+							查看详情
+						</view>
+						<view class="closes el-icon-circle-close" @tap='iconclose'>
+							 
+						</view> 
+					</view>
+				</view>
+			</popup>
 		   	<!-- 全局顶部选项卡 -->
-			<view class="nav-bat">
+			<view class="nav-bat"> 
 			
 					<view class="nav-bat-left">
 					
@@ -134,7 +152,7 @@
 											<image class="imgs" src="../../images/zan.png" mode=""></image>
 										</view>
 										<view class="box-firend-li-item-letter-left-number">
-											5
+											{{item.numsArray.dianzan_num}}
 										</view>
 									</view>
 									<view class="box-firend-li-item-letter-right">
@@ -144,7 +162,7 @@
 							
 									<image class="imgs" src="../../images/shouc.png" mode=""></image>
 											<view class="box-firend-li-item-letter-right-number">
-												331
+												{{item.numsArray.collect_num}}
 											</view>
 									</view>
 								
@@ -484,6 +502,7 @@
 	import goodsSwiper from "@/components/pyh-goodsSwiper/pyh-goodsSwiper.vue"
 	import mixAdvert from '@/components/mix-advert/vue/mix-advert';
 	import json from '@/json'
+	import popup from '../../components/uni-popup/uni-popup.vue'
 	import mixPulldownRefresh from '@/components/mix-pulldown-refresh/mix-pulldown-refresh';
 	import mixLoadMore from '@/components/mix-load-more/mix-load-more';
 	let windowWidth = 0, scrollTimer = false, tabBar;
@@ -493,10 +512,13 @@
 			mixLoadMore,
 			mixAdvert,
 			goodsSwiper,
-			jingswipe
+			jingswipe,
+			popup
 		},
 		data() {
 			return {
+				closeion:true,
+				plaque:[],
 				// list:[],
 				loadMoreStatus:0,
 			
@@ -616,6 +638,7 @@
 					},
 				})
 				// this.loadData('add');
+				
 		},
 		
 		mounted() {
@@ -628,7 +651,9 @@
 		this.getSpecialOne()
 		this.getSquareNews()
 		this.gambit()
-	
+		this.getPersonalAd() 
+		
+	     this.$refs.popup.open()
 		},
 		onReady(){
 			/**
@@ -668,14 +693,32 @@
 					
 					const access_token = uni.getStorageSync('access_token')
 					const user_id = uni.getStorageSync('user_id')
-				
+                      				
 					if (access_token && user_id) {
-					this.access_token = access_token
+					this.access_token = access_token 
 					this.user_id = user_id
 					
 					} 
 			},
 		methods: {
+			plaqueopen () {
+			 this.$refs.popup.open()
+			},
+			iconclose () {
+				this.closeion = false ||  this.$refs.popup.close()
+				
+				setTimeout(()=>{
+				this.plaqueopen()
+				this.closeion = true
+				
+				},60000)
+			},
+			//查看详情
+			lookdetas (va) { 
+				// uni.navigateTo({
+				// 	url:`../webview/webview?items=${va.account}`
+				// })
+			},
 			//跳转话题
 			skip (va) {
 				
@@ -715,6 +758,21 @@
 				  icon:'none',
 				  duration:2000
 				})
+			},
+			//插屏广告
+			async getPersonalAd () {
+				
+				 const data = await this.$http.post('http://www.app.youxun.com/api/getPersonalAd',{
+					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					
+						// search_value:'腾讯'
+					
+				 });
+				    // console.log(data);
+					const {DATA} = data
+					if (data.CODE==='200') {
+					   this.plaque = DATA
+					}
 			},
 			//关注用户列表
 			async userList () {
@@ -1260,6 +1318,55 @@
 	
   }
   .content {
+	  .popup-all {
+		
+		  height: 100%;
+		.popup-header {
+			
+			.imgs {
+		    /* width: 750upx; */
+			   height: 300upx;
+			     border-radius:  20upx 20upx  0 0 ;
+		  }
+		}  
+		.popup-bottom {
+			
+			background-color: #fff;
+			border-radius:  0 0 20upx 20upx;
+			.popup-bottom-text {
+				width: 400upx;
+				text-align: center;
+				font-size: 32upx;
+				font-family: Microsoft YaHei;
+				font-weight: 400;
+				letter-spacing: 2px;
+				margin: 0 auto; 
+				margin-top: 60upx; 
+				margin-bottom: 60upx;
+				line-height: 25px;
+			}
+			.btn {
+				width: 300upx;
+				height: 70upx;
+				line-height: 70upx;
+				margin: 0 auto;
+				background-color:#67c23a;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 1px;
+				margin-bottom: 20px;
+				border-radius: 5px;
+			}
+			.closes {
+				position: absolute;
+				top: -10px;
+				right: 0;
+				font-size: 50upx;
+				color: #fff;
+			}
+		}
+	  }
+	
 	 .nav-bat {
 		 	flex-direction: row;
 		z-index: 2222;
@@ -1449,7 +1556,8 @@
 					.attention-main-ul {
 						display: flex;
 						flex-direction: row;
-							
+						padding-left: 30upx;
+						padding-right: 30upx;
 						flex-wrap: wrap;
 			            height: 154upx;
 						

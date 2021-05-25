@@ -27,7 +27,7 @@
 			<view class="game_swipers">
 				<view class="gane_letter" >
 							<view class="ul">
-								<view class="li" @tap='gameReferral(item)' v-for="(item,index) in recommended" :key='index'>
+								<view class="li"   @tap='gameReferral(item)' v-for="(item,index) in recommended" :key='index'>
 									<image :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
 									<view class="li-item" >
 										<view class="li_text">
@@ -117,7 +117,10 @@
 						
 						<scroll-view scroll-y="true" style="height: 100%;">
 						<view class="game_swiper-item">
-							<view class="ul">
+							<view style="text-align: center;" class="" v-if="makegame.length===0">
+								抱歉~~没有该信息
+							</view>
+							<view class="ul" v-else>
 								<view class="li" @tap='makeGame(item)' v-for="(item,index) in makegame" :key='index'>
 								<image  :lazy-load='true' class="imgs" :src="item.gm_img" mode=""></image>
 								<view class="li_center">
@@ -153,7 +156,7 @@
 								
 								</view>
 								
-								
+							
 							</view>
 							
 							
@@ -354,37 +357,10 @@
 		
 		  },
 		  changeitem (va) {
-			// this.classfily =  va.detail.current
-			// if (this.classfily===0) {
-			// 	this.classfily = 1
-			// 	this.getAllGame()
-			// } else if (this.classfily===1) {
-			// 	this.classfily = 2
-			// 	this.getAllGame()
-			// }else if (this.classfily===2) {
-			// 	this.classfily = 3
-			// 	this.getAllGame()
-			// } else if (this.classfily===3) {
-			// 	this.classfily = 4
-			// 	this.getAllGame()
-			// }else if (this.classfily===4) {
-			// 	this.classfily = 5
-			// 	this.getAllGame()
-			// }else if (this.classfily===5) {
-			// 	this.classfily = 6
-			// 	this.getAllGame()
-			// }else if (this.classfily===6) {
-			// 	this.classfily = 7
-			// 	this.getAllGame()
-			// }
+			    
 			 this.tabCurrentIndex = va.detail.current
 			 this.getAllGame()
-			 // if ( this.tabCurrentIndex===0) {
-			 //   this.tabCurrentIndex=1
-			 //   this.classfily =  this.tabCurrentIndex
-			
-			 // }
-			 // this.getAllGame()
+		 
 		  },
 		
 		
@@ -401,11 +377,30 @@
 		  },
 		  //广告位轮播
 		  selectedBanner (item,index) {
-			 // const url = 'https://www.baidu.com/'
-			 console.log(item.account)
-			  uni.navigateTo({
-			  	url:`../webview/webview?items=${encodeURIComponent(item.account)}`
-			  })
+			 const url = 'http://uri6.com/tkio/iyiemqa'
+			 // console.log(item.account)
+			  // uni.navigateTo({
+			  // 	url:`../webview/webview?items=${encodeURIComponent(item.account)}`
+			  // })
+			  
+			    //跳转外部链接
+				
+			  	//#ifdef H5
+			  location.href = url
+			   	//#endif
+			  
+			
+			 	//#ifdef APP-PLUS
+			  plus.runtime.openURL(url, (res)=> {  
+			      console.log(res);  
+			   }); 
+			   	//#endif
+				
+			// uni.showToast({
+			//   title:'该功能暂未开放 敬请期待!',
+			//   icon:'none',
+			//   duration:2000
+			// })
 			  
 		  },
 		    //找游戏
@@ -527,19 +522,58 @@ page, .game{
 		}
 		/*  #ifdef  APP-PLUS ||  #ifdef H5 */
 		.altogether {
-			height: 1250upx;
+			height: 1200upx;
 			.game_swipers {
 				.gane_letter {
+					
 					// margin-bottom: 30upx;
 					.ul {
 						display: flex;
 						flex-wrap: wrap;
-						justify-content: space-around;
+						// justify-content: space-around;
 						.li {
 							display: flex;
 							flex-direction: column;
 							margin-bottom: 42upx;
-							// margin-right: 1upx;
+							margin-right: 29upx;
+							&:nth-child(1) {
+								margin-right: 16px;
+								// margin-left: 11px;
+							}
+							&:nth-child(2) {
+								margin-right: 10px;
+								margin-left: 2px;
+								// margin-left: 11px;
+							}
+							&:nth-child(3) {
+								margin-right: 0;
+								margin-left: 11px;
+							}
+							&:nth-child(4) {
+								margin-right: 16px;
+							}
+							&:nth-child(5) {
+							margin-right: 10px;
+							margin-left: 2px;
+							// margin-left: 11px;
+							}
+							&:nth-child(6) {
+							margin-right: 0; 
+							margin-left: 11px; 
+							}
+							&:nth-child(7) {
+							margin-right: 16px;
+							}
+							&:nth-child(8) {
+							margin-right: 10px;
+							margin-left: 2px;
+							}
+							&:nth-child(9) {
+								margin-right: 0;
+								margin-left: 11px;
+							}
+							
+							
 							.imgs {
 								width: 202upx;
 								height: 202upx;

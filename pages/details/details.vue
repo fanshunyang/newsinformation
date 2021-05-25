@@ -16,7 +16,7 @@
 			  <view class="contentsy-tranmist "  @click="transmit">
 			 <image class="imgs" src="../../images/fx.png" mode=""></image>
 			  </view>
-			  <view class="contentsy-nav-share el-icon-more">
+			  <view class="contentsy-nav-share el-icon-more" @tap='addmore'>
 			  	
 			  </view>
 			
@@ -504,12 +504,25 @@
 			},
 			//转发
 			transmit () {
-				this.$refs.popup.open()
-				this.focus  = true
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!', 
+				  icon:'none',
+				  duration:2000
+				})
+				// this.$refs.popup.open()
+				// this.focus  = true
 			},
 			//取消分享
 			countermand () {
 				this.$refs.popup.close()
+			},
+			//更多
+			addmore () {
+				uni.showToast({
+				  title:'该功能暂未开放 敬请期待!', 
+				  icon:'none',
+				  duration:2000
+				})
 			},
 			//收藏
 			async	enshrine () {
