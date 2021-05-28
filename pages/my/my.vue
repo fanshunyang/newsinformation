@@ -307,22 +307,33 @@
 			 	url:'../collect/collect'
 			 }) 
 		  },
-		  mymessage () {
+		  mymessage () { 
 			  uni.showToast({
 			    title:'该功能暂未开放 敬请期待!',
 			    icon:'none',
 			    duration:2000
 			  })
+			  // uni.navigateTo({
+			  // 	url:'../button/button'
+			  // })
+			
 		  },
 		  wbbanner (va) {
+			   const url = 'http://uri6.com/tkio/iyiemqa'  
 			 // uni.navigateTo({
 			 // 	url:`../webview/webview?items=${va.account}` 
 			 // })  
-			 uni.showToast({
-			   title:'该功能暂未开放 敬请期待!',
-			   icon:'none',
-			   duration:2000
-			 })
+			 
+			 //#ifdef APP-PLUS
+			 plus.runtime.openURL(url, (res)=> {  
+			     console.log(res);  
+			  }); 
+			  	//#endif
+			 // uni.showToast({
+			 //   title:'该功能暂未开放 敬请期待!',
+			 //   icon:'none',
+			 //   duration:2000
+			 // })
 		  }
 		}
 	}

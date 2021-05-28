@@ -1,8 +1,8 @@
 {
     "name" : "游讯时空",
     "appid" : "__UNI__C658B42",
-    "description" : "APP第一版",
-    "versionName" : "1.0.0",
+    "description" : "添加了插屏广告",
+    "versionName" : "1.0.1",
     "versionCode" : "100",
     "transformPx" : false,
     // 跨域问题
@@ -60,11 +60,7 @@
                     }
                 },
                 "oauth" : {
-                    "univerify" : {},
-                    "qq" : {
-                        "appid" : "1111862352"
-                    },
-                    "apple" : {}
+                    "univerify" : {}
                 },
                 "ad" : {}
             },

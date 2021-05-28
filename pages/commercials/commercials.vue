@@ -257,17 +257,17 @@ import market from "../../js_sdk/dc-market/market.js"
 			},
 			//下载
 			download () {
-				// market.open({
-				// ios:'682211190', 
+				market.open({
+				ios:'1454663939', 
 				
-				// // android:'com.tencent.mm'
-				//   // key:'思思'
-				// });   
-				 uni.showToast({
-				 	title:'该游戏暂时无法下载 敬请期待!',
-					icon:'none',
-					duration:2000
-				 })
+				// android:'com.tencent.mm'
+				  // key:'思思'
+				});   
+				 // uni.showToast({
+				 // 	title:'该游戏暂时无法下载 敬请期待!',
+					// icon:'none',
+					// duration:2000
+				 // })
 			},
 			//更多信息
 			moreDetails () {

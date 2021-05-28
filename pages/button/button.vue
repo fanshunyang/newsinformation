@@ -6,19 +6,58 @@
 			<image class="imgs" src="../../images/ac.jpg" mode=""></image>
 		</view>
 	
-		<view class="" @tap=' clickt'>
+		<view class="" @tap='clickt'>
 			1111111
-		</view>
+		</view> 
+
 		<!-- <button style="margin-top: 30px;" @click="weixinLo">微信登录</button> -->
+		<view class="videos" >   
+			<video :enable-progress-gesture='false' ref="videost" :muted='muted' style=" width: 100%;" :loop='true' :controls='false' :autoplay='true' objectFit="cover"  src="https://vd3.bdstatic.com/mda-ka9rbu1tgsazghj3/v1-cae/sc/mda-ka9rbu1tgsazghj3.mp4?v_from_s=sz_haokan_4469&auth_key=1622172314-0-0-6472a47636606867e982d7c5e6cd0e7d&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=" >
+			
+				<!--  <cover-view >
+			
+					关闭声音	
+				  </cover-view>
+				  
+				  <cover-view >
+				  	开启声音		
+				  					
+				  </cover-view> -->
+				  
+				  <cover-image src="/static/gbysu.jpeg" v-if="courshide===0" style="position: absolute;  top: 20px;   font-size: 40upx; color: #0000FF; width: 50px; height: 50px;" class="" @click="clickmouted">
+				    					
+				  </cover-image>
+				 
+					<cover-image src="/images/ylc.jpg" v-if="courshide===1" style="position: absolute; top: 20px; font-size: 40upx; color: #0000FF; width: 50px; height: 50px; " class="" @click="clickmoutedtwo" >  
+					  					
+					</cover-image>
+				  
+			
+				 
+				  <cover-view style="  height: 50px; line-height: 50px; text-align: center; position: absolute; top: 150px; right: 0; color: #007AFF; font-size: 40upx;" class=" icon" @tap="fn">
+				  				
+				  	了解详情
+				  				
+				  </cover-view>
+			</video>
+		 
+		</view>
+		
+		
+		<!-- app版本更新测试 -->
+		<mUpdateAppTip @updateClose="updateClose" :update_title="update_title" :is_forced_update="is_forced_update" :update_des="update_des" :update_type="update_type" :update_url="update_url" :is_update_app="is_update_app"></mUpdateAppTip>
+		
 	</view>
 </template>
 
 <script>
-	import {pathToBase64,  //图片路径转base64
-			base64ToPath,  //base64码转图片
-		} from '../../js_sdk/mmmm-image-tools/index.js'
-
+	import {pathToBase64,  
+			base64ToPath, } from '../../js_sdk/mmmm-image-tools/index.js'
+  import mUpdateAppTip from '@/components/maozai-update/updateAppTip.vue'
 	export default {
+		components: {
+			mUpdateAppTip
+		},
 		data() {
 			return {
 			// 	 webviewStyles: {
@@ -27,7 +66,16 @@
 			// 	                    }
 			// 	                }
 			files:[],
-			previewFiles:[]
+			previewFiles:[],
+			muted:false,
+			courshide:0,
+			
+			  update_type:0,//0是热更新，1整包更新
+			                update_url:'',//更新的地址
+			                update_title:'发现新的版本，请点击升级',
+			                update_des:['1.发现新的版本，请点击升级','2.发现新的版本，请点击升级'],
+			                is_update_app:false,
+			                is_forced_update:false,//是否强制升级
 			}
 		},
 		onLoad() {
@@ -35,7 +83,7 @@
 			//#ifdef APP-PLUS
 			  
 			  plus.storage.setItem('user_ids', 'id') 
-			//#endif
+			//#endif 
 		},
 		methods: {
 			// weixinLo () {
@@ -55,6 +103,25 @@
 			// },
 			clickt () {
 				  plus.storage.clear()
+			},
+			clickmouted () {
+			  this.muted = true
+			  this.courshide = 1
+			},
+			clickmoutedtwo () {
+				this.muted = false
+				this.courshide = 0
+			},
+			fn () {
+				 const url = 'http://uri6.com/tkio/iyiemqa'  
+				// uni.navigateTo({
+				// 	url:'../qualification/qualification'
+				// })
+				//#ifdef APP-PLUS
+				plus.runtime.openURL(url, (res)=> {  
+				    console.log(res);  
+				 }); 
+				 	//#endif
 			},
 			handClickChooseImage(){
 					let that = this;

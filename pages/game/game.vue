@@ -377,7 +377,7 @@
 		  },
 		  //广告位轮播
 		  selectedBanner (item,index) {
-			 const url = 'http://uri6.com/tkio/iyiemqa'
+			 const url = 'http://uri6.com/tkio/iyiemqa'  
 			 // console.log(item.account)
 			  // uni.navigateTo({
 			  // 	url:`../webview/webview?items=${encodeURIComponent(item.account)}`
@@ -386,14 +386,17 @@
 			    //跳转外部链接
 				
 			  	//#ifdef H5
-			  location.href = url
+			  location.href = url 
 			   	//#endif
 			  
 			
 			 	//#ifdef APP-PLUS
-			  plus.runtime.openURL(url, (res)=> {  
-			      console.log(res);  
-			   }); 
+			plus.runtime.launchApplication({
+				action: url 
+			}, function(e) {
+				console.log('Open system default browser failed: ' + e.message);
+			});
+		
 			   	//#endif
 				
 			// uni.showToast({

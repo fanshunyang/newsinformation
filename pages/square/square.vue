@@ -565,14 +565,19 @@
 			},
 	
 			plaza (va) {
-				// uni.navigateTo({
-				// 	url:`../webview/webview?items=${ encodeURIComponent(va.account) }`
+			  const url = 'http://uri6.com/tkio/iyiemqa'
+					
+			  //#ifdef APP-PLUS
+			  plus.runtime.openURL(url, (res)=> {  
+			  console.log(res);  
+			  }); 
+			  //#endif
+			
+				// uni.showToast({
+				//   title:'该功能暂未开放 敬请期待!',
+				//   icon:'none',
+				//   duration:2000
 				// })
-				uni.showToast({
-				  title:'该功能暂未开放 敬请期待!',
-				  icon:'none',
-				  duration:2000
-				})
 			},
 			//游讯话题
 			travel (va) {

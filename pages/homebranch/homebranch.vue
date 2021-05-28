@@ -225,6 +225,7 @@
 	 import  management  from '../../components/management/management.vue'
 	 import  strategy from '../../components/strategy/strategy.vue'
 	import ygcComment from '../../components/ygc-comment/ygc-comment.vue';
+	import market from "../../js_sdk/dc-market/market.js"
 	export default {
 		components: {
 			mixLoading,
@@ -232,7 +233,8 @@
 			popup,
 			comments,
 			maidan,
-			management
+			management,
+			market
 		},  
 		data() {
 			return {
@@ -349,6 +351,8 @@
 					icon:'none',
 					duration:2000
 				})
+				
+				
 			},
 		}
 	}

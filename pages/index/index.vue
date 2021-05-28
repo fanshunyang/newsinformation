@@ -37,11 +37,11 @@
 							 
 						</view> 
 					</view>
-				</view>
+				</view> 
 			</popup>
 		   	<!-- 全局顶部选项卡 -->
 			<view class="nav-bat"> 
-			
+			 
 					<view class="nav-bat-left">
 					
 							<view 
@@ -497,8 +497,9 @@
 	</view> 
 </template>
 <script>
-	
+	import {getIdfaidfvs} from '../../utils/idfa.js'
 	import jingswipe from '../../components/jing-swiper/jing-swiper.vue'
+	import market from "../../js_sdk/dc-market/market.js"
 	import goodsSwiper from "@/components/pyh-goodsSwiper/pyh-goodsSwiper.vue"
 	import mixAdvert from '@/components/mix-advert/vue/mix-advert';
 	import json from '@/json'
@@ -513,7 +514,8 @@
 			mixAdvert,
 			goodsSwiper,
 			jingswipe,
-			popup
+			popup,
+			market
 		},
 		data() {
 			return {
@@ -628,6 +630,8 @@
 			}
 		},
 		async onLoad() { 
+		
+	
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			this.loadTabbars();
@@ -714,10 +718,34 @@
 				},60000)
 			},
 			//查看详情
-			lookdetas (va) { 
-				// uni.navigateTo({
-				// 	url:`../webview/webview?items=${va.account}`
-				// })
+		async	lookdetas (va) { 
+			// const adCode 
+			// const idfa 
+			// const ip 
+			// const gm_id
+			
+			
+			
+		    // const adCode = 6654
+		const idfa = getIdfaidfvs()
+		console.log(idfa)
+		// 	const posturl =   this.plaque[0].account +  '&idfa=' + idfa
+		
+			
+		// 	const data = await this.$http.post(posturl,{
+								
+		// 	}); 
+		
+				// console.log(data)
+			
+				//#ifdef APP-PLUS
+				market.open({
+				ios:'1454663939', 
+			
+				});   
+				 //#endif
+				
+				
 			},
 			//跳转话题
 			skip (va) {
@@ -762,7 +790,7 @@
 			//插屏广告
 			async getPersonalAd () {
 				
-				 const data = await this.$http.post('http://www.app.youxun.com/api/getPersonalAd',{
+				 const data = await this.$http.post('/api/getPersonalAd',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 					
 						// search_value:'腾讯'
@@ -770,7 +798,9 @@
 				 });
 				    // console.log(data);
 					const {DATA} = data
+					console.log(DATA)
 					if (data.CODE==='200') {
+						
 					   this.plaque = DATA
 					}
 			},
