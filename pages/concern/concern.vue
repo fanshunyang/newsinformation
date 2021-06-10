@@ -17,8 +17,8 @@
 				<view class="concern_search">
 				 <view class="concern_search_icon el-icon-search">
 				 
-				 </view>
-				<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索" focus >
+				 </view> 
+				<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索"  >
 				<view class="concern_search_icon el-icon-close" v-if="close" @click="search_close">
 				
 				</view>
@@ -26,9 +26,9 @@
 			
 				<view class="concern_list">
 					<view class="ul">
-						<view class="li" v-for="(item,index) in listype" :key='index'>
-							<view class="li_kind"  @click="concern_list_item(item)">
-								<image class="imgs" :src=" item.fans_head_url ||item.rem_head_url  " mode=""></image>
+						<view class="li" v-for="(item,index) in listype" :key='index'>  
+							<view class="li_kind"  @click="concern_list_item(item)"> 
+								<image class="imgs" :src=" item.fans_head_url ||  item.rem_head_url  " mode=""></image>
 								<view class="li_kind_text">
 								{{item.rem_user_name || item.fans_user_name}}
 								</view>

@@ -89,19 +89,20 @@
 						   	21分钟前
 						   </view>
 					   </view>
-					<z-paging ref="paging" @query="queryList" :list.sync="torridList">
-					    <view class="ul" style="height: 100%;">
+				
+					    <view class="ul" >
 					    
 					    	<view class="li" v-for="(item,index) in torridList" @tap='torrid(item)'>
 					    		<view class="li-desc">
 					    		{{item.new_title}}
 					    		</view>
 					    		
-					    		<image class="imgs" :src="item.news_img" mode=""></image>
+					    		<image v-if="item.news_detail_title==='1'" class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.news_img" mode=""></image>
+								<image class="imgs" v-else :src="item.news_img" mode=""></image>
 					    	</view>
 					    	
 					    </view>
-					  </z-paging>
+				
 						
 				   </view>
 			</scroll-view>
@@ -144,8 +145,8 @@
 	  						<view class="recommend-list-li-top" >
 	  						<view class="recommend-list-li-desc" style="display: flex; flex: 1;">
 	  						
-								<image v-if="item.news_detail_title==='1'" class="recommend-list-li-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.new_author_head_url" mode=""></image>
-									<image v-else class="recommend-list-li-imgs" :src="item.new_author_head_url" mode=""></image>
+								<image v-if="item.news_detail_title==='1'" class="recommend-list-li-imgs" :src="item.new_author_head_url" mode=""></image>
+								<image v-else class="recommend-list-li-imgs" :src="item.new_author_head_url" mode=""></image>
 	  							<view class="recommend-list-li-label">
 	  								<view class="recommend-list-li-label-top">
 	  								{{item.new_author}}
@@ -189,7 +190,7 @@
 	  							
 	  							<view class="recommend-list-li-bottom-img-ul">
 	  								<view class="recommend-list-li-bottom-img-li">
-										<image v-if="item.news_detail_title==='1'" class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.news_img" mode=""></image>
+										<image v-if="item.news_detail_title==='1'" class="imgs" :src="item.news_img" mode=""></image>
 	  									<image v-else class="imgs" :src="item.news_img" mode=""></image>
 	  								</view>
 	  								
@@ -250,7 +251,7 @@
 				 <view class="concern_search_icon el-icon-search ">
 				
 				 </view>
-				<input v-model="textvalue"  @input="search_site" class="text"  type="text" placeholder="搜索社区名称"  >
+				<input v-model="textvalue" @blur="cleaarhideKeyboard"  @input="search_site" class="text"  type="text" placeholder="搜索社区名称"  >
 				 
 				</view>
 				</view>
@@ -267,7 +268,7 @@
 					<swiper @change="classfilyTable" :current="classfilyIndex" style="height: 410px;">
 						<swiper-item v-for="(item,index) in classify" :key='index'>
 							<view class="classfily-every-ul">
-								<view class="classfily-every-li"  v-for="(item,index) in  list" :key='index'>
+								<view class="classfily-every-li" @tap='classfilyclick(item)' v-for="(item,index) in  list" :key='index'>
 									<image class="imgs" :src="item.gm_img" mode=""></image>
 									<view class="radio" >
 									 <radio-group @change="radioChange($event,index,item)" v-if="radiohide">
@@ -287,8 +288,8 @@
 						
 					</swiper>
 				</view>
-			
-			
+			 
+			 
 			
 			</view>
 			</scroll-view>
@@ -299,8 +300,8 @@
 
 <script>
 
-	 
-
+	 import market from "../../js_sdk/dc-market/market.js"
+	import {getIdfaidfvs} from '../../utils/idfa.js'
 	export default {
 		components: {
 		
@@ -322,16 +323,11 @@
 				//推荐列表
 				tabBars: [],
 				//滑动scroll
-				recommend_scroll:[
-					
-				],
+				recommend_scroll:[],
 				//推荐分类下标
-				classfilyIndex:0,
+				classfilyIndex:0,   
 				//推荐分类
-				classify : [
-				
-				
-				],
+				classify : [],
 				//编辑
 				hide:0,
 				//点击编辑隐藏
@@ -367,10 +363,11 @@
 				textvalue:'',
 				classtype:[],
 				clasfilyID:1, 
+				ishide:true
 			}
 		},
 		onLoad() {
-		
+			
 		},
 		mounted() {
 			this.getSquareAdBanner()
@@ -392,10 +389,10 @@
 				    // console.log(data);
 					const {DATA} = data
 					if (data.CODE==='200') {
-			
+						
 					   this.travelList = DATA
 					   	console.log(this.travelList)
-					
+					 
 					}
 			},
 			//榜单热帖
@@ -565,12 +562,12 @@
 			},
 	
 			plaza (va) {
-			  const url = 'http://uri6.com/tkio/iyiemqa'
 					
 			  //#ifdef APP-PLUS
-			  plus.runtime.openURL(url, (res)=> {  
-			  console.log(res);  
-			  }); 
+			market.open({
+			ios:'1454663939', 
+						
+			});   
 			  //#endif
 			
 				// uni.showToast({
@@ -601,8 +598,10 @@
 					url:`../details/details?item=${encodeURIComponent (JSON.stringify(id))}`
 				})
 			},
+		
 			//广场首推
 			recommendRegard (va) {
+				console.log(va)
 				let id = va.id
 				console.log(id)
 				uni.navigateTo({
@@ -642,7 +641,7 @@
 				this.radiohide = true
 				this.icon_hide = true
 				// this.addinferior = true
-				this.getAllCommunity()
+				
 					if (this.classtype.length===0) {
 					  this.content_hide = false
 					  this.addinferior = true
@@ -651,6 +650,7 @@
 				//  return  item.chekeds='1'
 				// })
 				console.log(this.classtype)
+				this.ishide = false
 			},
 			//完成
 			achieve () {
@@ -659,11 +659,11 @@
 				this.icon_hide = false 
 				this.content_hide = false
 				this.addinferior = false
-			
+			    this.getAllCommunity()
 				if (this.classtype.length===0) {
 				  this.content_hide = true
 				}
-			
+			   this.ishide=true
 			},
 			//点击内容编辑加入对应的信息
 			clickCotent () {
@@ -769,9 +769,22 @@
 			
 			},
 		
-		
+			//失去焦点
+			cleaarhideKeyboard () {
+				uni.hideKeyboard()
+			},
+			classfilyclick (va) {
+				const id = va.gm_id
+			
+				if (this.ishide===true) {
+					uni.navigateTo({
+						url:`../homebranch/homebranch?item=${1}&items=${id}`
+					})
+				}
+			},  
 			//点击我的社区跳转
 			classtypeClick (va) {
+			
 				const id = va.gm_id
 				uni.navigateTo({
 					url:`../homebranch/homebranch?item=${1}&items=${id}`
@@ -812,12 +825,12 @@
   .square {
 	  .nav-bat {
 		  display: flex;
-	  		 flex-direction: row;
-			 justify-content: center;
-			 align-items: center;
-	  		z-index: 2222;
-	  	padding: 0 30upx;
-		margin-bottom: 42upx;
+	  	  flex-direction: row;
+		  justify-content: center;
+		  align-items: center;
+	  	  z-index: 2222;
+	  	  padding: 0 30upx;
+		  margin-bottom: 42upx;
 	  	  background-color: #fff;
 	  	  .nav-bat-left {
 			display: flex;

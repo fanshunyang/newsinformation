@@ -24,7 +24,7 @@
 		  		<view class="t-g" @tap='QQ'><image src="@/static/qq.png"></image></view>
 		  	</view>
 		  </view>
-		  
+		   
 		    <!-- #ifdef H5 -->
 	         <button type="default" @click="phoneNumberall">手机号登录</button>
 	        <!-- #endif -->
@@ -33,13 +33,13 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				phone_number:'15713665448',
+		data() { 
+			return { 
+				phone_number:'15713665448',  
 				title:'欢迎回来',
 				phoneNumber:'',
 				openid:'',
-				access_token:'', 
+				access_token:'',  
 				token:1,
 				
 			}

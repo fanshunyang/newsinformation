@@ -31,11 +31,8 @@
 </script>
 
 <style>
-	
-	
 	 @import 'https://unpkg.com/element-ui/lib/theme-chalk/index.css';
-
-	
+	 
 	@font-face {
 		font-family: yticon;
 		font-weight: normal;

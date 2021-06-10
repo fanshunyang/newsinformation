@@ -35,9 +35,12 @@
 				</view>
 			  </view>
 			  <view class="invitation-main-input-bottom">
-			  	<textarea @blur="blur" @focus="focus" focus v-model="topics_texta" @input="inputs_text" :maxlength='-1' class="input" type="text" value="" placeholder="写上你的标题会增加更多的曝光量哦！" />
+			  	<textarea @blur="blur" @focus="focus"  v-model="topics_texta" @input="inputs_text" :maxlength='-1' class="input" type="text" value="" placeholder="写上你的标题会增加更多的曝光量哦！" />
 			  </view>
-		  	
+			  
+		  	<view class="invitation-main-update" v-if="update">
+		  	<gUpload ref='gUpload' :mode="imgList"  @chooseFile='chooseFile' @imgDelete='imgDelete' :maxCount='1' :columnNum='3'></gUpload>
+		  	</view>
 			
 		  </view>
 		  <view class="invitation-bottom" v-if="lose">
@@ -66,12 +69,12 @@
 					 <view class="invitation-bottom-classify-icon-classify-classification">
 					 	@
 					 </view>
-					 <view @tap='uploadClick' class="invitation-bottom-classify-icon-classify-classification el-icon-picture">
-					 	
+					<view @tap='uploadClick' class="invitation-bottom-classify-icon-classify-classification el-icon-picture">
+					 	 
 					 </view>
-					 <imagecropper style="z-index: 2222222;" :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
+					<!-- <imagecropper style="z-index: 2222222;" :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
 					 				  					
-					 <image v-if="hideshow" @tap="upload" :src="cropFilePath" mode="aspectFit" style="width:32upx; height: 32upx;  position: absolute; left: 658upx; z-index: 222;  "></image> 
+					 <image v-if="hideshow" @tap="upload" :src="cropFilePath" mode="aspectFit" style="width:32upx; height: 32upx;  position: absolute; left: 658upx; z-index: 222;  "></image> -->
 				</view>
 				
 				
@@ -89,13 +92,21 @@
 </template>
 
 <script>
+	 import gUpload from "../../components/g-upload/g-upload.vue"
 	 import imagecropper from '../../components/invinbg-image-cropper/invinbg-image-cropper.vue'
+	 import {pathToBase64,  //图片路径转base64
+	 		base64ToPath,  //base64码转图片
+	 	} from '../../js_sdk/mmmm-image-tools/index.js'
+	import {mapState,mapMutations} from 'vuex';
+
 	export default {
 		components: {
-			imagecropper
+			imagecropper,
+			gUpload
 		},
 		data() {
 			return {
+				update:false,
 				lose:false,
 			    topics_title:'',
 				topics_texta:'',
@@ -103,11 +114,18 @@
 				tempFilePath:'',
 				cropFilePath:'',
 				user_url:'',
+				imgList:[],
+			
 			}
 		},
+		onLoad() {
+		   uni.setStorageSync('number',0) 
+		},
 		methods: {
+		  
 			//发布帖子
 			async createTopic  () {
+				console.log(this.user_url)
 				const user_id = uni.getStorageSync('user_id')
 				const data = await this.$http.post('/api/createTopic ',{
 				token:'d6a2fa16e60777e390256ec85cc2f42e',
@@ -118,6 +136,7 @@
 				topic_content:this.topics_texta,
 				});
 				console.log(data)
+				
 				// const {CODE,DATA} = data
 				// if (CODE==='200') {
 				// 	this.materialobj = DATA
@@ -125,11 +144,39 @@
 				// 	console.log(this.materialobj)
 				// }
 			},
+			chooseFile (list,v) {
+				
+				list.forEach((item)=>{
+				pathToBase64( item).then( async base64 => { 
+				  this.cropFilePathApp = base64
+				    const user_id = uni.getStorageSync('user_id')
+					console.log(item)
+				 	let data = await this.$http.post('/api/uploadFile',{
+				     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+				 	user_id:user_id,
+				 	path:'my',
+				 	file:this.cropFilePathApp			
+				 	});
+				 	const {CODE,DATA} = data
+					console.log(DATA)
+				 	if (CODE==='200') {
+				 	this.user_url = DATA
+					
+				    }
+				})
+				})
+		
+			},
+			imgDelete (list) {
+				
+			},
 			//返回上一级
 			back () {
+			 
 				uni.switchTab({
-				    url: '../index/index'
+				    url: `../index/index`
 				});
+				
 			},
 			input_title (va) {
 				this.topics_title =  va.detail.value
@@ -139,47 +186,47 @@
 			
 			},
 			uploadClick () {
-				
+			   this.update = true
 			},
-			//图片上传
-				upload () {
-					  uni.chooseImage({
-					     count: 1, //默认9
-					     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					     sourceType: ['album'], //从相册选择
-					      success: (res) => {
-							console.log(res)
-					      this.tempFilePath = res.tempFilePaths.shift()
+			// //图片上传
+			// 	upload () {
+			// 		  uni.chooseImage({
+			// 		     count: 1, //默认9
+			// 		     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			// 		     sourceType: ['album'], //从相册选择
+			// 		      success: (res) => {
+			// 				console.log(res)
+			// 		      this.tempFilePath = res.tempFilePaths.shift()
 							
-					      }
-					   });
-				},
+			// 		      }
+			// 		   });
+			// 	},
 				
-				//确定裁剪
-			async	confirm (e) {
-				this.tempFilePath = ''
-				 this.cropFilePath = e.detail.tempFilePath
-				console.log( this.cropFilePath)
+			// 	//确定裁剪
+			// async	confirm (e) {
+			// 	this.tempFilePath = ''
+			// 	 this.cropFilePath = e.detail.tempFilePath
+			// 	console.log( this.cropFilePath)
 				
-				const user_id = uni.getStorageSync('user_id')
-				let data = await this.$http.post('/api/uploadFile',{
-			     token:'d6a2fa16e60777e390256ec85cc2f42e',					
-				user_id:user_id,
-				path:'my',
-				file: this.cropFilePath	
-				});
-					if (this.cropFilePath) {
-						this.initialimgs = false
-					}
-					const {CODE,DATA} = data
-				    if (CODE==='200') {
-					this.user_url = DATA
+			// 	const user_id = uni.getStorageSync('user_id')
+			// 	let data = await this.$http.post('/api/uploadFile',{
+			//      token:'d6a2fa16e60777e390256ec85cc2f42e',					
+			// 	user_id:user_id,
+			// 	path:'my',
+			// 	file: this.cropFilePath	
+			// 	});
+			// 		if (this.cropFilePath) {
+			// 			this.initialimgs = false
+			// 		}
+			// 		const {CODE,DATA} = data
+			// 	    if (CODE==='200') {
+			// 		this.user_url = DATA
 				
-				    }
-				},
-			cancels () {
+			// 	    }
+			// 	},
+			// cancels () {
 				
-			},
+			// },
 			//获得焦点
 			focus () {
 				this.lose = true
@@ -196,15 +243,20 @@
 			//隐藏软键盘
 			ensconce () {
 				uni.hideKeyboard()
-					this.lose = false
+				this.lose = false
+				this.update = false 
 			},
 			
 			//添加话题
 			addtopic () {
-			
-				uni.navigateTo({
-					url:'../topic/topic'
-				})
+			uni.showToast({
+			  title:'该功能暂未开放 敬请期待!',
+			  icon:'none',
+			  duration:2000
+			})
+				// uni.navigateTo({
+				// 	url:'../topic/topic'
+				// })
 			},
 			//发送
 			send () {
@@ -305,7 +357,7 @@
 		 }
 		 .invitation-main-input-bottom {
 			 width: 100%;
-			 height:  400upx;
+			 height:  300upx;
 			 padding-left: 30upx;
 			 padding-right: 30upx;
 			 margin-top: 32upx;

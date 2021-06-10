@@ -45,11 +45,11 @@
 										<view class="text-part-li-user-list-li-action">
 									    {{  item.re_news_p1 || item.special_news_p1 || newsobjgl.news_p1}}
 										</view>
-										<image :style="{height:320 + 'upx'}" class="text-part-li-user-list-li-imgs" v-if="item.re_news_p3_img===''?false:item.re_news_p3_img " :src="item.re_news_p3_img " mode=""></image>
+										<image @tap='upstroreimg(item)' :style="{height:320 + 'upx'}" class="text-part-li-user-list-li-imgs" v-if="item.re_news_p3_img===''?false:item.re_news_p3_img " :src="item.re_news_p3_img " mode=""></image>
 										
-										<image class="text-part-li-user-list-li-imgs"  v-else-if=" item.special_news_p2_img===''?false:item.special_news_p2_img " :src=" item.special_news_p2_img" mode=""></image>
+										<image @tap='upstroreimg(item)' class="text-part-li-user-list-li-imgs"  v-else-if=" item.special_news_p2_img===''?false:item.special_news_p2_img " :src=" item.special_news_p2_img" mode=""></image>
 										
-											<image class="text-part-li-user-list-li-imgs"  v-else-if=" newsobjgl.news_p2_img===''?false:newsobjgl.news_p2_img " :src=" newsobjgl.news_p2_img" mode=""></image>
+										<image @tap='upstroreimg(item)' class="text-part-li-user-list-li-imgs"  v-else-if=" newsobjgl.news_p2_img===''?false:newsobjgl.news_p2_img " :src=" newsobjgl.news_p2_img" mode=""></image>
 										
 										<view class="text-part-li-user-list-li-action">
 										{{  item.re_news_p2 || item.special_news_p3 ||newsobjgl.news_p3 }}
@@ -62,10 +62,10 @@
 										<view class="text-part-li-user-list-li-action"  >
 										{{  item.re_news_p6 || item.special_news_p5 || newsobjgl.news_p4}}
 										</view>
-										<image class="text-part-li-user-list-li-imgs"  v-if="item.re_news_p11===''?false:item.re_news_p11 " :src="item.re_news_p11 || item.special_news_p8_img" mode=""></image>
+										<image @tap='upstroreimgs(item)' class="text-part-li-user-list-li-imgs"  v-if="item.re_news_p11===''?false:item.re_news_p11 " :src="item.re_news_p11 || item.special_news_p8_img" mode=""></image>
 										
 										
-										<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p8_img===''?false:item.special_news_p8_img " :src=" item.special_news_p8_img" mode=""></image>
+										<image @tap='upstroreimgs(item)' class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p8_img===''?false:item.special_news_p8_img " :src=" item.special_news_p8_img" mode=""></image>
 										
 										<view class="text-part-li-user-list-li-action">
 										{{  item.re_news_p9 || item.special_news_p16 || newsobjgl.news_p5}}
@@ -78,10 +78,10 @@
 										<view class="text-part-li-user-list-li-action">
 										{{  item.re_news_13 ||item.special_news_p11 ||newsobjgl.news_p8}}
 										</view>
-										<image  class="text-part-li-user-list-li-imgs"  v-if="item.re_news_14_img===''?false:item.re_news_14_img "  :src="item.re_news_14_img || item.special_news_p15_img" mode=""></image>
+										    <image @tap='upstroreimgsp(item)'  class="text-part-li-user-list-li-imgs"  v-if="item.re_news_14_img===''?false:item.re_news_14_img "  :src="item.re_news_14_img || item.special_news_p15_img" mode=""></image>
 										
-											<image class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p15_img===''?false:item.special_news_p15_img "  :src="item.special_news_p15_img" mode=""></image>
-											<image class="text-part-li-user-list-li-imgs"  v-else-if="newsobjgl.news_p6===''?false:newsobjgl.news_p6"  :src="newsobjgl.news_p6" mode=""></image>
+											<image  @tap='upstroreimgsp(item)' class="text-part-li-user-list-li-imgs"  v-else-if="item.special_news_p15_img===''?false:item.special_news_p15_img "  :src="item.special_news_p15_img" mode=""></image>
+											<image  @tap='upstroreimgsp(item)' class="text-part-li-user-list-li-imgs"  v-else-if="newsobjgl.news_p6===''?false:newsobjgl.news_p6"  :src="newsobjgl.news_p6" mode=""></image>
 										
 										<view class="text-part-li-user-list-li-action">
 										{{  item.re_news_15 || item.special_news_p16 ||newsobjgl.news_p9}}
@@ -96,14 +96,15 @@
 						</view>
 						
 					</view>
-					<view class="article_like">
+				<!-- <view class="article_like">
 				<view class="article_like_icon">
 					<image class="imgs" src="../../images/like.png" mode=""></image>
 				</view>
 				<view class="article_like_number">
 					331人喜欢
 				</view>
-					</view>
+				</view> -->
+				
 					<!-- 文章评论 -->
 						<!-- <view class="comments"  >
 							<view class="comments-number">
@@ -242,23 +243,24 @@
 						<image class="imgs" src="../../images/zan.png" mode=""></image>
 					</view>
 					<view class="input-box-right-icon" v-if="favorites===1" @tap='clearassist'>
-						<image class="imgs" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;"  src="../../images/zanxuan.png" mode=""></image>
+						<image class="imgs" style="width: 35upx; height: 35upx; margin-right: 10upx; margin-top: 5upx;"  src="../../images/zanxuan.png" mode=""></image>
 					</view>
 					<view class="input-box-right-number">
 					<!-- {{particulars.numsArray.dianzan_num}} -->
 					</view>
 				</view>
-			<view class="input-box-right-li">
-				<view  @tap='enshrine' class="input-box-right-icon el-icon-star-off" v-if="favorite===0">
+				
+			    <view class="input-box-right-li">
+				<view  @tap='enshrine' style="font-size: 18px;" class="input-box-right-icon el-icon-star-off" v-if="favorite===0">
 					
 				</view>
-				<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
+				<image @tap='clearfavorite' v-if="favorite===1" style="width: 35upx; height: 35upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
 					<!-- {{particulars.numsArray.collect_num}} -->
 				</view>
 			</view>
 			
-			<view class="input-box-right-li">
+			<!-- <view class="input-box-right-li">
 				<view class="input-box-right-icon el-icon-chat-dot-round">
 				
 				</view>
@@ -266,7 +268,7 @@
 					2
 					
 				</view>
-			</view>
+			</view> -->
 			</view>
 		  </view>
 	</view>
@@ -671,6 +673,37 @@
 			    urls:photoList  
 			   });
 			},
+			upstroreimg (va) {
+		    let photoList = [];
+			const imgsall = va.special_news_p2_img || va.re_news_p3_img || this.newsobjgl.news_p2_img
+			photoList.push(imgsall)
+		 
+			uni.previewImage({
+			   current: 0,
+			   urls:photoList  
+			  });
+			},
+			upstroreimgs (va) {
+			let photoList = [];
+			const imgsall = va.re_news_p11 || va.special_news_p8_img
+			photoList.push(imgsall)
+					 
+			uni.previewImage({
+			   current: 0,
+			   urls:photoList  
+			  });
+			},
+			upstroreimgsp (va) {
+			let photoList = [];
+			const imgsall = va.re_news_14_img || va.special_news_p8_img || va.special_news_p15_img || this.newsobjgl.news_p6
+			photoList.push(imgsall)
+					 
+			uni.previewImage({
+			   current: 0,
+			   urls:photoList  
+			  });
+			},
+			
 		}
 	}
 </script>
@@ -841,7 +874,7 @@
 				}
 			}
 			.input-box-right {
-					display: flex;
+				 display: flex;
 				.input-box-right-li {
 					display: flex;
 					margin-right: 38upx;
@@ -851,8 +884,8 @@
 					  // font-size: 36upx;
 					  margin-top: 4upx;
 					  .imgs {
-						  width: 26upx;
-						  height: 26upx;
+						  width: 35upx;
+						  height: 35upx;
 					  }
 					}
 					.input-box-right-number {

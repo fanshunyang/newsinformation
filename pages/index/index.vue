@@ -18,14 +18,14 @@
 		 <view class="status_bar">
 		          <!-- 这里是状态栏 --> 
 			
-				
+				  
 		   </view>
 		    <!-- 插屏广告 -->
-			<popup  ref="popup" type="center"  :mask-click="false" >
+			<popup  ref="popup" type="center"  :mask-click="false" v-if="tabCurrentIndexs===1" >
 				<view class="popup-all"  v-show="closeion" v-for="(item,index) in plaque" :key='index'>
-					<view class="popup-header">
+					<view class="popup-header"> 
 					 <image class="imgs" :src="item.img" mode=""></image>
-					</view>
+					</view> 
 					<view class="popup-bottom">
 						<view class="popup-bottom-text">
 							{{item.name}}
@@ -80,6 +80,7 @@
 	>
 	<!-- 关注 -->
 		<swiper-item>
+			
 		<!-- 	<mix-pulldown-refresh ref="mixPulldownRefreshs" class="panel-content" :top="90" @refresh="onPulldownRereshs" @setEnableScroll="setEnableScroll"> -->
 				<scroll-view 
 				class="panel-scroll-box"
@@ -117,7 +118,7 @@
 					<view class="attention-main"  v-if="userLoginId">
 						<view class="attention-main-ul">
 							<view class="attention-main-li" @tap='skip(item)' v-for="(item,index) in attentionmain" :key='index'>
-							<view class="	attention-main-li-text">
+							<view class="attention-main-li-text">
 								#{{item.gambit_name}}#
 							</view>
 								<image v-if="parseInt(item.is_hot)" style="width: 24upx; height: 24upx; margin-top: 6upx; margin-left: 15upx; " src="../../images/hot.png" mode=""></image>
@@ -127,7 +128,9 @@
 						</view>
 						
 					</view>
-					<view class="attention-list">
+					
+					
+					<view class="attention-list" v-if="userLoginId">
 						<view class="box-firend">
 							盒友动态
 						</view>
@@ -136,7 +139,7 @@
 							<view class="box-firend-li-header">
 								<view class="box-firend-li-item-madile">
 									<view class="box-firend-li-item-madile-img">
-										<image v-if="item.news_detail_title==='1'" class="box-firend-li-item-madile-item-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.new_author_head_url" mode=""></image>
+										<image v-if="item.news_detail_title==='1'" class="box-firend-li-item-madile-item-imgs" :src=" item.new_author_head_url" mode=""></image>
 										<image v-else class="box-firend-li-item-madile-item-imgs" :src="item.new_author_head_url" mode=""></image>
 									</view>
 									<view class="box-firend-li-item-madile-text">
@@ -179,7 +182,7 @@
 								<view class="box-firend-li-content-img">
 									<view class="box-firend-li-content-img-ul">
 										<view class="box-firend-li-content-img-li">
-											<image v-if="item.news_detail_title==='1'" class="box-firend-li-content-img-li-imgs" :src=" 'http://appyouxun.hundredzy.com/' + item.news_img" mode=""></image>
+											<image v-if="item.news_detail_title==='1'" class="box-firend-li-content-img-li-imgs" :src=" item.news_img" mode=""></image>
 											<image v-else class="box-firend-li-content-img-li-imgs" :src="item.news_img" mode=""></image>
 										</view>
 									</view>
@@ -244,6 +247,12 @@
 					>{{item.name}}</view>
 				
 				</scroll-view>
+				
+				
+				
+				
+				
+				
 			<!-- 	<view class="screen" @click="screen">
 					2
 				</view> -->
@@ -260,7 +269,7 @@
 						@change="changeTab "
 					>
 				   
-						<swiper-item v-for="tabItem in tabBars" :key="tabItem.id" >
+						<swiper-item  v-for="(item,index) in tabnav" :key="item.id">
 						
 							<scroll-view 
 								class="panel-scroll-box" 
@@ -268,7 +277,7 @@
 								@scrolltolower="loadMore"
 								>
 							
-								<!-- 最新内容轮播 -->
+								<!-- 推荐轮播 -->
 								<view class="swiperst" v-if="tabCurrentIndex===0">
 									<swiper :indicator-dots="true" :autoplay="true"  :interval="2000" :duration="500">
 										<swiper-item v-for="(item,index) in swiperitem" @tap='jumpdeatils(item)' :key='index'>
@@ -277,7 +286,8 @@
 												<image :src="item.re_news_img_url" mode="" class="imgs"></image>
 											</view>
 										</swiper-item>
-										 
+										  
+										
 									</swiper>
 								</view>
 								
@@ -314,7 +324,7 @@
 									* 和nvue的区别只是需要把uni标签转为weex标签而已
 									* class 和 style的绑定限制了一些语法，其他并没有不同
 								-->
-							
+							  
 					
 										
 										
@@ -353,10 +363,14 @@
 													</view>
 											
 											</view>
-											
+											 
 											
 												
 											</view>
+											
+											
+											
+											
 											<view class="new-recommend" v-if="tabCurrentIndex===0">
 											<view class="new-recommend-title-bar">
 												<view class="new-recommend-title">
@@ -391,6 +405,9 @@
 											</view>
 										
 											</view>
+											
+											
+											
 											<view class="new-special" v-if="tabCurrentIndex===0">
 												<view class="new-special-news">
 													新闻专题
@@ -413,6 +430,10 @@
 																					
 												</scroll-view>
 											</view>
+											
+										
+											 
+											
 											
 											
 											<view class="new-list">
@@ -454,7 +475,9 @@
 												
 												</view>
 												
-												
+												<view class="" style="text-align: center; font-size: 15px; letter-spacing: 2px;" v-if="newslists.length===0">
+													没有当前的信息列表数据
+												</view>
 													
 												</view>
 											</view>
@@ -483,11 +506,12 @@
 								</view> -->
 								
 								<!-- 上滑加载更多组件 -->
-							
+							 
 							<!-- 	<mix-load-more :status="tabItem.loadMoreStatus"></mix-load-more> -->
 							</scroll-view>
 						</swiper-item>
 					</swiper>
+					
 				<!-- </mix-pulldown-refresh> -->
 				
 			</view>
@@ -519,6 +543,9 @@
 		},
 		data() {
 			return {
+				autoplay:false, 
+				courshide:0,
+				muted:false,
 				closeion:true,
 				plaque:[],
 				// list:[],
@@ -537,10 +564,7 @@
 				enableScroll: true, 
 				//新闻详情前4个
 				newfourlist:[
-					{id:1,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:2,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:3,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'},
-					{id:4,title:'任天堂日服推出2020年Switch 游戏回顾页面',time:'6分钟前.',type:'三国志战略版',look:'11'}
+				
 				],
 				//每个tab中的索引切换全局不同的最新内容中的盒子
 				panelareaoverall:[
@@ -565,15 +589,13 @@
 				
 				//新闻列表
 				newslists:[
-				
-			
 					
 				],
 				newslistss:[
 				
 				],
 				
-				tabBars: [],
+				tabBars:[],
 				tabnav:[],
 				statustext:[{ id:1, desc:'关注'}, {id:2, desc:'推荐'}],
 				detail : {
@@ -581,7 +603,6 @@
 					subLable:'',
 					list:[
 					
-
 					]
 				},    
 				config : {
@@ -589,11 +610,7 @@
 				},
 				//关注
 				attention:[
-					{id:1,title:'虎扑体育'},
-					{id:2,title:'联盟资讯BOT'},
-					{id:3,title:'hunderd快讯'},
-					{id:4,title:'hunderd快讯'},		
-					{id:5,title:'hunderd快讯'}
+				
 				],
 			
 				//热销品牌
@@ -629,9 +646,7 @@
 				return user_id
 			}
 		},
-		async onLoad() { 
-		
-	
+		async onLoad(va) { 
 			// 获取屏幕宽度
 			windowWidth = uni.getSystemInfoSync().windowWidth;
 			this.loadTabbars();
@@ -642,13 +657,17 @@
 					},
 				})
 				// this.loadData('add');
-				
+				const value = uni.getStorageSync('number')
+				console.log(value)
+				if (value===0) {
+					this.tabCurrentIndexs = 0
+					
+				}
+			
 		},
 		
 		mounted() {
 		this.getCatNews() 
-	
-		
 		this.getRecommendGame()
 		this.getSpecialCat()
 		this.getBannerNews()
@@ -703,17 +722,19 @@
 					this.user_id = user_id
 					
 					} 
+		
 			},
 		methods: {
+			
 			plaqueopen () {
 			 this.$refs.popup.open()
 			},
-			iconclose () {
+			iconclose () { 
 				this.closeion = false ||  this.$refs.popup.close()
 				
 				setTimeout(()=>{
-				this.plaqueopen()
 				this.closeion = true
+				 this.$refs.popup.open()
 				
 				},60000)
 			},
@@ -727,7 +748,7 @@
 			
 			
 		    // const adCode = 6654
-		const idfa = getIdfaidfvs()
+		const idfa = getIdfaidfvs() 
 		console.log(idfa)
 		// 	const posturl =   this.plaque[0].account +  '&idfa=' + idfa
 		
@@ -735,7 +756,7 @@
 		// 	const data = await this.$http.post(posturl,{
 								
 		// 	}); 
-		
+		 
 				// console.log(data)
 			
 				//#ifdef APP-PLUS
@@ -747,15 +768,37 @@
 				
 				
 			},
+			
+			//视频广告位
+			// clickmouted () {
+			//   this.muted = true
+			//   this.courshide = 1
+			// },
+			// clickmoutedtwo () {
+			// 	this.muted = false
+			// 	this.courshide = 0
+			// },
+			// fn () {
+			// 	 const url = 'http://uri6.com/tkio/iyiemqa'  
+			// 	// uni.navigateTo({
+			// 	// 	url:'../qualification/qualification'
+			// 	// })
+			// 	//#ifdef APP-PLUS
+			// 	plus.runtime.openURL(url, (res)=> {  
+			// 	    console.log(res);  
+			// 	 }); 
+			// 	 	//#endif
+			// },
+			 
 			//跳转话题
-			skip (va) {
+			skip (va) { 
 				
 				uni.navigateTo({
 					url:`../themet/themet?item=${encodeURIComponent (JSON.stringify(va))}`
 				})
 			},
 			//关注登录
-			login () {
+			login () {      
 				if (!this.user_id) {
 					uni.navigateTo({
 						url:'../login/login'
@@ -776,7 +819,7 @@
 				uni.showToast({
 				  title:'该功能暂未开放 敬请期待!',
 				  icon:'none',
-				  duration:2000
+				  duration:2000 
 				})
 			
 			},
@@ -786,6 +829,9 @@
 				  icon:'none',
 				  duration:2000
 				})
+				// uni.navigateTo({
+				// 	url:'../login/login'
+				// })
 			},
 			//插屏广告
 			async getPersonalAd () {
@@ -793,14 +839,12 @@
 				 const data = await this.$http.post('/api/getPersonalAd',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 					
-						// search_value:'腾讯'
-					
 				 });
+					
 				    // console.log(data);
 					const {DATA} = data
 					console.log(DATA)
 					if (data.CODE==='200') {
-						
 					   this.plaque = DATA
 					}
 			},
@@ -817,7 +861,7 @@
 				    // console.log(data);
 					const {DATA} = data
 					if (data.CODE==='200') {
-					    console.log(this.attention = DATA);
+					    console.log(this.attention = DATA); 
 					}
 			},
 			//话题讨论
@@ -826,13 +870,13 @@
 				 const data = await this.$http.post('/api/gambit',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 						user_id:user_id
-						// search_value:'腾讯'
 					
 				 });
 				    // console.log(data);
 					const {DATA} = data
 					if (data.CODE==='200') {
-					    console.log(this.attentionmain = DATA);
+					  this.attentionmain = DATA
+					  console.log( this.attentionmain)
 					}
 			},
 			//分类导航
@@ -841,8 +885,6 @@
 				 let data = await this.$http.post('/api/getCatNews',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 						state:'1',
-						// search_value:'腾讯'
-					
 				 });
 				    // console.log(data);
 					const {DATA} = data
@@ -853,7 +895,7 @@
 					}
 			},
 		
-		
+		 
 		//轮播图
 		async getBannerNews () {
 			// tabnav
@@ -867,7 +909,7 @@
 				if (data.CODE==='200') {
 					 
 					this.swiperitem = DATA
-				
+					
 				}
 		},
 		//推荐新闻资讯前四个
@@ -1169,6 +1211,7 @@
 				//e=number为点击切换，e=object为swiper滑动切换
 				if(typeof e === 'object'){
 					index = e.detail.current
+					console.log(11)
 				}
 				if(typeof tabBar !== 'object'){
 					tabBar = await this.getElSize("nav-bar")
@@ -1798,7 +1841,7 @@
 	 		}
 	 	}
 	 .swiper-boxs{
-	 		height: 100%;
+	 		height: 1200upx;
 			
 	 	}
 		

@@ -36,7 +36,7 @@
 				<scroll-view scroll-y="true" style="height: 100%;">
 					<view class="swiper-box-game" >
 						<view class="swiper-box-game-banner">
-							<image class="imgs" :src="commerciarsobj.gm_detail_title_img" mode=""></image>
+							<image @tap='prenect' class="imgs" :src="commerciarsobj.gm_detail_title_img" mode=""></image>
 						</view>
 						<view class="swiper-box-game-introduce">
 							<view class="swiper-box-game-introduce-main">
@@ -274,7 +274,7 @@ import market from "../../js_sdk/dc-market/market.js"
 			
 			
 				uni.navigateTo({
-					url:`../moredetails/moredetails?item=${encodeURIComponent (JSON.stringify(	this.commerciarsobj))}`
+					url:`../moredetails/moredetails?item=${JSON.stringify(this.commerciarsobj.gm_detail_p2)}`
 				})
 			},
 			//打开评论组件
@@ -323,6 +323,17 @@ import market from "../../js_sdk/dc-market/market.js"
 				  icon:'none',
 				  duration:2000
 				})
+			},
+			//图片预览
+			prenect () {
+		
+				const photoList = []
+				
+				photoList.push(this.commerciarsobj.gm_detail_title_img )
+				uni.previewImage({
+				   current: 0,
+				   urls:photoList  
+				  });
 			},
 		}
 	}

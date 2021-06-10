@@ -36,8 +36,9 @@
 			}
 		},
 		onLoad(va) {
-			const item=  JSON.parse(decodeURIComponent(va.item))
-			console.log(item)
+		
+			const item=  JSON.parse(va.item)
+	
 		    this.item = item
 		},
 		mounted() {

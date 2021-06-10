@@ -31,15 +31,15 @@
 				<view class="text-part" v-if="loading===false">
 					<view class="text-part-ul">
 						<view class="text-part-li">
-							<view class="text-part-li-img">
-								<image class="text-part-li-first-imgs" v-if="detailsobj.news_detail_title==='1'" :src=" 'http://appyouxun.hundredzy.com/' + detailsobj.news_img" mode=""></image>
+							<view class="text-part-li-img" @tap='prenect'>
+								<image class="text-part-li-first-imgs" v-if="detailsobj.news_detail_title==='1'" :src=" detailsobj.news_img" mode=""></image>
 								<image class="text-part-li-first-imgs" v-else :src="detailsobj.news_img" mode=""></image>
 							</view>
 							<view class="text-part-li-title">
 							{{	detailsobj.new_title}}
 							</view>
 							<view class="text-part-li-user">
-								<image class="text-part-li-user-imgs" v-if="detailsobj.news_detail_title==='1'" @click="lookpage" :src=" 'http://appyouxun.hundredzy.com/' + detailsobj.new_author_head_url" mode=""></image>
+								<image class="text-part-li-user-imgs" v-if="detailsobj.news_detail_title==='1'" @click="lookpage" :src=" detailsobj.new_author_head_url" mode=""></image>
 								<image class="text-part-li-user-imgs" v-else @click="lookpage" :src="detailsobj.new_author_head_url" mode=""></image>
 								<view class="text-part-li-user-text">
 									<text class="text-part-li-user-text-secation">{{detailsobj.new_author}}</text>
@@ -96,14 +96,16 @@
 						
 						</view>
 					</view>
-					<view class="article_like">
+					<!-- <view class="article_like">
 					<view class="article_like_icon">
 						<image class="imgs" src="../../images/like.png" mode=""></image>
 					</view>
 					<view class="article_like_number">
 						{{detailsobj.news_show_num}}人喜欢
 					</view>
-						</view>
+					</view> -->
+					
+					
 					<!-- 文章评论 -->
 						<!-- <view class="comments"  >
 							<view class="comments-number">
@@ -240,27 +242,27 @@
 		  	</view> -->
 			<view class="input-box-right" style="width: 550px;">
 				<view class="input-box-right-li">
-					<view class="input-box-right-icon" @tap='somebody'  v-if="favorites===0">
+					<view style="margin-top: 10upx;" class="input-box-right-icon" @tap='somebody'  v-if="favorites===0">
 						<image class="imgs" src="../../images/zan.png" mode=""></image>
 					</view>
-					<view class="input-box-right-icon" @tap='clearsomebody'  v-if="favorites===1">
-						<image  style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" class="imgs" src="../../images/zanxuan.png" mode=""></image>
+					<view style="margin-top: 10upx;" class="input-box-right-icon" @tap='clearsomebody'  v-if="favorites===1">
+						<image  style="width: 40upx; height: 40upx; margin-right: 10upx; margin-top: 5upx;" class="imgs" src="../../images/zanxuan.png" mode=""></image>
 					</view>
 					<view class="input-box-right-number">
 						<!-- {{detailsobj.numsArray.dianzan_num}} -->
 					</view>
 				</view>
 			<view class="input-box-right-li">
-			<view  @tap='enshrine' class="input-box-right-icon el-icon-star-off" v-if="favorite===0">
+			<view  @tap='enshrine' style="font-size: 20px;" class="input-box-right-icon el-icon-star-off" v-if="favorite===0">
 				
 			</view>
-			<image @tap='clearfavorite' v-if="favorite===1" style="width: 30upx; height: 30upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
+			<image @tap='clearfavorite' v-if="favorite===1" style="width: 40upx; height: 40upx; margin-right: 10upx; margin-top: 5upx;" src="../../images/shouxuan.png" mode=""></image>
 				<view class="input-box-right-number">
 						<!-- {{detailsobj.numsArray.collect_num}} -->
 				</view>
 			</view>
 			
-			<view class="input-box-right-li">
+			<!-- <view class="input-box-right-li">
 				<view class="input-box-right-icon el-icon-chat-dot-round">
 				
 				</view>
@@ -268,7 +270,7 @@
 					2
 					
 				</view>
-			</view>
+			</view> -->
 			</view>
 		  </view>
 	</view>
@@ -413,6 +415,7 @@
 				// })
 				uni.navigateBack()
 			},
+			//关注
 			async attention () {
 				const user_id = uni.getStorageSync('user_id')
 				if (user_id==='') {
@@ -450,28 +453,43 @@
 			},
 			
 		async unfollow () {
+			if (this.detailsobj.is_attention===1) {
+				uni.showModal({
+					title:'确定取消关注？',
+					success: (res)=> {
+						if (res.confirm) {
+					
+							this.madeid =  this.detailsobj.is_attention
+							this.madeid = 0
+							// this.getSquareNewsDetail()
+							console.log(this.madeid )
+							
+						   
+						}
+					}
+				})
+			}
 			const user_id = uni.getStorageSync('user_id')
-			
 			let data = await this.$http.post('/api/cancelRecommend',{
 			 token:'d6a2fa16e60777e390256ec85cc2f42e',
 			 user_id:user_id,
 			 child_id:this.detailsobj.user_id			
 			});
 		    const {CODE,DATA} = data
-			uni.showModal({
-				title:'确定取消关注？',
-				success: (res)=> {
-					if (res.confirm) {
-					if (CODE==='200') {
-						this.madeid =  this.detailsobj.is_attention
-						this.madeid = 0
-						this.getSquareNewsDetail()
-						console.log(this.madeid )
+			// uni.showModal({
+			// 	title:'确定取消关注？',
+			// 	success: (res)=> {
+			// 		if (res.confirm) {
+			// 		if (CODE==='200') {
+			// 			this.madeid =  this.detailsobj.is_attention
+			// 			this.madeid = 0
+			// 			// this.getSquareNewsDetail()
+					
 						
-					   }
-					}
-				}
-			})
+			// 		   }
+			// 		}
+			// 	}
+			// })
 			
 			
 		
@@ -591,6 +609,17 @@
 						 
 						   	this.favorites = 0
 					   }
+					},
+					//图片预览
+					prenect () {
+					const detaltse = this.detailsobj.news_detail_title==='1'?'http://appyouxun.hundredzy.com/' + this.detailsobj.news_img:this.detailsobj.news_img
+						const photoList = []
+						
+						photoList.push(detaltse )
+						uni.previewImage({
+						   current: 0,
+						   urls:photoList  
+						  });
 					},
 			//查看别人主页
 			lookpage () {
@@ -777,8 +806,8 @@
 					  // font-size: 36upx;
 					  // margin-top: 4upx;
 					  .imgs {
-						  width: 26upx;
-						  height: 26upx;
+						  width: 35upx;
+						  height: 35upx;
 					  }
 					}
 					.input-box-right-number {
@@ -994,8 +1023,8 @@
 								}
 							}
 							.text-part-li-user-close-maded {
-								background-color:#BFBFBF !important ;
-								color:  #333333 !important;
+								background-color:#1482FF !important ;
+								color:  #fff !important;
 							}
 							.text-part-li-user-close {
 								

@@ -2,8 +2,8 @@
     "name" : "游讯时空",
     "appid" : "__UNI__C658B42",
     "description" : "添加了插屏广告",
-    "versionName" : "1.0.1",
-    "versionCode" : "100",
+    "versionName" : "1.0.6",
+    "versionCode" : 104,
     "transformPx" : false,
     // 跨域问题
     "launch_path" : "http://appyouxun.hundredzy.com",
@@ -17,7 +17,8 @@
             "delay" : 0
         },
         "modules" : {
-            "OAuth" : {}
+            "OAuth" : {},
+            "VideoPlayer" : {}
         },
         /* 模块配置 */
         "distribute" : {

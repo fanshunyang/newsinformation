@@ -23,7 +23,8 @@
 		        <image :src="cropFilePath" mode="aspectFit" style="width: 100%;"></image> -->
 		
 		<image v-if="initialimgs  " class="imgs" src="../../images/cj.jpg" mode=""></image>
-        	<image class="imgs" :src=" 'http://appyouxun.hundredzy.com/' +  user_item.user_head_url" mode=""></image>
+			<image class="imgs" v-if=" user_item.user_head_url===''?false: user_item.user_head_url" :src=" user_item.user_head_url" mode=""></image>
+        	<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
 		  <imagecropper :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
 		 <image @tap="upload" :src="cropFilePath " mode="aspectFit" style="width: 100upx; height: 100upx; border-radius: 50%; position: absolute; right: 10px; z-index: 222;"></image> 
 	 </view>
@@ -303,16 +304,17 @@
 			console.log(e)
 			this.tempFilePath = ''
 			 this.cropFilePath = e.detail.tempFilePath
-			 console.log( this.cropFilePath) 
-		
+			// const user_id = uni.getStorageSync('user_id')
+			// console.log(user_id , this.cropFilePathApp)
 				pathToBase64( this.cropFilePath).then( async base64 => {
 				  this.cropFilePathApp = base64
 				 const user_id = uni.getStorageSync('user_id')
+				 console.log(user_id )
 				 	let data = await this.$http.post('/api/uploadFile',{
-				     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+				           token:'d6a2fa16e60777e390256ec85cc2f42e',					
 				 			user_id:user_id,
 				 			path:'my',
-				 			file:  this.cropFilePathApp			
+				 			file:this.cropFilePathApp			
 				 			});
 							console.log(data)
 				 				if (this.cropFilePath) {
@@ -321,7 +323,7 @@
 				 				const {CODE,DATA} = data
 				 			   if (CODE==='200') {
 				 			   this.user_url = DATA
-				 			
+								console.log(  this.user_url)
 				 		}
 				})
 			

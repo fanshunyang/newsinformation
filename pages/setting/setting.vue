@@ -14,7 +14,9 @@
 			</view>
 		  </view>
 		<view class="setting-header" v-if="user_id " @tap='modification'>
-			<image class="imgs" :src=" 'http://appyouxun.hundredzy.com/' + materialobj.user_head_url" mode=""></image>
+			<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src="materialobj.user_head_url" mode=""></image>
+			<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
+		
 			<view class="setting-header-sorted">
 				<view class="setting-header-sorted-top">
 				{{materialobj.user_name}}

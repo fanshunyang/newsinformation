@@ -29,7 +29,10 @@
 				<view class="homepage-top-headline ">
 					<view class="homepage-top-headline-left">
 						<view class="homepage-top-headline-img">
-							<image class="imgs" :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image>
+							
+								<!-- <image class="imgs" :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image> -->
+							<image class="imgs"  :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image>
+						<!-- 	<image class="imgs" :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image> -->
 						</view>
 						<view class="homepage-top-headline-title">
 							<view class="homepage-top-headline-title-top">
@@ -106,7 +109,8 @@
 					<view class="homepage-bottom-list-li" @tap='zone(item)'  v-for="(item,index) in square_list  " :key='index'>
 						<view class="homepage-bottom-list-li-type-top">
 							<view class="homepage-bottom-list-li-left">
-								<image class="imgs" :src="item.new_author_head_url" mode=""></image>
+								<image class="imgs" :src="  item.new_author_head_url" mode=""></image>
+							<!-- 	<image class="imgs" v-else  :src="item.new_author_head_url" mode=""></image> -->
 								<view class="homepage-bottom-list-li-left-maddle">
 									<view class="homepage-bottom-list-li-left-desc">
 										{{item.new_author}}
@@ -147,7 +151,9 @@
 							</view>
 							<view class="homepage-bottom-list-li-bottom-list-img">
 								<view class="homepage-bottom-list-li-bottom-list-img-li">
-									<image class="imgs" :src="item.news_img" mode=""></image>
+									<image class="imgs" :src=" item.news_img" mode=""></image>
+								<!-- 	<image class="imgs" v-else :src="item.news_img" mode=""></image> -->
+								
 								</view>
 							
 								
@@ -261,15 +267,15 @@
 		 
 		
 		},
-	async	mounted() {
+		mounted() {
 		  this.myRecommend()
-		await  this.myRecommendUserDetail() 
-		if ( this.recomobj.is_attention===1) {
-			this.madeid=1
-		}
-		if ( this.recomobj.is_attention===0) {
-			this.madeid=0
-		}
+		  this.myRecommendUserDetail() 
+		// if ( this.recomobj.is_attention===1) {
+		// 	this.madeid=1
+		// }
+		// if ( this.recomobj.is_attention===0) {
+		// 	this.madeid=0
+		// }
 		},
 		computed: {
 		
@@ -294,7 +300,10 @@
 					  // console.log( this.myobj)
 					  // console.log(  this.myobj.is_attention)
 					  if (  this.myobj.is_attention===1) {
-						     	this.madeid = 1
+						  this.madeid = 1
+					  }
+					  if ( this.recomobj.is_attention===0) {
+					       this.madeid=0
 					  }
 					  
 					}
@@ -316,6 +325,12 @@
 					  const {square_list} = this.recomobj
 					  this.square_list = square_list
 					  console.log(this.square_list)
+					  if (  this.myobj.is_attention===1) {
+					  	    this.madeid = 1
+					  }
+					  if ( this.recomobj.is_attention===0) {
+					       this.madeid=0
+					  }
 					}
 			},
 			//返回上一级
@@ -372,34 +387,53 @@
 			   	this.madeid = 1
 			   this.myRecommendUserDetail()
 			  
-			   	console.log(this.madeid )
+			   	// console.log(this.madeid )
 			   	
 			   
 			   }	
 			},
 			async unfollow () {
+			  
+			     if (this.recomobj.is_attention===1) {
+					 uni.showModal({
+					 	title:'确定取消关注？',
+					 	success: (res)=> {
+					 		
+					 		if (res.confirm) {
+					 			this.madeid =  this.recomobj.is_attention || this.myobj.rem_id
+					 			this.madeid = 0
+					 			// this.getSquareNewsDetail()
+					 			console.log( this.recomobj)
+					 			
+					 		}  
+					 					
+					 	}
+					 })
+				 }
 			   const user_id = uni.getStorageSync('user_id')
-			   
 			   let data = await this.$http.post('/api/cancelRecommend',{
 			    token:'d6a2fa16e60777e390256ec85cc2f42e',
 			    user_id:user_id,
 			    child_id:this.recomobj.user_id	|| this.myobj.rem_id			
 			   });
 			   const {CODE,DATA} = data
-			   uni.showModal({
-			   	title:'确定取消关注？',
-			   	success: (res)=> {
-			   		if (res.confirm) {
-			   		if (CODE==='200') {
-			   			this.madeid =  this.recomobj.is_attention || this.myobj.rem_id
-			   			this.madeid = 0
-			   			// this.getSquareNewsDetail()
-			   			console.log(this.madeid )
-			   			
-			   		   }
-			   		}
-			   	}
-			   })
+			    if (CODE==='200') {
+					uni.showModal({
+						title:'确定取消关注？',
+						success: (res)=> {
+							
+							if (res.confirm) {
+								this.madeid =  this.recomobj.is_attention || this.myobj.rem_id
+								this.madeid = 0
+								// this.getSquareNewsDetail()
+								console.log( this.recomobj)
+								
+							}  
+										
+						}
+					})
+				}
+			 
 			   
 			   
 			},

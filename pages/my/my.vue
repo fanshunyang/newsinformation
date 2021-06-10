@@ -15,9 +15,9 @@
 			</view>
 		</view>
 		<scroll-view scroll-y="true" style="height: 100%;">
-			<view class="my-material" v-if='access_token || user_id' >
+			<view class="my-material" v-if="access_token  || user_id" >
 				<view class="my-material-top" @tap='mypersonal'>
-					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" 'http://appyouxun.hundredzy.com/' + materialobj.user_head_url" mode=""></image>
+					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" materialobj.user_head_url" mode=""></image>
 					
 					<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
 					
@@ -66,12 +66,12 @@
 							</view>
 							<view class="li-classfily">
 							 帖子
-							</view>
+							</view> 
 						</view>
 						
 					</view>
 				</view>
-				
+				 
 				
 			</view>
 			<view class="my-material-notlog" @tap='clickRegister' v-else-if="user_id || access_token===''">
@@ -147,7 +147,8 @@
 </template>
 
 <script>
-	
+	import market from "../../js_sdk/dc-market/market.js"
+	import {getIdfaidfvs} from '../../utils/idfa.js'
 	export default {
 		data() {
 			return { 
@@ -180,15 +181,15 @@
 		
 		//  console.log(this.token)
 		},
-		//tabbar切换执行
+		//tabbar切换执行 
 		onShow() {
 			const access_token = uni.getStorageSync('access_token')
 			const user_id = uni.getStorageSync('user_id')
-			// console.log(user_id)
+			// console.log(user_id) 
 			if (access_token && user_id) {
 			this.access_token = access_token
 			this.user_id = user_id
-			
+		
 			}
 			
 			const value = uni.getStorageSync('too');
@@ -201,10 +202,10 @@
 	      this.getPersonalInfo()
 		  this.getPersonalAd()
 		},
-		computed: {
+		computed: { 
 			userState () {
 				const user_id = uni.getStorageSync('user_id')
-				return user_id
+				return user_id    
 			}
 		},
 		methods: {
@@ -304,7 +305,7 @@
 		  //收藏
 		  enshrine () {
 			 uni.navigateTo({
-			 	url:'../collect/collect'
+			 	url:'../collect/collect' 
 			 }) 
 		  },
 		  mymessage () { 
@@ -319,15 +320,13 @@
 			
 		  },
 		  wbbanner (va) {
-			   const url = 'http://uri6.com/tkio/iyiemqa'  
-			 // uni.navigateTo({
-			 // 	url:`../webview/webview?items=${va.account}` 
-			 // })  
+			
 			 
 			 //#ifdef APP-PLUS
-			 plus.runtime.openURL(url, (res)=> {  
-			     console.log(res);  
-			  }); 
+			market.open({
+			ios:'1454663939', 
+						
+			});   
 			  	//#endif
 			 // uni.showToast({
 			 //   title:'该功能暂未开放 敬请期待!',

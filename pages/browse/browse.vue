@@ -138,7 +138,7 @@
 					const {CODE,DATA} = data
 					if (CODE==='200') {
 						this.browseList = DATA
-					
+						console.log(this.browseList)
 					}
 				},
 				maidan (va) {

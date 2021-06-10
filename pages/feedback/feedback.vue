@@ -175,7 +175,7 @@
 			 	const {CODE,DATA} = data
 			 	if (CODE==='200') {
 			 	this.user_url = DATA
-			 			
+			 		console.log(this.user_url)	
 			    }
 			})
 					
@@ -185,7 +185,7 @@
 		
 			},
 			imgDelete (list,eq) {
-			
+			   console.log(list)
 			},
 			
 		

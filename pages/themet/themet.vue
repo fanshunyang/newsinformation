@@ -8,6 +8,7 @@
 		  <view class="themet-header">
 			<image class="imgs"  :src="tehntobj.gambit_img_url" mode=""></image>
 		  </view>
+		  
 		  <view class="themet-left-icon el-icon-arrow-left" @click="back">
 		  	
 		  </view>
@@ -57,7 +58,7 @@
 							<view class="box-firend-li-item-letter">
 								<view class="box-firend-li-item-letter-left">
 									<view class="  box-firend-li-item-letter-left-praise">
-										赞
+										<image style="width: 26upx; height: 26upx;" src="../../images/zan.png" mode=""></image>
 									</view>
 									<view class="box-firend-li-item-letter-left-number">
 										5
@@ -163,6 +164,7 @@
 					 console.log( this.tehntobj)
 					const {newsList} =    DATA
 					this.dynamicallyList = newsList
+					 console.log( this.dynamicallyList)
 					}
 			},
 			//返回上一级
@@ -181,6 +183,7 @@
 			},
 			//跳转帖子详情
 			dynamically (va) {
+				console.log(va)
 				const id = va.id
 				uni.navigateTo({
 					url:`../details/details?item=${id}`

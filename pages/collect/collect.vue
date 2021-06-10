@@ -70,7 +70,10 @@
 							
 						</view>
 					</view>
-				
+					
+					<view class="" style=" text-align: center; letter-spacing: 1px; margin-top: 20px;" v-if="maidanList.length===0">
+						抱歉~~~没有该收藏的资讯或者帖子的列表信息
+					</view>
 				</view>
 			
 			</view>
@@ -124,7 +127,7 @@
 				const {CODE,DATA} = data
 				if (CODE==='200') {
 					this.maidanList = DATA
-				
+					console.log(this.maidanList)
 				}
 			},
 		
