@@ -379,7 +379,7 @@
 			    user_id:user_id,
 			    child_id:this.recomobj.user_id			
 			   });
-			   console.log(this.recomobj )
+		
 			   			
 			   const {CODE} = data
 			   if (CODE==='200') {
@@ -403,7 +403,7 @@
 					 			this.madeid =  this.recomobj.is_attention || this.myobj.rem_id
 					 			this.madeid = 0
 					 			// this.getSquareNewsDetail()
-					 			console.log( this.recomobj)
+					 			this.myRecommendUserDetail()
 					 			
 					 		}  
 					 					
@@ -417,22 +417,22 @@
 			    child_id:this.recomobj.user_id	|| this.myobj.rem_id			
 			   });
 			   const {CODE,DATA} = data
-			    if (CODE==='200') {
-					uni.showModal({
-						title:'确定取消关注？',
-						success: (res)=> {
+			 //    if (CODE==='200') {
+				// 	uni.showModal({
+				// 		title:'确定取消关注？',
+				// 		success: (res)=> {
 							
-							if (res.confirm) {
-								this.madeid =  this.recomobj.is_attention || this.myobj.rem_id
-								this.madeid = 0
-								// this.getSquareNewsDetail()
-								console.log( this.recomobj)
+				// 			if (res.confirm) {
+				// 				this.madeid =  this.recomobj.is_attention || this.myobj.rem_id
+				// 				this.madeid = 0
+				// 				// this.getSquareNewsDetail()
+				// 				console.log( this.recomobj)
 								
-							}  
+				// 			}  
 										
-						}
-					})
-				}
+				// 		}
+				// 	})
+				// }
 			 
 			   
 			   
@@ -638,7 +638,7 @@
 	   .homepage-bottom-list {
 		   background-color: #F1F1F1;
 		   // height: 870px;
-		   padding-bottom: 110upx;
+		   // padding-bottom: 110upx;
 		   .homepage-bottom-list-ul {
 			
 			   padding-top: 10upx;

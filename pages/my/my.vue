@@ -216,7 +216,7 @@
 				token:'d6a2fa16e60777e390256ec85cc2f42e',
 				user_id:user_id			
 				});
-			
+			     
 				const {CODE,DATA} = data
 				if (CODE==='200') {
 					this.materialobj = DATA
@@ -228,7 +228,6 @@
 			async getPersonalAd () {
 				const data = await this.$http.post('/api/getPersonalAd',{
 				token:'d6a2fa16e60777e390256ec85cc2f42e',
-			
 				});
 							
 				const {CODE,DATA} = data

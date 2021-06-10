@@ -612,8 +612,8 @@
 					},
 					//图片预览
 					prenect () {
-					const detaltse = this.detailsobj.news_detail_title==='1'?'http://appyouxun.hundredzy.com/' + this.detailsobj.news_img:this.detailsobj.news_img
-						const photoList = []
+					const detaltse = this.detailsobj.news_detail_title==='1'? this.detailsobj.news_img:this.detailsobj.news_img
+					const photoList = []
 						
 						photoList.push(detaltse )
 						uni.previewImage({

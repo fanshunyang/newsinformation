@@ -283,10 +283,7 @@
 			async getAdBanner () {
 				// tabnav
 				 let data = await this.$http.post('/api/getAdBanner',{
-					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
-					
-						// search_value:'腾讯'
-					
+					 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 });
 				    // console.log(data);
 					const {DATA} = data
@@ -297,8 +294,6 @@
 			},
 			//热门推荐
 			async getRecommendGame () {
-			
-				// tabnav
 				 let data = await this.$http.post('/api/getRecommendGame',{
 					 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 }); 
@@ -306,13 +301,12 @@
 					const {DATA} = data
 					if (data.CODE==='200') {
 					   this.game_recommendlist = DATA
-					   	console.log(this.game_recommendlist)
+					   console.log(this.game_recommendlist)
 					}
 			},
 			//最新上市
 			 
 			async getNewGames () {
-				// tabnav
 				 let data = await this.$http.post('/api/getNewGames',{
 					 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 });

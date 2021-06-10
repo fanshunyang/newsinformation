@@ -184,9 +184,7 @@
 	  							<view class="recommend-list-li-bottom-text-top">
 	  								{{item.new_title}}
 	  							</view>
-	  							<!-- <view class="recommend-list-li-bottom-text-bottom">
-	  							{{item.news_detail_title}}
-	  							</view> -->
+	  							
 	  							
 	  							<view class="recommend-list-li-bottom-img-ul">
 	  								<view class="recommend-list-li-bottom-img-li">
@@ -244,7 +242,7 @@
 					</view>
 				</view>
 				</scroll-view>
-					
+				        	 
 				</view>
 				<view class="recommendation-search">
 				<view class="concern_search"> 
@@ -646,9 +644,7 @@
 					  this.content_hide = false
 					  this.addinferior = true
 					}
-				// this.classtype.filter((item)=>{
-				//  return  item.chekeds='1'
-				// })
+				
 				console.log(this.classtype)
 				this.ishide = false
 			},
@@ -710,22 +706,17 @@
 						}
 				
 					console.log(this.classtype)
-			
-		  //    tailor.forEach((item)=>{
-			 // item.is_checked==='0'
-		  //     })
-					
-				
 			  if ( this.classtype.length===0) {
 				
 				this.addinferior = true
 			
 			 }
-		
+		     
 			},
 			//分类
 			classfilyTable (va) {
 			this.classfilyIndex =  va.detail.current
+		
 			},
 			classifyitem (va,item) {
 				this.clasfilyID = item.id

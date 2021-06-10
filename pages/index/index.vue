@@ -837,7 +837,7 @@
 			async getPersonalAd () {
 				
 				 const data = await this.$http.post('/api/getPersonalAd',{
-					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
+					   token:'d6a2fa16e60777e390256ec85cc2f42e',
 					
 				 });
 					
@@ -855,24 +855,19 @@
 				 const data = await this.$http.post('/api/userList',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 						user_id:user_id
-						// search_value:'腾讯'
-					
 				 });
-				    // console.log(data);
 					const {DATA} = data
 					if (data.CODE==='200') {
-					    console.log(this.attention = DATA); 
+					   this.attention = DATA 
 					}
 			},
 			//话题讨论
 			async gambit () {
 				  const user_id = uni.getStorageSync('user_id')
-				 const data = await this.$http.post('/api/gambit',{
+				  const data = await this.$http.post('/api/gambit',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
 						user_id:user_id
-					
 				 });
-				    // console.log(data);
 					const {DATA} = data
 					if (data.CODE==='200') {
 					  this.attentionmain = DATA
