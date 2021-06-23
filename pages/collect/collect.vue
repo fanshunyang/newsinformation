@@ -106,14 +106,15 @@
 			}
 		},
 	    onLoad(va) {
-
+          this.myCollect() 
 			
 		},
 	     mounted() {
-		 this.myCollect()
+		 // this.myCollect() 
 		},
 		
 		methods: {
+		
 		async myCollect () {
 				const user_id = uni.getStorageSync('user_id')
 			     let prams = this.currIndex===0?'news':'topic'
@@ -127,7 +128,7 @@
 				const {CODE,DATA} = data
 				if (CODE==='200') {
 					this.maidanList = DATA
-					console.log(this.maidanList)
+					console.log(this.maidanList) 
 				}
 			},
 		

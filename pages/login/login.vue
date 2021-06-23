@@ -25,7 +25,7 @@
 		  	</view>
 		  </view>
 		   
-		    <!-- #ifdef H5 -->
+		    <!-- #ifdef H5  -->
 	         <button type="default" @click="phoneNumberall">手机号登录</button>
 	        <!-- #endif -->
 	</view>
@@ -35,7 +35,7 @@
 	export default {
 		data() { 
 			return { 
-				phone_number:'15713665448',  
+				phone_number:'15713665448',    
 				title:'欢迎回来',
 				phoneNumber:'',
 				openid:'',
@@ -49,20 +49,11 @@
 		},
 		methods: {
 			close () {
-				  
-				 // value = 0
-				 // console.log(value)
-				 // uni.getStorage({
-				 // 	key:'too',
-						
-					// success: (res)=>{
-					// 	console.log(res)
-					// } 
-				 // })
+				
 				uni.reLaunch({
 					url:'../index/index'
 				})
-			},
+			}, 
 				//手机号登录
 		    async phoneNumberall () {
 			     const data = await this.$http.post('/api/userLogin',{
@@ -203,7 +194,7 @@
 						},
 						"slogan": {
 						"color": "#8a8b90", //  slogan 字体颜色 默认值：#8a8b90  
-						"fontSize": "12" // slogan 字体大小 默认值：12  
+						"fontSize": "14" // slogan 字体大小 默认值：12  
 						},
 						"authButton": {
 						"normalColor": "#3479f5", // 授权按钮正常状态背景颜色 默认值：#3479f5  
@@ -286,7 +277,7 @@
 							   if (res.errMsg) {
 								   uni.showToast({
 								   	 title:'登录成功',
-									 duration:2000
+									 duration:1500
 								   })
 							   }
 							 },

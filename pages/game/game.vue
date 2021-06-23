@@ -430,16 +430,25 @@
 			  })
 		  },
 		  //广告位轮播
-		  selectedBanner (item,index) {
-			console.log(item)
-			
+		 async selectedBanner (va,index) {
+		
 			 	//#ifdef APP-PLUS
 			market.open({
-			ios:'1454663939', 
+			ios:va.redirect_url, 
 						
 			});   
 			
 			   	//#endif
+				
+				const idfa = getIdfaidfvs()
+					
+					const posturl =  va.monitor_url +  '&idfa=' + idfa
+				// console.log(posturl)
+					
+					const data = await this.$http.post(posturl,{
+						
+										
+					});
 				
 			// uni.showToast({
 			//   title:'该功能暂未开放 敬请期待!',

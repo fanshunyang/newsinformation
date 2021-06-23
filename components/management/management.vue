@@ -66,6 +66,7 @@
 			  ]	
 			}
 		},
+		
 		mounted() {
 		 this.zx_list()
 		},
@@ -75,13 +76,13 @@
 					const {special_zx_list} = this.mangent
 					this.informationList = special_zx_list
 					console.log(	this.informationList )
-				},500)
+				},200)
 			},
 			//跳转新闻资讯
 			information (va) {
 				let id = va.id
 				uni.navigateTo({
-					url:`../../pages/qualification/qualification?items=${id}`
+					url:`../../pages/qualification/qualification?items=${id}&onday=${66}`
 				})
 			},
 		}

@@ -55,7 +55,9 @@
 						</div>
 					</div>
 					<div v-else class="img-empty"></div>
+					
 					<div :class="['bot', 'bot'+item.type]">
+						
 						<text class="author">{{item.author}}</text>
 						<text class="time">{{item.time}}</text>
 					</div>

@@ -29,10 +29,9 @@
 				<view class="homepage-top-headline ">
 					<view class="homepage-top-headline-left">
 						<view class="homepage-top-headline-img">
+							<image class="imgs" v-if="recomobj.user_head_url===null || myobj.user_head_url===null" src="../../images/cj.jpg" mode=""></image>
+							<image class="imgs" v-else :src="recomobj.user_head_url || myobj.user_head_url" mode=""></image>
 							
-								<!-- <image class="imgs" :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image> -->
-							<image class="imgs"  :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image>
-						<!-- 	<image class="imgs" :src="recomobj.user_head_url ||myobj.user_head_url" mode=""></image> -->
 						</view>
 						<view class="homepage-top-headline-title">
 							<view class="homepage-top-headline-title-top">

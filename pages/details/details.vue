@@ -410,9 +410,17 @@
 				// })
 			},
 			iconleft () {
-				// uni.switchTab({
-				// 	url:'../index/index'
-				// })
+			
+				 // let pages = getCurrentPages(); // 当前页面
+				 // let beforePage = pages[pages.length - 2]; // 前一个页面
+				 
+				 // console.log( beforePage) 
+				 // uni.navigateBack({
+				 //     success() {
+					// 	beforePage.myCollect()
+				 //         // beforePage.onLoad(); // 执行前一个页面的onLoad方法
+				 //     }
+				 // });
 				uni.navigateBack()
 			},
 			//关注

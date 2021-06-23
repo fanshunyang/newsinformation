@@ -76,11 +76,11 @@
 				hideshow:true,
 				imgList:[],
 				phoneNumber:'',
-			tempFilePath:'',
-			cropFilePath:'',
+			    tempFilePath:'',
+			    cropFilePath:'',
 		
-			user_url:'',
-			cropFilePathApp:'',
+			    user_url:'',
+			    cropFilePathApp:'',
 			}
 		},
 		onLoad() {
@@ -165,7 +165,7 @@
 			    const user_id = uni.getStorageSync('user_id')
 				
 			 	let data = await this.$http.post('/api/uploadFile',{
-			     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+			    token:'d6a2fa16e60777e390256ec85cc2f42e',					
 			 	user_id:user_id,
 			 	path:'my',
 			 	file:this.cropFilePathApp			
@@ -177,8 +177,7 @@
 			 	this.user_url = DATA
 			 		console.log(this.user_url)	
 			    }
-			})
-					
+			   })		
 			})
 				
 		

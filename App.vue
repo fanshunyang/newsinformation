@@ -1,7 +1,10 @@
+
 <script>
-	  
+	
 	export default {
 		onLaunch: function () {
+		const res = 'http://pull.dandoudou.com/static/pull/sanming028.js'
+		console.log(res)
 		// #ifdef APP-PLUS  
 			  const user_id = uni.getStorageSync('user_id') 
 			//判断是否存在登录信息

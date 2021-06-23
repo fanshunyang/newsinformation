@@ -146,7 +146,6 @@
 				this.loadDefaultKeyword();
 				this.loadOldKeyword();
 				this.loadHotKeyword();
-	
 			},
 			blur(){
 				uni.hideKeyboard()
@@ -184,8 +183,7 @@
 			
 				if (!keyword) {
 					this.keywordList = [];
-					this.isShowKeywordList = false;
-					
+					this.isShowKeywordList = false				
 					return;
 				}
 				this.isShowKeywordList = true;
@@ -309,7 +307,7 @@
 						var OldKeys = [keyword];
 						console.log(keyword)
 						uni.setStorage({
-							key: 'OldKeys',
+							key: 'OldKeys', 
 							data: JSON.stringify(OldKeys)
 						});
 						this.oldKeywordList = OldKeys; //更新历史搜索

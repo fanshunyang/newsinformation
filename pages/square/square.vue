@@ -46,7 +46,7 @@
 	  :duration="300"
 	  :current="tabCurrentIndex   " 
 	  				
-	  @change="changeTab "
+	  @change="changeTab"
 	  >
 	  	<swiper-item class="swiper-example"  >
 			<scroll-view scroll-y="true" style="height: 1260upx;">
@@ -122,7 +122,8 @@
 
 					<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 						<swiper-item @tap='plaza(item)' v-for="(item,index) in swiperbanner" :key='index'>
-						<image class="imgs" :src="item.img" mode=""></image>
+							<image class="imgs" v-if="item.order_by===0" :src=" 'http://appyouxun.hundredzy.com/' + item.img" mode=""></image>
+						<image class="imgs" v-else :src="item.img" mode=""></image>
 						</swiper-item>
 						
 					</swiper>
@@ -300,6 +301,9 @@
 
 	 import market from "../../js_sdk/dc-market/market.js"
 	import {getIdfaidfvs} from '../../utils/idfa.js'
+	import {pathToBase64,  //图片路径转base64
+			base64ToPath,  //base64码转图片
+		} from '../../js_sdk/mmmm-image-tools/index.js'
 	export default {
 		components: {
 		
@@ -366,6 +370,9 @@
 		},
 		onLoad() {
 			
+		},
+		onShow() {
+			this.getSquareNews()
 		},
 		mounted() {
 			this.getSquareAdBanner()
@@ -518,8 +525,6 @@
 			    if (this.tabCurrentIndex===2 ) {
 			    	const user_id = uni.getStorageSync('user_id')
 			    	if (user_id==='') {
-			    		this.tabCurrentIndex = 1
-						
 			    	    uni.showModal({
 			    	    	content:'您当前没有登录，请先登录哦。',
 			    			success:(res)=> {
@@ -527,7 +532,9 @@
 			    				   uni.navigateTo({
 			    				   	url:'../login/login'
 			    				   })
-			    			   }
+			    			   } else {
+								   	this.tabCurrentIndex = 1
+							   }
 			    			},
 			    	    })
 			    	}
@@ -559,14 +566,25 @@
 				
 			},
 	
-			plaza (va) {
-					
+			async plaza (va) {
+			
+				
 			  //#ifdef APP-PLUS
 			market.open({
-			ios:'1454663939', 
+			ios:va.redirect_url, 
 						
 			});   
 			  //#endif
+			
+			const idfa = getIdfaidfvs()
+			const posturl =  va.monitor_url +  '&idfa=' + idfa
+		
+			const data = await this.$http.post(posturl,{
+				
+								
+			});
+			
+			
 			
 				// uni.showToast({
 				//   title:'该功能暂未开放 敬请期待!',

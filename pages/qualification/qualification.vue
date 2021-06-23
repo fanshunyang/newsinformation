@@ -320,7 +320,7 @@
 			newsobjgl:{},
 			user_id:'',
 			// itemp:{},
-		
+			onda:'',
 			} 
 		},
 		onLoad(options){
@@ -328,7 +328,7 @@
 		this.user_id = user_id
 		
 		this.jourId = parseInt( options.items)
-		  
+	
 		console.log(this.jourId)
 			
 			this.detaId =  options.item
@@ -339,6 +339,10 @@
 			// this.detailData = JSON.parse(options.data);
 			// this.itemp =  JSON.parse(decodeURIComponent(options.itemp)) 
 			// console.log(this.itemp)
+			
+			
+			this.onda = options.onday
+				  
 			this.comment = comment
 			
 		},
@@ -401,7 +405,7 @@
 			
 				 let data = await this.$http.post('/api/getSpecialDetail',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
-						id:this.jourId,
+						id:this.jourId || this.itemid,
 						user_id:user_id
 						// search_value:'腾讯'
 					
@@ -444,7 +448,7 @@
 			
 				 let data = await this.$http.post('/api/getSpecialGlDetail',{
 					 	token:'d6a2fa16e60777e390256ec85cc2f42e',
-						id:this.itemid,
+						id: this.jourId || this.itemid,
 						
 						// search_value:'腾讯'
 					
@@ -481,13 +485,16 @@
 				// uni.switchTab({
 				// 	url:'../index/index'
 				// })
+				
+		
 				uni.navigateBack()
+				
 			},
 			//收藏
 		async	enshrine () {
 			 const user_id = uni.getStorageSync('user_id')
 				let data = await this.$http.post('/api/addDetailCollect',{
-				 detail_id:this.ids || this.jourId,
+				 detail_id:this.ids || this.jourId ,
 				 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 user_id:user_id,
 				 place_param:'news'
@@ -508,7 +515,7 @@
 			async clearfavorite () {
 				const user_id = uni.getStorageSync('user_id')
 				let data = await this.$http.post('/api/cancelDetailCollect',{
-				 detail_id:this.ids || this.jourId,
+				 detail_id:this.ids || this.jourId ,
 				 token:'d6a2fa16e60777e390256ec85cc2f42e',
 				 user_id:user_id,
 				place_param:'news'
@@ -529,7 +536,7 @@
 			async	assist () {
 				 const user_id = uni.getStorageSync('user_id')
 					let data = await this.$http.post('/api/addDetailDianZan',{
-					 detail_id:this.ids || this.jourId,
+					 detail_id:this.ids || this.jourId ,
 					 token:'d6a2fa16e60777e390256ec85cc2f42e',
 					 user_id:user_id,
 					 place_param:'news'
@@ -548,7 +555,7 @@
 				async clearassist () {
 					const user_id = uni.getStorageSync('user_id')
 					let data = await this.$http.post('/api/cancelDetailDianZan',{
-					 detail_id:this.ids || this.jourId,
+					 detail_id:this.ids || this.jourId ,
 					 token:'d6a2fa16e60777e390256ec85cc2f42e',
 					 user_id:user_id,
 					place_param:'news'

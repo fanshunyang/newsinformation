@@ -258,13 +258,14 @@
 			}
 		},
 		onShow() {
-		
+			
 		},
 		onLoad(va) {
 		this.indexId = 	parseInt(va.items)
-			
+			console.log(this.indexId)
 			this.tabIndex = parseInt(va.item)
 				this.comment = comment
+			
 		},
 		mounted() {
 			this.getSpecialOneInfo()
@@ -323,10 +324,12 @@
 			},
 			changeitem (va) {
 				this.tabIndex = va
+		
 			},
 			changetab (va) {
 			
 				this.tabIndex = va.detail.current
+				
 			},
 			search () {
 				// uni.navigateTo({

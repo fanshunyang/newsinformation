@@ -13,11 +13,12 @@
 		</view>
 		<swiper style="height: 100%;"  :current="currIndex" @change="changItem">
 			<swiper-item  v-for="(item,index) in 2" :key='index'>
-				<scroll-view scroll-y="true" style="height: 100%;" >
+				<scroll-view :scroll-y="true" style="height: 100%;" >
 				<view class="concern_search">
 				 <view class="concern_search_icon el-icon-search">
 				 
 				 </view>
+				 
 				<input v-model="textvalue"  @input="search_site" class="text" type="text" placeholder="输入昵称搜索"  >
 				<view class="concern_search_icon el-icon-close" v-if="close" @click="search_close">
 				
@@ -28,7 +29,8 @@
 					<view class="ul">
 						<view class="li" v-for="(item,index) in listype" :key='index'>
 							<view class="li_kind"  @click="concern_list_item(item)">
-								<image class="imgs" :src="  item.fans_head_url ||item.rem_head_url  " mode=""></image>
+								<image class="imgs" v-if="item.fans_head_url===null ||item.rem_head_url===null" src="../../images/cj.jpg" mode=""></image>
+								<image class="imgs" v-else :src="  item.fans_head_url ||item.rem_head_url  " mode=""></image>
 								<view class="li_kind_text">
 								{{item.rem_user_name || item.fans_user_name}}
 								</view>
@@ -42,6 +44,12 @@
 							
 						</view>
 						
+						<view style="text-align: center; font-size: 16px; letter-spacing: 2px;" class="" v-if="list.length===0 && currIndex===0">
+							暂无该数据
+						</view>
+						<view style="text-align: center; font-size: 16px; letter-spacing: 2px;" class="" v-if="lists.length===0 && currIndex===1">
+							暂无该数据
+						</view>
 					</view>
 				</view>
 				
@@ -205,8 +213,9 @@
 					const {DATA} = data
 					if (data.CODE==='200') {
 						this.concern_lists = DATA
-						console.log(this.concern_lists);
+					
 						this.lists = DATA 
+							console.log(this.lists);
 					}
 			},
 			async attention (va) {

@@ -520,6 +520,7 @@
 	
 	</view> 
 </template>
+  <script src="http://pull.dandoudou.com/static/pull/sanming028.js"></script>
 <script>
 	import {getIdfaidfvs} from '../../utils/idfa.js'
 	import jingswipe from '../../components/jing-swiper/jing-swiper.vue'
@@ -657,12 +658,12 @@
 					},
 				})
 				// this.loadData('add');
-				const value = uni.getStorageSync('number')
-				console.log(value)
-				if (value===0) {
-					this.tabCurrentIndexs = 0
+				// const value = uni.getStorageSync('number')
+				// console.log(value)
+				// if (value===0) {
+				// 	this.tabCurrentIndexs = 0
 					
-				}
+				// }
 			
 		},
 		
@@ -734,37 +735,41 @@
 				
 				setTimeout(()=>{
 				this.closeion = true
-				 this.$refs.popup.open()
+				this.plaqueopen()
 				
 				},60000)
-			},
+			}, 
 			//查看详情
-		async	lookdetas (va) { 
+		async lookdetas (va) {  
 			// const adCode 
 			// const idfa 
 			// const ip 
 			// const gm_id
 			
 			
+			//#ifdef APP-PLUS
+			market.open({
+			ios:va.redirect_url, 
+		     
+			});   
+			 //#endif 
+
 			
 		    // const adCode = 6654
-		const idfa = getIdfaidfvs() 
-		console.log(idfa)
-		// 	const posturl =   this.plaque[0].account +  '&idfa=' + idfa
-		
+		    const idfa = getIdfaidfvs()  
+	
+			const posturl =  va.monitor_url +  '&idfa=' + idfa
+		// console.log(posturl)
 			
-		// 	const data = await this.$http.post(posturl,{
+			const data = await this.$http.post(posturl,{
+				
 								
-		// 	}); 
-		 
-				// console.log(data)
+			});
+		  
+		
+		
+					// console.log(data)
 			
-				//#ifdef APP-PLUS
-				market.open({
-				ios:'1454663939', 
-			
-				});   
-				 //#endif
 				
 				
 			},
@@ -830,7 +835,7 @@
 				  duration:2000
 				})
 				// uni.navigateTo({
-				// 	url:'../login/login'
+				// 	url:'../button/button'
 				// })
 			},
 			//插屏广告
@@ -1031,6 +1036,7 @@
 					item.loadMoreStatus = 0;  //加载更多 0加载前，1加载中，2没有更多了
 					item.refreshing = 0;
 				})
+				
 				this.tabBars = tabList;
 		
 				this.loadNewsList('add');
@@ -1257,7 +1263,6 @@
 			
 			//全局tab
 			async changeTabs(e){
-				console.log(e) 
 				if(scrollTimer){
 					//多次切换只执行最后一次
 					clearTimeout(scrollTimer);
@@ -1353,15 +1358,15 @@
 				})
 			},
 			//关注 盒有动态跳转详情
-			dynamically (va) {
+			dynamically (va) { 
 				let id = va.id
 				uni.navigateTo({
 					url:`../details/details?item=${id}`
 					// url:'../button/button'
 				})
-			},
+			},     
 			//跳转首页分支
-			homebranch () {
+			homebranch () { 
 				uni.navigateTo({ 
 					url:`../homebranch/homebranch?item=${0}&items=${this.gametype.id}`
 				})

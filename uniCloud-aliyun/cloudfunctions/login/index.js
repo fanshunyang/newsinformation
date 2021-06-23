@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
 		access_token: event.access_token,
 		openid: event.openid
 	})
-
+	
 	console.log('res',res); // res里包含手机号
 	// 执行用户信息入库等操作，正常情况下不要把完整手机号返回给前端
 	// 如果数据库在uniCloud上，可以直接入库

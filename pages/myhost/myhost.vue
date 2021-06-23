@@ -89,7 +89,9 @@
 					
 				</view>
 				
-				
+				<view style="text-align: center; font-size: 16px; letter-spacing:2px ;" class="" v-if="myinviList.length===0" >
+					暂无该帖子数据
+				</view>
 				
 			</view>
 			

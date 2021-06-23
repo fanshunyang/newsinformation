@@ -165,7 +165,7 @@
 									
 								</view>
 								<view class="main-li-left-leave-number">
-									{{item.special_news_zx_show || 22}}
+									{{item.special_news_gl_show }}
 								</view>
 							
 							
@@ -232,6 +232,9 @@
 				]	
 			}
 		},
+		onShow() {
+			 this.strateylist()
+		},
 		mounted() {
 		 this.strateylist()
 		},
@@ -251,7 +254,7 @@
 		 glformation (va) {
 			let id =  va.id
 			 uni.navigateTo({
-			 	url:`../../pages/qualification/qualification?itemid=${id}`
+			 	url:`../../pages/qualification/qualification?items=${id}`
 			 })
 		 },
 		}

@@ -13,7 +13,7 @@
 				设置
 			</view>
 		  </view>
-		<view class="setting-header" v-if="user_id " @tap='modification'>
+		<view class="setting-header" v-if="user_id===''?acdtoken: user_id" @tap='modification'> 
 			<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src="materialobj.user_head_url" mode=""></image>
 			<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
 		
@@ -48,7 +48,7 @@
 			</view>
 		</view>
 		
-		<view class="quit" @tap='log_out' v-if="user_id ">
+		<view class="quit" @tap='log_out' v-if="user_id===''?acdtoken: user_id "> 
 			退出登录
 		</view>
 	</view>
@@ -59,6 +59,7 @@
 		data() {
 			return {
 			token:'',
+			acdtoken:false,
 			access_token:'',
 			user_id:'',
 			value:'',
@@ -107,6 +108,10 @@
 					this.materialobj = DATA
 					
 					console.log(this.materialobj)
+						this.acdtoken = true 
+				}
+				if (CODE==='NOTlOGIN01') {
+					this.acdtoken = false 
 				}
 			},
 			//修改个人信息
@@ -126,12 +131,7 @@
 				    content: '您确定要退出吗？',
 				    success: async (res) =>{
 				        if (res.confirm) {
-							
-							// if (this.token===1) {
-							// 	this.token=0
-							// 	  uni.setStorageSync('tokens', this.token);
-								
-							// }
+						
 						    const user_id = uni.getStorageSync('user_id')
 							let data = await this.$http.post('/api/userLoginOut',{
 							token:'d6a2fa16e60777e390256ec85cc2f42e',
@@ -145,20 +145,14 @@
 								 uni.removeStorageSync('user_id')
 							
 									this.settingShow = false
-						
+									this.acdtoken = false 
 								  uni.navigateTo({
 								  	url:'../login/login'
 								  })
 								}
-						// 	const {DATA} = data
-						// 	if (data.CODE==='200') {
-						// 		console.log(DATA)					 
-						
-					 //     	}
-						
 				      
 				        } else if (res.cancel) {
-				            console.log('用户点击取消');
+				            console.log('用户点击取消'); 
 				        }
 				    }
 				});

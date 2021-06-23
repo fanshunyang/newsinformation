@@ -34,8 +34,9 @@
 					如何写好标题
 				</view>
 			  </view>
+			  
 			  <view class="invitation-main-input-bottom">
-			  	<textarea @blur="blur" @focus="focus"  v-model="topics_texta" @input="inputs_text" :maxlength='-1' class="input" type="text" value="" placeholder="写上你的标题会增加更多的曝光量哦！" />
+			  	<textarea @blur="blur" @focus="focus"  v-model="topics_texta" @input="inputs_text" :maxlength='-1' class="input" type="text" value="" placeholder="写下内容会增加更多的曝光量哦！" />
 			  </view>
 			  
 		  	<view class="invitation-main-update" v-if="update">
@@ -115,7 +116,6 @@
 				cropFilePath:'',
 				user_url:'',
 				imgList:[],
-			
 			}
 		},
 		onLoad() {
@@ -145,14 +145,12 @@
 				// }
 			},
 			chooseFile (list,v) {
-				
 				list.forEach((item)=>{
-				pathToBase64( item).then( async base64 => { 
+				pathToBase64(item).then( async base64 => { 
 				  this.cropFilePathApp = base64
-				    const user_id = uni.getStorageSync('user_id')
-					console.log(item)
+				    const user_id = uni.getStorageSync('user_id') 
 				 	let data = await this.$http.post('/api/uploadFile',{
-				     token:'d6a2fa16e60777e390256ec85cc2f42e',					
+				    token:'d6a2fa16e60777e390256ec85cc2f42e',					
 				 	user_id:user_id,
 				 	path:'my',
 				 	file:this.cropFilePathApp			
@@ -161,11 +159,10 @@
 					console.log(DATA)
 				 	if (CODE==='200') {
 				 	this.user_url = DATA
-					
 				    }
+				  })
 				})
-				})
-		
+				
 			},
 			imgDelete (list) {
 				
@@ -179,11 +176,10 @@
 				
 			},
 			input_title (va) {
-				this.topics_title =  va.detail.value
+			this.topics_title =  va.detail.value
 			},
 			inputs_text (va) {
 			this.topics_texta = va.detail.value
-			
 			},
 			uploadClick () {
 			   this.update = true
@@ -210,7 +206,7 @@
 				
 			// 	const user_id = uni.getStorageSync('user_id')
 			// 	let data = await this.$http.post('/api/uploadFile',{
-			//      token:'d6a2fa16e60777e390256ec85cc2f42e',					
+			//  token:'d6a2fa16e60777e390256ec85cc2f42e',					
 			// 	user_id:user_id,
 			// 	path:'my',
 			// 	file: this.cropFilePath	
@@ -260,13 +256,29 @@
 			},
 			//发送
 			send () {
-				this.createTopic()
-				this.hideshow = false
-				this.topics_title = ''
-				this.topics_texta = ''
-				uni.reLaunch({
-					url:'../index/index'
-				})
+				if (this.topics_title === '') {
+					uni.showToast({
+						title:'请输入标题',
+						icon:'none',
+						duration:2000
+					})
+					
+				} else if (this.topics_texta === '') {
+					uni.showToast({
+						title:'请输入内容主体',
+						icon:'none',
+						duration:2000
+					})
+				} else {
+				   this.createTopic()
+				   this.hideshow = false
+				   this.topics_title = ''
+				   this.topics_texta = ''
+				   uni.reLaunch({
+				   	url:'../index/index'
+				   })	
+				}
+				
 			},
 		}
 	}
@@ -318,7 +330,7 @@
 				margin-right: 24upx;
 			}
 			.invitation-header-right-send {
-				font-size: 28upx;
+				font-size: 30upx;
 				font-family: Microsoft YaHei;
 				font-weight: 400;
 				color: #1482FF;

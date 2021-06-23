@@ -57,8 +57,7 @@
 				console.log(val)
 				let {concern_list} = this
 				let arr = [];
-				for (let i = 0; i < concern_list.length; i++) {
-				
+				for (let i = 0; i < concern_list.length; i++) {		
 					if (concern_list[i].text.indexOf(val) !==-1) {
 					
 						arr.push(concern_list[i]);

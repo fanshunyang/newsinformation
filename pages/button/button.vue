@@ -40,16 +40,10 @@
 			
 		
 		</view> -->
-		
-		  <z-paging ref="paging" fixed @query="queryList" :list.sync="dataList">
-		            <!-- list数据，建议像下方这样在item外层套一个view，而非直接for循环item，因为slot插入有数量限制 -->
-		            <view>
-		                <view class="item" v-for="(item,index) in dataList">
-							
-		                    <view class="item-title">{{item.title}}</view>
-		                </view>
-		            </view>
-		        </z-paging>
+		<view @tap='zfbPay' class="" style="text-align: center; font-size: 22px; margin-top: 120px;" >
+			调用
+		</view>
+		  
 				
 	</scroll-view>
 	
@@ -184,6 +178,43 @@
 						
 						}
 					});
+				},
+				zfbPay () {
+				 	var that = this;
+				 	// 调用uniapp API uni.getProvider 获取服务供应商
+				 	uni.getProvider({
+				 		/* 获取服务类型，可选值如下:
+				 		* @param share: 分享
+				 		* @param oauth: 授权登录
+				 		* @param push: 推送
+				 		* @param payment: 支付类型
+				 		*/
+				 		service: 'payment',
+						
+				 		success: (res) => {
+					
+				 			/*
+				 			* @ res.service 获取服务供应商 ==> 'payment'
+				 			* @ res.provider 这里选择的是支付类型，所以包含["alipay","wxpay"]
+				 			* ‘alipay’: 表示支付宝
+				 			* ‘wxpay’: 表示微信
+				 			*/
+				 			// 检查res.provider中是否有 alipay
+				 			if (res.provider.indexOf('wxpay') !== -1) {
+							
+				 				// 后台支付接口需要的一些参数
+				 				var data = {
+				 					id: that.id, // 订单id
+				 					pay_type: that.pay_type // 支付类型
+				 				};
+								
+								
+				 				
+				 			}
+							
+				 		}
+				 	})
+					
 				},
 		    handControllGetBase64(file, callback) {
 		    		//h5不可用

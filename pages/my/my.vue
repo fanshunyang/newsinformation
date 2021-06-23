@@ -15,7 +15,7 @@
 			</view>
 		</view>
 		<scroll-view scroll-y="true" style="height: 100%;">
-			<view class="my-material" v-if="access_token  || user_id" >
+			<view class="my-material" v-if="acdtoken===1" >
 				<view class="my-material-top" @tap='mypersonal'>
 					<image class="imgs" v-if="materialobj.user_head_url===''?false:materialobj.user_head_url" :src=" materialobj.user_head_url" mode=""></image>
 					
@@ -74,11 +74,11 @@
 				 
 				
 			</view>
-			<view class="my-material-notlog" @tap='clickRegister' v-else-if="user_id || access_token===''">
+			<view class="my-material-notlog" @tap='clickRegister' v-else-if="acdtoken===0">
 				<view class="box">
 					<image class="imgs" src="../../images/my.png" mode=""></image>
 				</view>
-				<view class="my-material-click">
+				<view class="my-material-click"> 
 					<view class="my-material-click-log">
 						点击登录
 					</view>
@@ -152,6 +152,7 @@
 	export default {
 		data() {
 			return { 
+				acdtoken:0,
 				token:'',
 				access_token:'',
 				user_id:'',
@@ -163,11 +164,13 @@
 			  ],
 			  materialobj:{},
 			  bannerList:[],
+			 
+			  
 			}
 		},
 		
 		onLoad() {
-			
+		
 	// 	   let value = uni.getStorageSync('tokens')
 		
 	// 	  console.log(value)
@@ -188,6 +191,7 @@
 			// console.log(user_id) 
 			if (access_token && user_id) {
 			this.access_token = access_token
+		
 			this.user_id = user_id
 		
 			}
@@ -195,7 +199,8 @@
 			const value = uni.getStorageSync('too');
 			if (value) {
 			  this.token = value 
-			} 
+			}  
+			this.getPersonalInfo()
 			// console.log(value)    
 		},
 		mounted() {
@@ -204,8 +209,8 @@
 		},
 		computed: { 
 			userState () {
-				const user_id = uni.getStorageSync('user_id')
-				return user_id    
+				// const user_id = uni.getStorageSync('user_id')
+				return this.acdtoken    
 			}
 		},
 		methods: {
@@ -218,10 +223,13 @@
 				});
 			     
 				const {CODE,DATA} = data
+				console.log(DATA)
 				if (CODE==='200') {
 					this.materialobj = DATA
-					  
-					console.log(this.materialobj)
+					this.acdtoken = 1
+				} 
+				if (CODE==='NOTlOGIN01') { 
+					this.acdtoken = 0
 				}
 			},
 			//banner广告位
@@ -239,11 +247,11 @@
 			},
 			//点击登录 
 			clickRegister () {
-				 const value = uni.getStorageSync('too');
-				 console.log(value)
-				 if (value) {
-					this.token =  value
-				 }
+				 // const value = uni.getStorageSync('too');
+				 // console.log(value)
+				 // if (value) {
+					// this.token =  value
+				 // }
 				uni.reLaunch({
 					url:'../login/login'
 				})
@@ -264,14 +272,23 @@
 		  // },
 		  //设置
 		  Setting () {
-			    uni.setStorageSync('token', this.token);
-			 uni.navigateTo({
-			 	url:'../setting/setting'
-			 }) 
+			const user_id = uni.getStorageSync('user_id') 
+			if (!user_id) {
+				uni.showToast({
+				title:'请先登录才能够解锁哦',
+				icon:'none',
+				duration:2000
+				})
+			} else {
+				uni.navigateTo({
+					url:'../setting/setting'
+				}) 
+			}
+			
 		  },
 		  //分类
 		  materialclassfily () {
-			
+			 
 			 	uni.navigateTo({
 			 		url:'../myconcern/myconcern'
 			 	})
@@ -313,20 +330,24 @@
 			    icon:'none',
 			    duration:2000
 			  })
-			  // uni.navigateTo({
-			  // 	url:'../button/button'
-			  // })
 			
 		  },
-		  wbbanner (va) {
+		async  wbbanner (va) {
+			  
+			  //#ifdef APP-PLUS
+			  market.open({
+			  	ios:va.redirect_url, 
+			  			
+			  });   
+			  //#endif
+			   
+		    const idfa = getIdfaidfvs()
+			const posturl =  va.monitor_url +  '&idfa=' + idfa	 
+		   const data = await this.$http.post(posturl,{
 			
-			 
-			 //#ifdef APP-PLUS
-			market.open({
-			ios:'1454663939', 
-						
-			});   
-			  	//#endif
+							
+		   }); 
+		
 			 // uni.showToast({
 			 //   title:'该功能暂未开放 敬请期待!',
 			 //   icon:'none',

@@ -25,7 +25,7 @@
 						</view>
 					
 					</view>
-					<view class="box-firend-li-item-letter">
+					<!-- <view class="box-firend-li-item-letter">
 						<view class="box-firend-li-item-letter-left">
 							<view class="  box-firend-li-item-letter-left-praise">
 								<image style="width: 32upx; height: 32upx;" src="../../images/zan.png" mode=""></image>
@@ -44,7 +44,8 @@
 						</view>
 					
 					
-					</view>			
+					</view> -->			
+					
 				</view>
 				<view class="box-firend-li-content">
 					<view class="box-firend-li-content-title">

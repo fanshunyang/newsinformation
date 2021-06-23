@@ -18,7 +18,7 @@
 							
 						</view>
 			
-				<view class="nav-bat-right" @tap="delate">
+			    	<view class="nav-bat-right" @tap="delate">
 					<view class="nav-bat-right-icon el-icon-delete">
 						
 					</view>
@@ -92,7 +92,10 @@
 										
 									</view>
 								</view>
-							
+								
+								<view style="text-align: center; font-size: 16px; letter-spacing: 2px; margin-top: 20px;" class="" v-if="browseList.length===0">
+									暂无该数据
+								</view>
 							</view>
 						
 						</view>
@@ -118,6 +121,12 @@
 					{id:1,title:'热帖'}
 				],
 				currIndex:0,
+				cslist:[
+					{id:1,name:'随便'},
+					{id:2,name:'11'},
+					{id:3,name:'22'},
+					{id:4,name:'33'}
+				]
 			}
 		},
 		mounted() {
@@ -126,9 +135,10 @@
 		methods: {
 			//浏览记录
 			async myViewsRecord () {
+				
 					const user_id = uni.getStorageSync('user_id')
 				     let prams = this.currIndex===0?'news':'topic'
-					
+				
 					let data = await this.$http.post('/api/myViewsRecord',{	
 					token:'d6a2fa16e60777e390256ec85cc2f42e',
 			        user_id:user_id,
@@ -163,10 +173,10 @@
 				},
 			//返回上一级
 			upleave () {
-			   uni.navigateBack()
+			   uni.navigateBack() 
 			},
 			//清空记录
-			 delate () {
+			delate () {
 			uni.showModal({
 				title:'您确定要清除吗？',
 				success: async (res)=>{
@@ -182,9 +192,7 @@
 						}
 					}
 				}
-			})
-			
-		
+			}) 
 			
 			},
 		}
