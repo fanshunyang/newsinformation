@@ -57,14 +57,14 @@
 									Cyberpunk
 								</view> -->
 							</view>
-							<view class="swiper-box-game-introduce-right">
+							<!-- <view class="swiper-box-game-introduce-right">
 								<view class="swiper-box-game-introduce-right-icon el-icon-download">
 									
 								</view>
 								<view class="swiper-box-game-introduce-right-dowolad" @tap='uploads'>
 									去下载
 								</view>
-							</view>
+							</view> -->
 						</view>
 						<view class="swiper-box-game-introduce-bottom">
 							<view class="swiper-box-game-introduce-bottom-label">
@@ -652,6 +652,7 @@ page, .homepage{
 								color: #333333;
 							    margin-bottom: 20upx;
 								letter-spacing: 2px;
+							
 							}
 							.swiper-box-game-introduce-left-text {
 								height: 24upx;
@@ -705,6 +706,7 @@ page, .homepage{
 							margin-right: 12upx;
 							padding-left: 12upx;
 							padding-right: 12upx;
+							margin-top: 20upx;
 						}
 					}
 				}

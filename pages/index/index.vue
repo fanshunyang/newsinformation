@@ -676,8 +676,10 @@
 		this.getSquareNews()
 		this.gambit()
 		this.getPersonalAd() 
-		
-	     this.$refs.popup.open()
+		if (this.tabCurrentIndexs===1) {
+			  this.$refs.popup.open()
+		}
+	   
 		},
 		onReady(){
 			/**
@@ -733,7 +735,7 @@
 			iconclose () { 
 				this.closeion = false ||  this.$refs.popup.close()
 				
-				setTimeout(()=>{
+				setTimeout( ()=>{
 				this.closeion = true
 				this.plaqueopen()
 				
@@ -801,7 +803,7 @@
 				uni.navigateTo({
 					url:`../themet/themet?item=${encodeURIComponent (JSON.stringify(va))}`
 				})
-			},
+			}, 
 			//关注登录
 			login () {      
 				if (!this.user_id) {
@@ -820,9 +822,9 @@
 			search () {
 				// uni.navigateTo({
 				// 	url:'../search/search'  
-				// })
+				// }) 
 				uni.showToast({
-				  title:'该功能暂未开放 敬请期待!',
+				  title:'该功能暂未开放 敬请期待!', 
 				  icon:'none',
 				  duration:2000 
 				})

@@ -158,8 +158,8 @@
 				"app-plus": {
 					
 					"titleNView": false,
-					"bounce": "none"
-				
+					"bounce": "none",
+				    "softinputMode": "adjustResize"
 				}
             }
             
@@ -529,7 +529,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+					"navigationBarTextStyle" : "black",
+				"app-plus": {
+				
+					"titleNView": false,
+					"bounce": "none",
+					"softinputNavBar": "none",
+					"softinputMode": "adjustResize"
+				}
             }
             
         }

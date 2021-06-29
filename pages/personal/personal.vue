@@ -23,7 +23,7 @@
 		        <image :src="cropFilePath" mode="aspectFit" style="width: 100%;"></image> -->
 		
 		<image v-if="initialimgs  " class="imgs" src="../../images/cj.jpg" mode=""></image>
-			<image class="imgs" v-if=" user_item.user_head_url===''?false: user_item.user_head_url" :src=" user_item.user_head_url" mode=""></image>
+			<image class="imgs" v-if="user_item.user_head_url===''?false: user_item.user_head_url" :src="user_item.user_head_url" mode=""></image>
         	<image class="imgs" v-else src="../../images/cj.jpg" mode=""></image>
 		  <imagecropper :src="tempFilePath" @confirm="confirm" @cancel="cancels"></imagecropper>
 		 <image @tap="upload" :src="cropFilePath " mode="aspectFit" style="width: 100upx; height: 100upx; border-radius: 50%; position: absolute; right: 10px; z-index: 222;"></image> 

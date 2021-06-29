@@ -48,14 +48,14 @@
 										Cyberpunk
 									</view> -->
 								</view>
-								<view class="swiper-box-game-introduce-right" @tap='download'>
+								<!-- <view class="swiper-box-game-introduce-right" @tap='download'>
 									<view class="swiper-box-game-introduce-right-icon el-icon-download">
 										
 									</view>
 									<view class="swiper-box-game-introduce-right-dowolad">
 										去下载
 									</view>
-								</view>
+								</view> -->
 							</view>
 							<view class="swiper-box-game-introduce-bottom">
 								<view class="swiper-box-game-introduce-bottom-label">

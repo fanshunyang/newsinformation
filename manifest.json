@@ -2,8 +2,8 @@
     "name" : "游讯时空",
     "appid" : "__UNI__C658B42",
     "description" : "添加了插屏广告",
-    "versionName" : "2.2",
-    "versionCode" : 112,
+    "versionName" : "3.0",
+    "versionCode" : 220,
     "transformPx" : false,
     // 跨域问题
     "launch_path" : "http://appyouxun.hundredzy.com",
@@ -18,7 +18,8 @@
         },
         "modules" : {
             "VideoPlayer" : {},
-            "OAuth" : {}
+            "OAuth" : {},
+            "Messaging" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -43,15 +44,18 @@
                     "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_SMS\"/>",
                     "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.SEND_SMS\"/>",
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SMS\"/>"
                 ]
             },
             "ios" : {
-                "idfa" : true
+                "idfa" : false
             },
             /* ios打包配置 */
             "sdkConfigs" : {

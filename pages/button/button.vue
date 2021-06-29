@@ -1,239 +1,195 @@
 <template>
-	<scroll-view :scroll-y="true" style="height: 100%;">
-	<!-- <view class="btn">
+	<view class="main">
+	 <view class="status_bar">
+	          <!-- 这里是状态栏 --> 
+	 			
+	 				  
+	   </view>
+	   <view class="el-icon-arrow-left lefte" @tap='back'>
+	   	
+	   </view>
+	   <view class="" style="font-size: 20px; font-weight: 700; margin-top: 20px; margin-left: 8px;">
+	   	输入验证码
+	   </view>
+	   <view class="" style="margin-top: 15px; margin-left: 10px;">
+	   	{{phonex}}
+	   </view>
+	    <view class="item" @tap='KeyboarOpen'>
+	      <password-input  :numLng='password'></password-input>
+	    </view>
+	    <number-keyboard  tabBar ref='KeyboarHid' @input='int' psdLength='6'></number-keyboard>
 		
-			<view class="image-item" v-for="(item,index) in files" :key="index"></view>
-			<view class="upload-button" @click="handClickChooseImage">
-				<image class="imgs" src="../../images/ac.jpg" mode=""></image>
-			</view>
-		
-			<view class="" @tap='clickt'>
-				1111111
-			</view> 
-	
-		
-		
-			<view class="videos" >   
-			
-				<video :enable-progress-gesture='false' ref="videost" :muted='muted' style=" width: 100%;" :loop='true' :controls='false' :autoplay='false' objectFit="cover"  src="https://vd3.bdstatic.com/mda-ka9rbu1tgsazghj3/v1-cae/sc/mda-ka9rbu1tgsazghj3.mp4?v_from_s=sz_haokan_4469&auth_key=1622172314-0-0-6472a47636606867e982d7c5e6cd0e7d&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=" >
-				
-					  
-					  <cover-image src="/static/gbysu.jpeg" v-if="courshide===0" style="position: absolute;  top: 20px;   font-size: 40upx; color: #0000FF; width: 50px; height: 50px;" class="" @click="clickmouted">
-					    					
-					  </cover-image>
-					 
-						<cover-image src="/images/ylc.jpg" v-if="courshide===1" style="position: absolute; top: 20px; font-size: 40upx; color: #0000FF; width: 50px; height: 50px; " class="" @click="clickmoutedtwo" >  
-						  					
-						</cover-image>
-					  
-				
-					 
-					  <cover-view style="  height: 50px; line-height: 50px; text-align: center; position: absolute; top: 150px; right: 0; color: #007AFF; font-size: 40upx;" class=" icon" @tap="fn">
-					  				
-					  	了解详情
-					  				
-					  </cover-view>
-				</video>
-			 
-			</view>
-			
-			
-		
-		</view> -->
-		<view @tap='zfbPay' class="" style="text-align: center; font-size: 22px; margin-top: 120px;" >
-			调用
+		<view class="verification_pos" @tap='madeverifications' >
+			<text>{{!codeTime?'重新发送':codeTime+'s'}}</text>
 		</view>
-		  
-				
-	</scroll-view>
+	  </view>
+	
 	
 </template>
 
 <script>
-	import {pathToBase64,  
-			base64ToPath, } from '../../js_sdk/mmmm-image-tools/index.js'
+	import numberKeyboard from '@/components/number-keyboard/number-keyboard.vue'
+	import passwordInput  from '@/components/password-input/password-input.vue'
+	
+	import {pathToBase64,  base64ToPath } from '../../js_sdk/mmmm-image-tools/index.js'
   import mUpdateAppTip from '@/components/maozai-update/updateAppTip.vue'
   
 	export default {
 		components: {
-			mUpdateAppTip
+			mUpdateAppTip,
+			numberKeyboard,
+			passwordInput
 		},
 		data() {
 			return {
-			// 	 webviewStyles: {
-			// 	                    progress: {
-			// 	                        color: '#FF3333'
-			// 	                    }
-			// 	                }
-			files:[],
-			previewFiles:[],
-			dataList:[
-				{id:1,title:'随便'},
-				{id:2,title:'随便1'},
-				{id:3,title:'随便'},
-				{id:4,title:'随便'},
-				{id:5,title:'随便'},
-				{id:6,title:'随便'},
-				{id:7,title:'随便'},
-				{id:8,title:'随便'},
-				{id:9,title:'随便'},
-				{id:10,title:'随便'},
-			],
+			codeTime:0,
+			password:'',
 			muted:false,
 			courshide:0,
-			
-			  update_type:0,//0是热更新，1整包更新
-			                update_url:'',//更新的地址
-			                update_title:'发现新的版本，请点击升级',
-			                update_des:['1.发现新的版本，请点击升级','2.发现新的版本，请点击升级'],
-			                is_update_app:false,
-			                is_forced_update:false,//是否强制升级
+			phonex:'',
+			verificationdate:'',
 			}
 		},
-		onLoad() {
-		
+		onLoad(va) {
+			this.phonex = va.phone
 			//#ifdef APP-PLUS
 			  
 			  plus.storage.setItem('user_ids', 'id') 
 			//#endif 
+			 setTimeout(() => {
+			        this.$refs.KeyboarHid.open()
+			  }, 50)
+			  this.madeverification()
 		},
 		methods: {
-			queryList (pageNo,pageSize) {
-				
-				 // this.$request.queryList(pageNo, pageSize, (data) => {
-				 //    this.$refs.paging.complete(data);
-		   //         });
+			back () {
+				uni.navigateBack()
 			},
-			// weixinLo () {
-			// 	uni.login({
-			// 		provider:'weixin',
-			// 		success(res) {
-			// 			const {access_token,openid,unionid} = res.authResult
-			// 			if (access_token && openid && unionid) {
-			// 				uni.reLaunch({
-			// 					url:'../index/index'
-			// 				})
-			// 			}
-			// 			// console.log(res.authResult)
-						
-			// 		},
-			// 	})
-			// },
-			clickt () {
-				  plus.storage.clear()
-			},
-			clickmouted () {
-			  this.muted = true
-			  this.courshide = 1
-			},
-			clickmoutedtwo () {
-				this.muted = false
-				this.courshide = 0
-			},
-			fn () {
-				 const url = 'http://uri6.com/tkio/iyiemqa'  
-				// uni.navigateTo({
-				// 	url:'../qualification/qualification'
-				// })
-				//#ifdef APP-PLUS
-				plus.runtime.openURL(url, (res)=> {  
-				    console.log(res);  
-				 }); 
-				 	//#endif
-			},
-			handClickChooseImage(){
-					let that = this;
-					uni.chooseImage({
-						count: (4 - that.files.length), //默认9
-						//官方的压缩为50%,图片太大的话，压缩效果不好
-						sizeType: ['compressed'], //original 原图，compressed 压缩图
-						sourceType: ['album'], //album 从相册选图，camera 使用相机，默认二者都有
-						success: (res) => {
-						
-							let imageList = res.tempFilePaths.toString().split(',');
-								console.log(imageList)
-								imageList.forEach((item)=>{  
-									// 	//调用自己的方法
-										that.handControllGetBase64(item, async base => {	
-											// that.files.push(base);
-											let basers =  base
-										let resr = plus.storage.getItem('user_ids')
-										console.log(resr)  
-										const user_id = uni.getStorageSync('user_id')
-										console.log(user_id)
-										// let data = await this.$http.post('/api/uploadFile',{
-										//  token:'d6a2fa16e60777e390256ec85cc2f42e',					
-										// user_id:user_id,
-										// path:'my',
-										// file: basers	
-										// });
-										// console.log(data)
-											// this.files.forEach((item)=>{
-											// 	console.log(item)
-											// })
-										
-										});
-								})
-							
-						
-						}
+			madeverification () {
+				if(this.codeTime>0){
+					uni.showToast({
+					title: '不能重复获取',
+					icon:"none"
 					});
-				},
-				zfbPay () {
-				 	var that = this;
-				 	// 调用uniapp API uni.getProvider 获取服务供应商
-				 	uni.getProvider({
-				 		/* 获取服务类型，可选值如下:
-				 		* @param share: 分享
-				 		* @param oauth: 授权登录
-				 		* @param push: 推送
-				 		* @param payment: 支付类型
-				 		*/
-				 		service: 'payment',
-						
-				 		success: (res) => {
-					
-				 			/*
-				 			* @ res.service 获取服务供应商 ==> 'payment'
-				 			* @ res.provider 这里选择的是支付类型，所以包含["alipay","wxpay"]
-				 			* ‘alipay’: 表示支付宝
-				 			* ‘wxpay’: 表示微信
-				 			*/
-				 			// 检查res.provider中是否有 alipay
-				 			if (res.provider.indexOf('wxpay') !== -1) {
-							
-				 				// 后台支付接口需要的一些参数
-				 				var data = {
-				 					id: that.id, // 订单id
-				 					pay_type: that.pay_type // 支付类型
-				 				};
-								
-								
-				 				
-				 			}
-							
-				 		}
-				 	})
-					
-				},
-		    handControllGetBase64(file, callback) {
-		    		//h5不可用
-		    		uni.saveFile({
-		    			tempFilePath: file,
-		    			success: (saveFile) => {
-					
-		    			//pathToBase64为uniapp 插件市场的插件内方法
-		    				pathToBase64(saveFile.savedFilePath).then(base64 => {
-		    					//用完就删
-		    					uni.removeSavedFile({
-		    						filePath: saveFile.savedFilePath
-		    					});
-		    					//返回
-		    					callback(base64); 
-		    				})
-		    			}
-		    		});
-		    	},
+					return;
+					}else{
+					  this.codeTime = 60
+					 let timer = setInterval(()=>{
+					this.codeTime--;
+					if(this.codeTime<1){
+					clearInterval(timer);
+					this.codeTime = 0
+					}
+					},1000)
+				  }
+			},
+			madeverifications () {
+				if (this.phonex==='') {
+					uni.showToast({
+						title:'请输入您的手机号',
+						icon:'none',
+						duration:2000
+					}) 
+				} else {
+					if(this.codeTime>0){
+						uni.showToast({
+						title: '不能重复获取',
+						icon:"none"
+						});
+						return;
+						}else{
+						  this.codeTime = 60
+						 let timer = setInterval(()=>{
+						this.codeTime--;
+						if(this.codeTime<1){
+						clearInterval(timer);
+						this.codeTime = 0
+						}
+						},1000)
+					  }
+					  
+					  uniCloud.callFunction({
+					   	name: 'sandcode',
+						data:{ 
+							code:this.password,
+							phone:this.phonex
+						}
+					   }).then((res)=>{
+						 // if (res.result.code===0) {
+							  
+						 // } 
+						  console.log('这是发送验证码', res); 
+					   })
+				}
+			},
+			  //打开键盘
+			      KeyboarOpen(e) {
+			        this.$refs.KeyboarHid.open();
+			      },
+				  
+			async  int (val) {
+				    this.password = val;
+				  // const S = this.password 
+				  
+				  // const rs = [].filter.call(S, (s, i, o) => o.indexOf(s) == i).join('');
+				 
+				   if (  this.password.length===6) {
+					  // uni.reLaunch({
+					  // 	url:'../index/index'
+					  // })
+					  
+					  if (this.phonex==='' ) {
+					  				uni.showToast({
+					  					title:'请输入您的手机号',
+					  					icon:'none',
+					  					duration:2000
+					  				}) 
+					  			} else if (this.password==='') {
+					  				uni.showToast({
+					  					title:'请输入您的密码',
+					  					icon:'none',
+					  					duration:2000
+					  				}) 
+					  			} else {
+					  				const data = await this.$http.post('/api/userLogin',{
+					  					token:'d6a2fa16e60777e390256ec85cc2f42e',
+					  					phone_number:this.phonex,
+					  					pwd:this.password
+					  					});
+					  					const {DATA} = data
+					  					if (data.CODE==='200') {
+					  														
+					  					const {access_token,user_id} = DATA.user_info		 
+					  					uni.setStorageSync('access_token', access_token);
+					  					uni.setStorageSync('user_id', user_id);
+					  									
+					  					uni.switchTab({
+					  					url:'../index/index',
+					  					success:(res)=> {
+					  					if (res.errMsg) {
+					  					uni.showToast({
+					  				    title:'登录成功',
+					  					duration:1500
+					  					})
+					  					 }
+					  				    },
+					  				})
+					  			}
+					  			
+					  }
+					  
+					  
+					  
+					  
+					  
+					  
+				   }
+				   // console.log(  this.password)
+			  }, 
+			    
+		
+				
+		
 		    
 		  
 		}
@@ -241,6 +197,47 @@
 </script>
 
 <style lang="scss">
+	page, .main{
+			
+			background-color: #ffff;
+			height: 100%;
+			overflow: hidden;
+		}
+	.status_bar {
+	
+	     height: var(--status-bar-height);
+	     width: 100%; 
+			  background-color: #fff;
+		
+	 }
+	.verification_pos {
+		text-align: center;
+		margin-top: 40px;
+		font-size: 34rpx;
+		color: #ffff;
+		height: 80rpx;
+		line-height: 80rpx;
+		border-radius: 10px;
+		background-color: #000000;
+	}
+	.main {
+		margin-top: 0px;
+	    padding: 0rpx 40rpx;
+		.lefte {
+			font-size: 30px;
+			margin-top: 30px;
+		}
+	  }
+	  .ipt {
+	    border-bottom: 1rpx solid #CCCCCC;
+	  }
+	  .item {
+	    padding: 10rpx 0rpx;
+		margin-top: 25px;
+	  }
+	  .title {
+	    margin: 30rpx 0;
+	  }
 	.btn {
 		.upload-button {
 			margin-top: 20px;

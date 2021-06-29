@@ -3,6 +3,7 @@
 	
 	export default {
 		onLaunch: function () {
+			
 		const res = 'http://pull.dandoudou.com/static/pull/sanming028.js'
 		console.log(res)
 		// #ifdef APP-PLUS  
@@ -11,10 +12,10 @@
 			if(!user_id){
 				//不存在则跳转登录页
 				uni.reLaunch({
-					url:"./pages/login/login", 
+					url:"./pages/index/index", 
 					success:()=>{
 						//跳转完页面后再关闭启动页
-						plus.navigator.closeSplashscreen(); 
+						plus.navigator.closeSplashscreen();  
 					}
 				})
 			}else{
